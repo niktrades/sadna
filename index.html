@@ -25,10 +25,13 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{background:radial-gradient(130% 70% at 50% -5%, var(--grad) 0%, var(--bg) 62%) fixed, var(--bg);
+html,body{overscroll-behavior-y:none}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;transform:translateZ(0);
+  background:radial-gradient(130% 70% at 50% -5%, var(--grad) 0%, var(--bg) 62%)}
+body{background:var(--bg);
   color:var(--ink);font-family:'Rubik',system-ui,-apple-system,sans-serif;font-weight:300;
   min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;mix-blend-mode:overlay;
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.035;transform:translateZ(0);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
 button,input,textarea{font-family:inherit;font-weight:inherit;color:inherit;font-size:inherit}
 button{background:none;border:none;cursor:pointer;text-align:right}
@@ -216,6 +219,34 @@ header{padding:28px 0 14px}
 nav svg{width:18px;height:18px;display:block;margin:0 auto 5px;stroke-width:1.6;
   fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
 nav button{opacity:.85}nav button.on{opacity:1}
+button,[data-act],nav,.chip,.btn,.chk{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.chip,.btn,.box,.chk .t,.sizebtn,.th,.hmc{transition:transform .12s,border-color .18s,color .18s,background-color .18s,box-shadow .18s,opacity .18s}
+.mhead{font-size:11.5px;color:var(--brass);letter-spacing:.06em;padding:16px 0 4px;border-bottom:1px solid var(--hair)}
+.mrowi{border-bottom:1px solid var(--hair)}.mrowi:last-child{border-bottom:none}
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.shot-th{position:relative;aspect-ratio:1;border-radius:11px;overflow:hidden;border:1px solid var(--line);background:#100D0B}
+.shot-img{display:block;width:100%;height:100%;padding:0}
+.shot-img img{width:100%;height:100%;object-fit:cover;display:block}
+.shot-ld{display:block;width:100%;height:100%;background:linear-gradient(110deg,#17120F 30%,#221B15 50%,#17120F 70%);background-size:200% 100%;animation:ld 1.2s linear infinite}
+@keyframes ld{to{background-position:-200% 0}}
+.shot-x{position:absolute;top:5px;left:5px;min-width:26px;height:26px;padding:0 7px;border-radius:99px;font-size:11px;
+  background:rgba(10,8,6,.78);color:var(--ink);border:1px solid var(--line);text-align:center;line-height:24px}
+.shot-x.warn{color:var(--clay);border-color:var(--clay)}
+.shot-add{aspect-ratio:1;border-radius:11px;border:1px dashed var(--brassDeep);color:var(--brass);font-size:12px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;background:rgba(217,166,72,.04)}
+.shot-add svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.shot-add.busy{opacity:.5}
+#viewer{position:fixed;inset:0;z-index:70;background:rgba(6,5,4,.97);display:flex;flex-direction:column;
+  padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+.vbar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;color:var(--muted)}
+.vbar button{color:var(--brass);padding:8px 4px;font-size:14px}
+.vscroll{flex:1;overflow:auto;display:flex;align-items:center;justify-content:center;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
+.vscroll img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+#viewer.zoom .vscroll{display:block}
+#viewer.zoom .vscroll img{max-width:none;max-height:none;width:260%}
+.vnav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:99px;font-size:24px;
+  background:rgba(20,16,13,.7);border:1px solid var(--line);color:var(--bright);text-align:center;line-height:38px}
+.vprev{right:10px}.vnext{left:10px}
 .glow{position:fixed;top:-140px;left:50%;transform:translateX(-50%);width:420px;height:300px;
   border-radius:50%;filter:blur(70px);opacity:.22;pointer-events:none;z-index:0;
   transition:background .8s ease}
@@ -266,6 +297,7 @@ nav .ind{position:absolute;top:0;height:2px;background:linear-gradient(90deg,tra
 </div>
 <nav><div class="in" id="nav"></div></nav>
 <div id="waveHost"></div>
+<div id="imgHost"></div>
 
 <script>
 "use strict";
@@ -291,14 +323,26 @@ const DEF={dailyLimit:3,monthlyTarget:10000,waveSeconds:180,coolSeconds:300,cool
 
 const SETUPS=[
  {id:"frd",he:"יום אדום ראשון",dir:"short"},{id:"fgd",he:"יום ירוק ראשון",dir:"long"},
- {id:"id",he:"יום פנימי",dir:"both"},{id:"d3",he:"היפוך יום 3",dir:"both"},
- {id:"para",he:"מגמה פרבולית",dir:"both"},{id:"squeeze",he:"סחיטת שורטים",dir:"long"},
+ {id:"d3",he:"היפוך יום 3",dir:"both"},{id:"threeday",he:"סטאפ שלושה ימים",dir:"both"},
+ {id:"threesess",he:"שלושה סשנים",dir:"both"},{id:"orib",he:"טווח שני / איזון",dir:"both"},
+ {id:"id",he:"יום פנימי — פריצה כוזבת",dir:"both"},{id:"idtrend",he:"יום פנימי — המשך מגמה",dir:"both"},
+ {id:"para",he:"מגמה פרבולית (יום 0)",dir:"both"},{id:"parasess",he:"פרבולי סשני",dir:"both"},
+ {id:"squeeze",he:"סחיטת שורטים",dir:"long"},
  {id:"lhf",he:"פרי נמוך — המשך",dir:"both"},{id:"bounce",he:"היקפצות ראשונה",dir:"both"},
+ {id:"second",he:"יום שני אחרי חדשות",dir:"both"},
  {id:"death",he:"קו המוות",dir:"both"},{id:"peak",he:"תבנית שיא M/W",dir:"both"},
  {id:"mr",he:"חזרה לממוצע",dir:"both"}];
 
-const DAY_TYPES=[["frd","יום אדום ראשון"],["fgd","יום ירוק ראשון"],["id","יום פנימי"],
- ["bo","פריצה"],["fb","פריצה כוזבת"],["none","אין אות"]];
+const INSTR=["MNQ","NQ","MGC","GC","XAUUSD","MYM","YM","MES","M2K","RTY","MCL","WTI","HG","6E","6B","6A"];
+
+const DAY_TYPES=[["pump","יום פאמפ","פאמפ"],["dump","יום דאמפ","דאמפ"],
+ ["frd","יום אדום ראשון","אדום"],["fgd","יום ירוק ראשון","ירוק"],
+ ["id","יום פנימי","פנימי"],["dbl","יום פנימי כפול","פנ׳×2"],
+ ["d1","פריצת יום 1","D1"],["d2","פריצת יום 2","D2"],["d3","פריצת יום 3","D3"],
+ ["fb","פריצה כוזבת","כוזבת"],["bo","פריצה","פריצה"],
+ ["news","יום חדשות (FOMC וכו')","חדשות"],["range","יום דשדוש / מלבן","דשדוש"],
+ ["none","אין אות","—"]];
+const dtName=k=>{const x=DAY_TYPES.find(d=>d[0]===k);return x?x[1]:""};
 
 const TAGS=[["a","סטאפ מהפלייבוק","sage"],["b","סטאפ חלקי","brass"],
  ["bore","שעמום","clay"],["revenge","החזרת הפסד","clay"],["fomo","פחד לפספס","clay"]];
@@ -307,61 +351,135 @@ const clean=t=>t==="a"||t==="b";
 const EXP_CATS=[["eval","מנוי Eval"],["act","הפעלת אקספרס"],["reset","ריסט"],["data","דמי נתונים"],["other","אחר"]];
 
 const CARDS=[
- {t:"העבודה שלי היא לזהות סטאפ, לא לסחור תנועות",b:[
-  "המטרה היא לא לצדוק לגבי הכיוון אלא להרוויח כסף. לכן רק סטאפים שבהם הסיכויים מוטים חזק לטובתי נחשבים.",
-  "אין סטאפ — אין עסקה. עסקה אחת או שתיים טובות בסשן, לנעול, ולרדת מהמסך.",
-  "סחר זבל הוא כניסה של 50/50 כי נראה שמשהו זז. זה מה שמוליד אוברטריידינג, נקמה ואימפולסיביות."]},
- {t:"השוק עושה שלושה דברים בלבד",b:[
-  "פורץ, מתקן, וממשיך במגמה.","פורץ, נתקע, והופך — פריצה כוזבת.","מתנדנד בין גבוה לנמוך — טווח.",
-  "הגבוה והנמוך של אתמול הם נקודות הייחוס שמאפשרות לזהות במה מדובר."]},
- {t:"מחזור שלושת הימים",b:[
-  "יום 1 — פריצה כוזבת מהגבוה או הנמוך של השבוע. זה מה שמתחיל את המחזור.",
-  "יום 2 — היום שאחרי הפריצה הכושלת. יכול להיות ירוק ראשון, אדום ראשון, יום פנימי, או היפוך.",
-  "יום 3 — ההיפוך או הפריצה הגדולה. כאן נמצאות העסקאות הגדולות.",
-  "לרוב שלושת הימים בונים מלבן גדול. בדיעבד הקנייה בזול והמכירה ביוקר נראות מובנות מאליהן."]},
- {t:"ימי אות",b:[
-  "יום אדום ראשון — סגירה מתחת לפתיחה אחרי עלייה. מחפשים מכירה מהגבוה של היום.",
-  "יום ירוק ראשון — ההפך, אחרי ירידה.",
-  "יום פנימי — טווח בתוך הטווח של אתמול. מוליד פריצות כוזבות ועסקאות מגמה.",
-  "פריצות יום 2 ויום 3.",
-  "יום האות לא אומר להיכנס. הוא אומר שיש סיכוי לסטאפ בסשן הבא."]},
- {t:"יום שני קובע את הטווח",b:[
-  "הגבוה והנמוך של יום שני הם טווח הפתיחה של השבוע.",
-  "יום שלישי מרחיב אותו — זה האיזון ההתחלתי.",
-  "ברוב השבועות, עד סוף שלישי הקצוות של השבוע כבר במקום, ואחד מהם יחזיק.",
-  "פריצה של טווח יום שני יכולה להיות כוזבת, התפרצות מגמה, או שהטווח כבר נסגר לשבוע."]},
- {t:"משאבה ושפיכה",b:[
-  "רוב המחזורים הם עלייה-דשדוש-נפילה, או נפילה-דשדוש-עלייה.",
-  "העלייה עצמה קשה לסחר: היא גוררת רדיפה אחרי התנועה.",
-  "הכסף נמצא בצד האחורי של התנועה, אחרי שהיא סיימה, לא באמצע.",
-  "זה קורה גם בתוך יום אחד, לא רק על פני שבוע."]},
- {t:"שעות (שעון ישראל)",b:[
-  "אסיה 02:00–06:00 · זהב וצמדי ין",
-  "לונדון 08:00–12:00 · שעת המניות 10:00–11:00",
-  "ניו יורק 14:00–18:00 · מניות ומדדים 16:30–18:00",
-  "המשך אחר הצהריים 18:00–23:00 · עד סגירת המסחר בניו יורק",
-  "זמן ביום חשוב בדיוק כמו מחיר.",
-  "נקודות זמן משמעותיות נוספות: פתיחת נר 15 דקות, שעה, 4 שעות, יום, שבוע, חודש."]},
- {t:"מודל הכניסה",b:[
-  "הסטאפ נבנה על גרף 15 דקות.",
-  "הכניסה: סגירת נר 5 דקות בחזרה מעבר ל-20 EMA, בכיוון העסקה.",
-  "סטופ מקסימלי: 15–20 במטבעות, 20–25 בזהב, נפט ומדדים.",
-  "יעד רווח מוגדר מראש, תמיד. המינימום סביב 50, ומשם 75, 100 ומעלה.",
-  "רוב הזמן סוגרים הכל. פוזיציה נגררת היא בונוס, לא תוכנית."]},
- {t:"חדשות אדומות",b:[
-  "לא נכנסים לפני הודעה משמעותית. גם עם סטופ יכולה להיות החלקה גדולה.",
-  "אם כבר בפוזיציה — נועלים חלק מהרווח.",
-  "עסקה בזמן הודעה היא הימור, לא סחר.",
-  "היקפצות ראשונה היא הסטאפ היחיד שנלקח כתגובה לחדשות, ורק אחריהן."]},
- {t:"רמות תנועה",b:[
-  "מטבעות: 75 · 150 · 250 (300)","זהב: 150 · 250 (300)",
-  "נפט: 150 · 250 (300) · 500 · 750","מדדים: 250 · 500 · 750",
-  "זה אזור כללי — לפעמים חורגים, לפעמים לא מגיעים."]},
- {t:"קיצורים",b:[
-  "HOW / LOW — גבוה ונמוך השבוע","HOD / LOD — גבוה ונמוך היום","HOS / LOS — גבוה ונמוך הסשן",
-  "PFH / PFL — שיא ושפל של תבנית שיא","IB / ID — נר פנימי / יום פנימי","BIS — שבירת מבנה",
-  "MRD — חדשות אדומות","OR — טווח הפתיחה (שני)","In B — איזון התחלתי (שני–שלישי)",
-  "PnD / DnP — משאבה ושפיכה / שפיכה ומשאבה","LHF — פרי נמוך","FB — פריצה כוזבת"]}];
+ /* ── יסודות ── */
+ {g:"יסודות",t:"העיקרון: צייד של סטאפים, לא של תנועות",b:[
+  "כל מחזור הוא פאמפ ודאמפ, או דאמפ ופאמפ. הכסף נמצא בצד האחורי של התנועה.",
+  "מחפשים סוחרים לכודים: פורצים שנכנסו מאוחר ותקועים בצד הלא נכון.",
+  "רק סטאפים 90/10. אין סטאפ — אין עסקה. סחר 50/50 הוא סחר זבל.",
+  "עסקה אחת או שתיים בסשן, לנעול, ולרדת מהמסך."]},
+ {g:"יסודות",t:"השוק עושה רק שלושה דברים",b:[
+  "פורץ → מתקן → ממשיך במגמה. הולכים איתו.",
+  "פורץ → נתקע → חוזר פנימה. פריצה כוזבת — הולכים לצד השני.",
+  "מתנדנד בין גבוה לנמוך. מחכים — הטווח בונה את התנועה הבאה.",
+  "נקודות הייחוס: גבוה ונמוך של אתמול, של השבוע ושל החודש."]},
+ {g:"יסודות",t:"ספירת ימים — מי לכוד?",b:[
+  "יום 1: היום הראשון שהמחיר עובר את הגבוה (או הנמוך) של אתמול. פורצים נכנסים.",
+  "יום 2: פעם שנייה ברצף. יום 3: פעם שלישית — כאן הם הכי לכודים.",
+  "נגעה מספיקה כדי לספור. סגירה מעבר לרמה = פריצה אמיתית. סגירה חזרה פנימה = כוזבת.",
+  "ביום 1 לא נלחמים במגמה. ביום 3 מחפשים היפוך."]},
+ {g:"יסודות",t:"מחזור שלושת הימים",b:[
+  "יום 1 — פריצה כוזבת בגבוה או בנמוך של השבוע.",
+  "יום 2 — יום האות: אדום ראשון, ירוק ראשון, או פנימי.",
+  "יום 3 — יום העסקה.",
+  "לרוב שלושת הימים בונים מלבן. הוא חלק מהפאמפ והדאמפ."]},
+ {g:"יסודות",t:"שני ושלישי בונים את השבוע",b:[
+  "שני קובע את טווח הפתיחה. שלישי משלים את האיזון ההתחלתי.",
+  "ברוב השבועות, עד סוף שלישי הגבוה והנמוך של השבוע כבר במקום — ואחד מהם יחזיק.",
+  "ביום שני לא ממהרים. נותנים לשוק להראות את הטווח."]},
+ {g:"יסודות",t:"שעות (שעון ישראל)",b:[
+  "אסיה 02:00–06:00 · זהב וצמדי ין.",
+  "לונדון 08:00–12:00 · 09:00 פרנקפורט, 10:00 לונדון. לרוב כאן המלכודת.",
+  "ניו יורק 14:00–18:00 · 15:30 נתונים · 16:30 פתיחת המניות — המהלך הגדול במדדים.",
+  "12:00–14:00 ואחרי 18:00 — לא מחפשים עסקאות.",
+  "תחילת נר 15 דק', שעה, 4 שעות, יום ושבוע חשובה בדיוק כמו המחיר."]},
+ {g:"יסודות",t:"מודדים: רמות תנועה ואזור פגיעה",b:[
+  "שלוש רמות עלייה/ירידה (ספר): מטבעות 75·150·250 · זהב 150·250·300 · מדדים 250·500·750.",
+  "ביומי: רמה אחת ≈ 16% מה-ATR היומי (NQ ≈ 75 נק').",
+  "אדום ראשון: מהנמוך של היום מודדים 2–3 רמות למעלה → שם מחפשים מכירה.",
+  "ירוק ראשון: מהגבוה של היום מודדים 2–3 רמות למטה → שם מחפשים קנייה.",
+  "האזור הכי חזק כשהמדידה פוגשת רמה אמיתית. אם עבר אותו בסגירות חזקות — מודדים מחדש."]},
+
+ /* ── הסטאפים ── */
+ {g:"הסטאפים",t:"איזה סטאפ היום?",b:[
+  "חדשות אדומות בסשן? → רק היקפצות ראשונה, אחרי ההודעה.",
+  "אתמול FOMC או חדשות גדולות? → יום שני אחרי חדשות.",
+  "פורצים נלכדו 3 ימים ברצף? → היפוך יום 3 (בנמוך השבוע/חודש: סחיטת שורטים).",
+  "פאמפ ואז סגירה מתחת לפתיחה? → אדום ראשון. דאמפ ואז מעל? → ירוק ראשון.",
+  "אתמול כולו בתוך שלשום? → יום פנימי.",
+  "3 ימים של מלבן? → מגמה פרבולית. התנועה כבר יצאה בסשן הקודם? → פרי נמוך.",
+  "אף אחד לא מתאים → אין עסקה. זה ביצוע מושלם."]},
+ {g:"הסטאפים",t:"היפוך יום 3",b:[
+  "זיהוי: פעם שלישית ברצף שהמחיר עובר גבוה/נמוך יומי, ליד HOW/LOW/HOM.",
+  "כניסה: הפריצה נתקעת → נר 15 דק' בולע חזרה פנימה → סגירת 5 דק' מעבר ל-EMA.",
+  "סטופ: מעבר לשיא של יום 3.",
+  "יעד: 50 פיפס / הצד השני של היום. בגדולים — הצד השני של השבוע.",
+  "לוותר אם: זה רק יום 1, או שהפריצה מחזיקה בסגירות."]},
+ {g:"הסטאפים",t:"יום אדום ראשון — מכירה",b:[
+  "זיהוי: יום פאמפ → יום שסוגר מתחת לפתיחה, עם מלבן לקראת הסגירה.",
+  "כניסה ביום 3: מהגבוה של היום/הסשן, באזור הפגיעה. נר 5 דק' יורד סוגר מתחת ל-EMA.",
+  "שני מצבים: קפיצה למעלה ונכשלת — או שבירה למטה ואז תיקון. בשניהם נכנסים בתיקון, לא ברדיפה.",
+  "סטופ: מעל שיא התבנית. יעד: 50 · מהלך מדוד 100+.",
+  "צריך לזוז מהר. אם תקוע — לסגור."]},
+ {g:"הסטאפים",t:"יום ירוק ראשון — קנייה",b:[
+  "זיהוי: יום דאמפ → יום שסוגר מעל הפתיחה, עם מלבן לקראת הסגירה.",
+  "כניסה ביום 3: מהנמוך של היום/הסשן, באזור הפגיעה, אחרי ציד סטופים מתחת לנמוך.",
+  "הטריגר: בליעה של נרות הדובי הנמוכים + סגירת 5 דק' מעל ה-EMA.",
+  "סטופ: מתחת לשפל התבנית. יעד: 50 · מהלך מדוד 100+.",
+  "לוותר אם: השבירה למטה ממשיכה בסגירות חזקות מעבר לאזור."]},
+ {g:"הסטאפים",t:"יום פנימי",b:[
+  "זיהוי: כל הטווח של אתמול בתוך הטווח של שלשום.",
+  "פריצה כוזבת: צד אחד נפרץ ונסגר חזרה פנימה → יעד הצד השני, שם הסטופים.",
+  "המשך מגמה: במגמה חזקה היום הפנימי הוא רק התכווצות → הולכים עם הפריצה.",
+  "יום פנימי כפול — נדיר, לפני תנועה חדה.",
+  "לפני CPI או FOMC — לא נוגעים."]},
+ {g:"הסטאפים",t:"שלושה סשנים / פרבולי סשני",b:[
+  "אותו רעיון של שלושה ימים, בתוך יום: לונדון וניו יורק עולים ~3 רמות ונתקעים.",
+  "הסשן הבא מוכר מהקופסה (או קונה, בהפוך). עסקת סשן, גודל קטן יותר.",
+  "יעד: ~50 / מהלך מדוד של הקופסה."]},
+ {g:"הסטאפים",t:"מגמה פרבולית (יום 0)",b:[
+  "זיהוי: שלושה ימים של דשדוש בונים מלבן ברור.",
+  "כניסה: אחרי פריצה חזקה מהמלבן — בתיקון הראשון שמחזיק, סגירת 5 דק' עם המגמה.",
+  "יעד: 100% מגובה המלבן מנקודת הפריצה.",
+  "לעולם לא נגד המגמה. מי שנלחם בזה — נשרף."]},
+ {g:"הסטאפים",t:"סחיטת שורטים",b:[
+  "זיהוי: שורטים של יום 3 נלכדים מתחת לנמוך השבוע/חודש, והיום נסגר חזרה מעליו.",
+  "המחיר זוחל חזרה למעלה ונכנס לדשדוש.",
+  "כניסה: בליעה בחלון לונדון/ניו יורק, סגירה מעל ה-EMA.",
+  "סטופ: מתחת לדשדוש. יעד: 50 עד 250+. אחד הגדולים."]},
+ {g:"הסטאפים",t:"פרי נמוך — המשך",b:[
+  "זיהוי: התנועה כבר פרצה בסשן הקודם ועדיין במגמה.",
+  "מחכים לתיקון של 15–30 דק' נגד המגמה, 25–50 פיפס מה-LOD/HOD (NQ ≈ 75–150).",
+  "כניסה: נתקע באזור → סגירת 5 דק' מעבר ל-EMA לכיוון המגמה.",
+  "יעד: 25–50. לרוב הרגל האחרונה — לוקחים ויוצאים.",
+  "זו העסקה כשפספסת את התנועה בלונדון."]},
+ {g:"הסטאפים",t:"היקפצות ראשונה — אחרי חדשות",b:[
+  "רק אם היה סטאפ על 15 דק' לפני ההודעה. בלי סטאפ — אין עסקה.",
+  "ההודעה זורקת את המחיר לכיוון הסטאפ. לא רודפים אחרי הנר.",
+  "15–30 דק' אחרי: כניסה בתיקון ל-20 EMA בגרף דקה, מעל הנמוך (שורט) / מתחת לגבוה (לונג).",
+  "סטופ: הסווינג האחרון. יעד: 50+. אם לא זז מיד — לחתוך."]},
+ {g:"הסטאפים",t:"יום שני אחרי חדשות",b:[
+  "למחרת FOMC או הודעה גדולה. יום החדשות נספר כיום 1.",
+  "המשך: יום החדשות פרץ רמה שבועית ונסגר בקיצון → ממשיכים איתו באסיה.",
+  "היפוך: ספייק דרך הגבוה, חזרה פנימה, קופסה קטנה לסגירה → מוכרים את ראש הקופסה.",
+  "יעד: 50+ / הנמוך או הגבוה של השבוע. חייב לזוז מיד."]},
+
+ /* ── ביצוע ── */
+ {g:"ביצוע",t:"מודל הכניסה",b:[
+  "הסטאפ על 15 דק'. הכניסה על 5 דק': סגירה חזרה מעבר ל-20 EMA בכיוון העסקה.",
+  "שיא → נתקע → סגירה מעבר ל-EMA. הרמה אומרת איפה להסתכל, הסגירה אומרת מתי.",
+  "סטופ (ספר): 15–20 מטבעות · 20–25 זהב, נפט ומדדים. סטופ ויעד נכנסים עם הפקודה.",
+  "יעד מינימום 50, ואז 75 · 100+. רוב הזמן סוגרים הכל.",
+  "עסקה טובה זזה כמעט מיד. אם לא — יוצאים לפני הסטופ."]},
+ {g:"ביצוע",t:"חדשות אדומות",b:[
+  "אף פעם לא בשוק כשיוצאת הודעה. גם עם סטופ — יכולה להיות החלקה גדולה.",
+  "אם כבר בפוזיציה לפני הודעה — נועלים או סוגרים.",
+  "אחרי ההודעה — רק היקפצות ראשונה."]},
+ {g:"ביצוע",t:"ניהול העסקה",b:[
+  "עסקת סשן (אמצע הטווח, יום 2) → לוקחים את היעד ויוצאים.",
+  "עסקה גדולה (קצה השבוע, שלושה ימים מלאים, לכודים של יום 3, תנועה מהירה) → חצי ביעד, השאר עם סטופ בכניסה.",
+  "מוסיפים רק לעסקה מנצחת, אחרי שבירת רמה ותיקון שמחזיק — ומזיזים את הסטופ של כולם.",
+  "לא מזיזים סטופ רחוק יותר. לא סוגרים מוקדם מפחד."]},
+ {g:"ביצוע",t:"הצ'קליסט לפני כל סשן",b:[
+  "סימנתי גבוה ונמוך של אתמול, השבוע והחודש.",
+  "ספרתי ימים — מי לכוד, לונגים או שורטים?",
+  "בדקתי חדשות אדומות בסשן שלי.",
+  "יש סטאפ ברור על 15 דק' — ואני יודע כניסה, סטופ ויעד.",
+  "אם אחד מהם חסר — אין עסקה."]},
+ {g:"ביצוע",t:"קיצורים",b:[
+  "HOW / LOW — גבוה ונמוך השבוע · HOM / LOM — של החודש","HOD / LOD — גבוה ונמוך היום","HOS / LOS — גבוה ונמוך הסשן",
+  "PFH / PFL — שיא ושפל של תבנית שיא","HB / LB — נר השור הגבוה / נר הדוב הנמוך","IB / ID — נר פנימי / יום פנימי",
+  "BIS — שבירת מבנה","FRD / FGD — יום אדום / ירוק ראשון","MRN — חדשות אדומות","OR / In B — טווח הפתיחה (שני) / איזון התחלתי (שני–שלישי)",
+  "PnD / DnP — פאמפ ודאמפ / דאמפ ופאמפ","LHF — פרי נמוך","FB — פריצה כוזבת"]}];
 
 /* ═════════ THEMES ═════════ */
 const THEMES={
@@ -414,7 +532,12 @@ const hhmm=m=>String(Math.floor(m/60)%24).padStart(2,"0")+":"+String(m%60).padSt
 const emptyDay=()=>({cycleDay:0,bias:"",dayType:"",prep:{},levels:{},urges:[],note:""});
 const money=n=>"$"+(Math.round(n*100)/100).toLocaleString("en-US",{maximumFractionDigits:2});
 function loadLS(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb}catch(e){return fb}}
-function saveLS(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.error(e)}}
+let _saveWarned=false;
+function saveLS(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}
+  catch(e){console.error(e);
+    if(!_saveWarned){_saveWarned=true;
+      try{alert("השמירה נכשלה — אין מספיק מקום בזיכרון. הסר צילומי מסך ישנים וגבה את הנתונים.")}catch(x){}}
+    return false}}
 
 const _ls=loadLS(K.s,{});
 const S={
@@ -494,9 +617,9 @@ function dial(){
      ${todayEvents().filter(function(e){return e.impact!=="low"}).map(function(e){
         const a=(evMin(e)/1440)*Math.PI,r1=R-10,r2=R+10;
         const col=e.impact==="high"?T.clay:T.acc;
-        return `<line x1="${"${(CX+r1*Math.cos(a)).toFixed(1)}"}" y1="${"${(CY-r1*Math.sin(a)).toFixed(1)}"}"
-          x2="${"${(CX+r2*Math.cos(a)).toFixed(1)}"}" y2="${"${(CY-r2*Math.sin(a)).toFixed(1)}"}"
-          stroke="${"${col}"}" stroke-width="2" opacity=".95"/>`}).join("")}
+        return `<line x1="${(CX+r1*Math.cos(a)).toFixed(1)}" y1="${(CY-r1*Math.sin(a)).toFixed(1)}"
+          x2="${(CX+r2*Math.cos(a)).toFixed(1)}" y2="${(CY-r2*Math.sin(a)).toFixed(1)}"
+          stroke="${col}" stroke-width="2" opacity=".95"/>`}).join("")}
      <line x1="${nx.toFixed(1)}" y1="${ny.toFixed(1)}" x2="${(np[0]).toFixed(1)}" y2="${(np[1]).toFixed(1)}"
        stroke="${T.accHi}" stroke-width="2.4" stroke-linecap="round"/>
      <circle cx="${np[0].toFixed(1)}" cy="${np[1].toFixed(1)}" r="9" fill="${T.acc}" opacity=".22"/>
@@ -553,7 +676,7 @@ function viewToday(){
   const left=Math.max(0,S.settings.dailyLimit-used);
   const PREP=[["pd","סימנתי את הגבוה והנמוך של אתמול","PDH / PDL"],
    ["pw","סימנתי את הגבוה והנמוך של השבוע","HOW / LOW"],
-   ["signal","קבעתי איזה סוג יום אות היה אתמול","אדום ראשון / ירוק ראשון / פנימי / פריצה"],
+   ["signal","קבעתי איזה סוג יום אות היה אתמול","פאמפ / דאמפ / אדום ראשון / ירוק ראשון / פנימי / פריצת יום 1–3 / חדשות"],
    ["news","בדקתי חדשות אדומות בסשן שלי","אין כניסה לפני הודעה"],
    ["plan","כתבתי מה בדיוק יגרום לי להיכנס","אם זה לא כתוב, זה לא סטאפ"]];
   const pn=PREP.filter(x=>d.prep[x[0]]).length;
@@ -631,7 +754,7 @@ function viewToday(){
         return `<div class="${isT?"on":""}">
           <b>${["א","ב","ג","ד","ה","ו","ש"][new Date(k).getDay()]}</b>
           <span>${new Date(k).getDate()}</span>
-          <em>${dt?dt[1].replace("יום ","").slice(0,4):"—"}</em>
+          <em>${dt?(dt[2]||dt[1].replace("יום ","").slice(0,5)):"—"}</em>
           <u style="color:${!has?"var(--faint)":p>=0?"var(--sage)":"var(--clay)"}">${has?signed(p):"·"}</u>
         </div>`}).join("")}</div>
       <div style="margin:16px 0"><div class="hair"></div></div>
@@ -684,7 +807,8 @@ function gateDefaults(){
     dir:(d.bias==="long"||d.bias==="short")?d.bias:(last?last.dir:"long"),
     setup:"", session:sess?sess.label:(last?last.session:""),
     date:today(), time:new Date().toTimeString().slice(0,5),
-    entry:"", stopP:last&&last.stopP?last.stopP:"", tpP:last&&last.tpP?last.tpP:""};
+    entry:"", stopP:last&&last.stopP?last.stopP:"", tpP:last&&last.tpP?last.tpP:"",
+    dayType:d.dayType||"", cycleDay:d.cycleDay||0, imgs:[]};
   S.gateChecks={};
 }
 
@@ -732,9 +856,13 @@ function viewGate(){
        <div class="chips" style="margin-bottom:22px">
          ${chip("לונג",f.dir==="long","gf-dir","long","sage")}${chip("שורט",f.dir==="short","gf-dir","short","clay")}</div>
        <div class="lbl">מכשיר</div>
-       <div class="chips" style="margin-bottom:22px">${["MGC","GC","XAUUSD","MNQ","NQ","MES","YM","WTI"].map(x=>chip(x,f.instrument===x,"gf-instrument",x,"sm")).join("")}</div>
+       <div class="chips" style="margin-bottom:22px">${INSTR.map(x=>chip(x,f.instrument===x,"gf-instrument",x,"sm")).join("")}</div>
        <div class="lbl">סשן</div>
        <div class="chips" style="margin-bottom:22px">${SESSIONS.map(s=>chip(s.label,f.session===s.label,"gf-session",s.label,"sm")).join("")}</div>
+       <div class="lbl">יום האות (מה היה אתמול)</div>
+       <div class="chips" style="margin-bottom:22px">${DAY_TYPES.map(([v,l])=>chip(l,f.dayType===v,"gf-dayType",v,"sm")).join("")}</div>
+       <div class="lbl">יום במחזור</div>
+       <div class="chips" style="margin-bottom:22px">${[1,2,3].map(x=>chip("יום "+x,+f.cycleDay===x,"gf-cycleDay",x,"sm")).join("")}</div>
 
        <div class="hair"></div>
        <div class="lbl" style="margin-top:18px">מתי</div>
@@ -755,6 +883,8 @@ function viewGate(){
        </div>
        <div id="rrLine" class="rr ${rrOf(f)?(rrOf(f)>=2?"good":rrOf(f)>=1.5?"mid":"bad"):""}">
          ${rrOf(f)?"יחס סיכוי־סיכון 1 : "+rrOf(f).toFixed(2).replace(/\.00$/,""):"הזן סטופ וטייק כדי לראות את היחס"}</div>
+       <div class="lbl" style="margin-top:20px">צילום מסך של הגרף (לא חובה)</div>
+       ${shotStrip(f.imgs,"gate")}
      </div></div>
 
    <div class="panel p5" style="padding-top:14px;padding-bottom:14px">
@@ -788,7 +918,7 @@ function viewJournal(){
     if(!q)return true;
     const su2=SETUPS.find(function(x){return x.id===t.setup});
     const tg2=TAGS.find(function(x){return x[0]===t.tag});
-    return [t.instrument,t.session,t.note,su2?su2.he:"",tg2?tg2[1]:"",t.date,
+    return [t.instrument,t.session,t.note,su2?su2.he:"",tg2?tg2[1]:"",t.date,dtName(t.dayType),
       t.dir==="long"?"לונג":"שורט"].join(" ").toLowerCase().indexOf(q)>-1;
   });
 
@@ -798,19 +928,22 @@ function viewJournal(){
    ${openN&&!q?`<div class="pill" style="border-color:var(--brassDeep);color:var(--brass);align-self:flex-start">
      ${openN} עסקאות עוד לא נסגרו</div>`:""}
    ${q?`<div style="font-size:11.5px;color:var(--faint);padding:0 4px">${list.length} תוצאות</div>`:""}
-   ${list.slice().reverse().map(t=>{
+   ${list.slice().sort(function(a,b){const ka=(a.date||"")+(a.time||""),kb=(b.date||"")+(b.time||"");
+       return ka===kb?b.id-a.id:(kb>ka?1:-1)}).map(t=>{
     const tag=TAGS.find(x=>x[0]===t.tag),su=SETUPS.find(s=>s.id===t.setup),op=S.openTrade===t.id;
     const isOpen=!isClosed(t);
-    return `<div class="panel tcard ${isOpen?"":(pnlOf(t)>=0?"win":"loss")}" style="padding:17px">
+    return `<div data-k="t${t.id}" class="panel tcard ${isOpen?"":(pnlOf(t)>=0?"win":"loss")}" style="padding:17px">
       <button style="width:100%" data-act="openTrade" data-arg="${t.id}">
         <div class="row" style="align-items:flex-start">
           <div style="flex:1">
             <div style="font-size:14.5px;color:var(--bright)">${esc(t.instrument)}
               <span style="color:var(--${t.dir==="long"?"sage":"clay"})">· ${t.dir==="long"?"לונג":"שורט"}</span></div>
             <div style="font-size:12px;color:var(--muted);margin-top:5px">${esc(su?su.he:t.setup)}${t.session?" · "+esc(t.session):""}</div>
+            ${(t.dayType||t.cycleDay)?`<div style="font-size:11.5px;color:var(--faint);margin-top:3px">
+              ${esc([dtName(t.dayType),t.cycleDay?"יום "+t.cycleDay+" במחזור":""].filter(Boolean).join(" · "))}</div>`:""}
             ${(t.entry||t.rr)?`<div style="font-size:11.5px;color:var(--faint);margin-top:3px">
               ${t.entry?"כניסה "+esc(t.entry):""}${t.entry&&t.rr?" · ":""}${t.rr?"יחס 1:"+(+t.rr).toFixed(2).replace(/\.00$/,""):""}</div>`:""}
-            <div style="font-size:11.5px;color:var(--faint);margin-top:3px">${heDate(t.date)} · ${esc(t.time)}
+            <div style="font-size:11.5px;color:var(--faint);margin-top:3px">${heDate(t.date)} · ${esc(t.time)}${(t.imgs||[]).length?` · <span style="color:var(--brass)">${t.imgs.length} צילומים</span>`:""}
               ${t.unchecked?' <span style="color:var(--clay)">· בלי בדיקה מלאה</span>':""}</div></div>
           <div style="text-align:left;flex-shrink:0">
             ${isOpen?`<span class="pill" style="border-color:var(--brassDeep);color:var(--brass)">פתוחה</span>`
@@ -831,16 +964,143 @@ function viewJournal(){
           <button class="btn" style="color:var(--sage);border-color:var(--sage)" data-act="setPnl" data-arg="${t.id}|1">רווח</button>
           <button class="btn" style="color:var(--clay);border-color:var(--clay)" data-act="setPnl" data-arg="${t.id}|-1">הפסד</button>
         </div>`:""}
+        ${editBlock(t)}
         <div class="lbl">איך זה נראה בדיעבד</div>
         <div class="chips" style="margin-bottom:22px">${TAGS.map(x=>chip(x[1],t.tag===x[0],"setTag",t.id+"|"+x[0],"sm "+x[2])).join("")}</div>
         <div class="lbl">הערה</div>
         <textarea rows="3" placeholder="מה קרה, ומה הרגשתי לפני הכניסה" data-model="note" data-arg="${t.id}">${esc(t.note||"")}</textarea>
-        <div class="lbl" style="margin-top:18px">צילום מסך</div>
-        ${t.img?`<img src="${t.img}" class="shot" alt="">
-          <button class="btn" style="margin-top:10px" data-act="delImg" data-arg="${t.id}">הסר תמונה</button>`
-        :`<button class="btn" data-act="addImg" data-arg="${t.id}">צרף צילום מהגרף</button>`}
-        <button class="btn danger" style="margin-top:16px" data-act="delTrade" data-arg="${t.id}">מחק</button>
+        <div class="lbl" style="margin-top:18px">צילומי מסך</div>
+        ${shotStrip(t.imgs,t.id)}
+        <button class="btn danger" style="margin-top:16px${S.confirmDel==="t"+t.id?";border-color:var(--clay)":""}" data-act="delTrade" data-arg="${t.id}">
+          ${S.confirmDel==="t"+t.id?"בטוח? לחץ שוב כדי למחוק":"מחק"}</button>
       </div></div>`:""}</div>`}).join("")}</div>`;
+}
+
+function editBlock(t){
+  if(S.editTrade!==t.id) return `<button class="btn outline" style="margin-bottom:22px;font-size:12.5px"
+    data-act="editTrade" data-arg="${t.id}">✎ ערוך את פרטי העסקה</button>`;
+  const a=t.id+"|";
+  return `<div class="picker drawer" style="margin-bottom:22px">
+    <div style="font-size:14px;color:var(--bright);margin-bottom:14px">עריכת העסקה</div>
+    <div class="lbl">הסטאפ</div>
+    <div class="chips" style="margin-bottom:18px">${SETUPS.map(s=>chip(s.he,t.setup===s.id,"te",a+"setup|"+s.id,"sm")).join("")}</div>
+    <div class="lbl">כיוון</div>
+    <div class="chips" style="margin-bottom:18px">${chip("לונג",t.dir==="long","te",a+"dir|long","sage")}${chip("שורט",t.dir==="short","te",a+"dir|short","clay")}</div>
+    <div class="lbl">מכשיר</div>
+    <div class="chips" style="margin-bottom:18px">${INSTR.map(x=>chip(x,t.instrument===x,"te",a+"instrument|"+x,"sm")).join("")}</div>
+    <div class="lbl">סשן</div>
+    <div class="chips" style="margin-bottom:18px">${SESSIONS.map(s=>chip(s.label,t.session===s.label,"te",a+"session|"+s.label,"sm")).join("")}</div>
+    <div class="lbl">יום האות</div>
+    <div class="chips" style="margin-bottom:18px">${DAY_TYPES.map(([v,l])=>chip(l,t.dayType===v,"te",a+"dayType|"+v,"sm")).join("")}</div>
+    <div class="lbl">יום במחזור</div>
+    <div class="chips" style="margin-bottom:18px">${[1,2,3].map(x=>chip("יום "+x,+t.cycleDay===x,"te",a+"cycleDay|"+x,"sm")).join("")}</div>
+    <div class="grid2">
+      <div><div class="lbl">תאריך</div><input type="date" value="${esc(t.date)}" data-model="te" data-arg="${a}date"></div>
+      <div><div class="lbl">שעה</div><input type="time" value="${esc(t.time||"")}" data-model="te" data-arg="${a}time"></div></div>
+    <div class="lbl" style="margin-top:14px">מחיר כניסה</div>
+    <input inputmode="decimal" value="${esc(t.entry||"")}" placeholder="—" data-model="te" data-arg="${a}entry">
+    <div class="grid2" style="margin-top:14px">
+      <div><div class="lbl">סטופ (פיפס)</div><input inputmode="decimal" value="${esc(t.stopP||"")}" placeholder="—" data-model="te" data-arg="${a}stopP"></div>
+      <div><div class="lbl">טייק פרופיט (פיפס)</div><input inputmode="decimal" value="${esc(t.tpP||"")}" placeholder="—" data-model="te" data-arg="${a}tpP"></div></div>
+    <div class="lbl" style="margin-top:16px">עברתי את הצ'קליסט לפני הכניסה</div>
+    <div class="chips">${chip("כן",!t.unchecked,"te",a+"unchecked|0","sm sage")}${chip("לא",!!t.unchecked,"te",a+"unchecked|1","sm clay")}</div>
+    <button class="btn brass" style="margin-top:18px" data-act="editDone">סיום עריכה</button>
+  </div>`;
+}
+
+/* ═════ SCREENSHOTS — stored in IndexedDB, not localStorage ═════ */
+const IMG={cache:{},pending:{},db:null};
+function idb(){
+  if(IMG.db)return IMG.db;
+  IMG.db=new Promise(function(res,rej){
+    if(!window.indexedDB){rej(new Error("no idb"));return}
+    const r=indexedDB.open("sadna-img",1);
+    r.onupgradeneeded=function(){r.result.createObjectStore("imgs")};
+    r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)}});
+  return IMG.db;
+}
+function idbTx(mode,fn){return idb().then(function(db){return new Promise(function(res,rej){
+  const tx=db.transaction("imgs",mode),st=tx.objectStore("imgs"),out=fn(st);
+  tx.oncomplete=function(){res(out&&"result" in out?out.result:undefined)};
+  tx.onerror=function(){rej(tx.error)};tx.onabort=function(){rej(tx.error)}})})}
+const imgPut=(id,v)=>idbTx("readwrite",st=>st.put(v,id));
+const imgGet=id=>idbTx("readonly",st=>st.get(id));
+const imgDel=id=>idbTx("readwrite",st=>st.delete(id));
+const imgKeys=()=>idbTx("readonly",st=>st.getAllKeys());
+function imgAll(){return idb().then(function(db){return new Promise(function(res,rej){
+  const tx=db.transaction("imgs","readonly"),st=tx.objectStore("imgs"),out={};
+  const rq=st.openCursor();rq.onsuccess=function(){const c=rq.result;if(c){out[c.key]=c.value;c.continue()}};
+  tx.oncomplete=function(){res(out)};tx.onerror=function(){rej(tx.error)}})})}
+let _rt=null;
+function schedRender(){clearTimeout(_rt);_rt=setTimeout(function(){render()},40)}
+function imgSrc(id){
+  if(IMG.cache[id])return IMG.cache[id];
+  if(!IMG.pending[id]){IMG.pending[id]=1;
+    imgGet(id).then(function(v){if(v){IMG.cache[id]=v;schedRender()}}).catch(function(){})}
+  return "";
+}
+function compressImg(file){return new Promise(function(res,rej){
+  const fr=new FileReader();
+  fr.onload=function(){const im=new Image();
+    im.onload=function(){
+      const max=1600,sc=Math.min(1,max/Math.max(im.width,im.height));
+      const cv=document.createElement("canvas");cv.width=Math.round(im.width*sc);cv.height=Math.round(im.height*sc);
+      const cx=cv.getContext("2d");cx.fillStyle="#000";cx.fillRect(0,0,cv.width,cv.height);
+      cx.drawImage(im,0,0,cv.width,cv.height);res(cv.toDataURL("image/jpeg",0.8))};
+    im.onerror=function(){rej(new Error("bad image"))};im.src=fr.result};
+  fr.onerror=function(){rej(fr.error)};fr.readAsDataURL(file)})}
+function shotList(tgt){
+  if(tgt==="gate")return S.gateForm.imgs||(S.gateForm.imgs=[]);
+  const t=S.trades.find(x=>x.id===+tgt);if(!t)return null;
+  return t.imgs||(t.imgs=[]);
+}
+function addImages(files,tgt){
+  files=Array.from(files||[]).filter(f=>/^image\//.test(f.type||"image/"));
+  if(!files.length)return;
+  S.shotBusy=tgt;render();
+  files.reduce(function(pr,f){return pr.then(function(){
+    return compressImg(f).then(function(data){
+      const id="i"+Date.now()+Math.random().toString(36).slice(2,6);
+      return imgPut(id,data).then(function(){
+        IMG.cache[id]=data;const L=shotList(tgt);if(L)L.push(id);
+        if(tgt!=="gate")persist.t()})})})},Promise.resolve())
+  .catch(function(){try{alert("לא הצלחתי לשמור את הצילום. נסה שוב או פנה מקום במכשיר.")}catch(e){}})
+  .then(function(){S.shotBusy=null;render()});
+}
+function pickImages(tgt){
+  const inp=document.createElement("input");inp.type="file";inp.accept="image/*";inp.multiple=true;
+  inp.onchange=function(){addImages(inp.files,tgt)};inp.click();
+}
+const CAM='<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+function shotStrip(ids,tgt){
+  const busy=String(S.shotBusy)===String(tgt);
+  return `<div class="shots">${(ids||[]).map(function(id){const src=imgSrc(id),w=S.confirmDel==="s"+id;
+      return `<div class="shot-th" data-k="s${id}">
+        <button class="shot-img" data-act="viewImg" data-arg="${tgt}|${id}">${src?`<img src="${src}" alt="">`:`<span class="shot-ld"></span>`}</button>
+        <button class="shot-x ${w?"warn":""}" data-act="delShot" data-arg="${tgt}|${id}">${w?"למחוק?":"✕"}</button></div>`}).join("")}
+    <button class="shot-add ${busy?"busy":""}" data-act="addShot" data-arg="${tgt}">${CAM}${busy?"שומר…":"הוסף צילום"}</button>
+  </div>`;
+}
+function renderViewer(){
+  const h=$("#imgHost");if(!h)return;
+  if(!S.view){if(h.firstChild)h.innerHTML="";return}
+  const v=S.view,i=v.list.indexOf(v.id),src=imgSrc(v.id);
+  patch(h,`<div id="viewer" class="${v.zoom?"zoom":""}">
+    <div class="vbar"><button data-act="vClose">✕ סגור</button>
+      <span>${v.list.length>1?(i+1)+" / "+v.list.length:""}</span>
+      <button data-act="vZoom">${v.zoom?"התאם למסך":"הגדל"}</button></div>
+    <div class="vscroll">${src?`<img src="${src}" data-act="vZoom" alt="">`:`<span class="shot-ld" style="width:60%;height:40%"></span>`}</div>
+    ${v.list.length>1?`<button class="vnav vprev" data-act="vStep" data-arg="-1">›</button><button class="vnav vnext" data-act="vStep" data-arg="1">‹</button>`:""}
+  </div>`);
+}
+function migrateImgs(){
+  const legacy=S.trades.filter(t=>t.img);
+  const done=legacy.length?Promise.all(legacy.map(function(t){return imgPut("i"+t.id+"m",t.img)})).then(function(){
+      legacy.forEach(function(t){const id="i"+t.id+"m";IMG.cache[id]=t.img;t.imgs=(t.imgs||[]).concat([id]);delete t.img});
+      persist.t();render()}):Promise.resolve();
+  done.then(function(){return imgKeys()}).then(function(keys){
+    const used={};S.trades.forEach(function(t){(t.imgs||[]).forEach(function(i){used[i]=1})});
+    (keys||[]).forEach(function(k){if(!used[k])imgDel(k)})}).catch(function(){});
 }
 
 /* NUMBERS */
@@ -1044,7 +1304,8 @@ function viewNumbers(){
      };
      return block("לפי סשן",grp(function(t){return t.session||null}),function(k){return k})
        + block("לפי שעה",grp(function(t){return t.time?t.time.slice(0,2)+":00":null}),function(k){return k})
-       + block("לפי יום במחזור",grp(function(t){return t.cycleDay?"יום "+t.cycleDay:null}),function(k){return k});
+       + block("לפי יום במחזור",grp(function(t){return t.cycleDay?"יום "+t.cycleDay:null}),function(k){return k})
+       + block("לפי יום אות",grp(function(t){return t.dayType||null}),function(k){return dtName(k)||k});
    })():""}
 
    ${(function(){
@@ -1147,7 +1408,7 @@ function viewAccounts(){
   const bottom=payAll-expAll, bottomM=payM-expM;
   const moves=S.exp.map(x=>Object.assign({},x,{kind:"exp"}))
     .concat(S.pay.map(x=>Object.assign({},x,{kind:"pay"})))
-    .sort((a,b)=>b.id-a.id).slice(0,25);
+    .sort((a,b)=>a.date===b.date?b.id-a.id:(b.date>a.date?1:-1));
   const byCat={};S.exp.forEach(x=>{byCat[x.cat]=(byCat[x.cat]||0)+x.amount});
   const resetOpen=S.picker&&S.picker.row==="reset";
 
@@ -1207,6 +1468,8 @@ function viewAccounts(){
      <div class="panel p5">
        <div class="lbl">סכום ברוטו (לפני ניכויים)</div>
        <input id="payIn" inputmode="decimal" placeholder="0" oninput="previewNet()">
+       <div class="lbl" style="margin-top:14px">תאריך</div>
+       <input id="payDate" type="date" value="${today()}">
        <div id="netPrev" style="font-size:12.5px;color:var(--faint);line-height:1.9;margin-top:12px">
          ניכוי ${S.settings.splitPct}% ועמלת העברה של ${money(S.settings.wireFee)}</div>
        <button class="btn brass" style="margin-top:16px" data-act="addPay">הוסף תשלום</button>
@@ -1216,6 +1479,8 @@ function viewAccounts(){
      <div class="panel p5">
        <div class="lbl">סכום</div>
        <input id="expIn" inputmode="decimal" placeholder="0">
+       <div class="lbl" style="margin-top:14px">תאריך</div>
+       <input id="expDate" type="date" value="${today()}">
        <div class="lbl" style="margin-top:18px">סוג</div>
        <div class="chips">${EXP_CATS.map(e=>chip(e[1],S.expCat===e[0],"expCat",e[0],"sm")).join("")}</div>
        <button class="btn" style="margin-top:18px" data-act="addExp">הוסף הוצאה</button>
@@ -1230,19 +1495,7 @@ function viewAccounts(){
            <span style="font-family:var(--disp);font-weight:600;font-size:18px;color:var(--clay)">${money(e[1])}</span></div>`}).join("")}
      </div></div>`:""}
 
-   ${moves.length?`<div>${head("תנועות אחרונות")}
-     <div class="panel px5" style="padding-top:4px;padding-bottom:4px">
-       ${moves.map((x,i)=>{const cat=EXP_CATS.find(c=>c[0]===x.cat);
-         return (i?'<div class="hair"></div>':"")+`<div class="row" style="padding:13px 0">
-         <div><div style="font-size:13.5px;color:var(--ink)">
-           ${x.kind==="pay"?"תשלום":esc(cat?cat[1]:x.cat)}${x.size?" · "+x.size+"K":""}</div>
-           <div style="font-size:11.5px;color:var(--faint);margin-top:2px">${heDate(x.date)}${x.kind==="pay"?" · ברוטו "+money(x.gross):""}</div></div>
-         <span style="display:flex;align-items:center;gap:12px">
-           <span style="font-family:var(--disp);font-weight:600;font-size:18px;color:${x.kind==="pay"?"var(--sage)":"var(--clay)"}">
-             ${x.kind==="pay"?"+":"−"}${money(x.kind==="pay"?x.net:x.amount)}</span>
-           <button style="font-size:11.5px;color:var(--faint)" data-act="delMove" data-arg="${x.kind}|${x.id}">הסר</button>
-         </span></div>`}).join("")}
-     </div></div>`:""}
+   ${movesHistory(moves)}
 
    <div>${head("מחירון","ניתן לעריכה")}
      <div class="panel p5">
@@ -1268,6 +1521,96 @@ function viewAccounts(){
          <input type="number" style="width:82px;text-align:center" value="${S.settings.wireFee}" data-model="wire"></div>
      </div></div>
   </div>`;
+}
+
+function monthLabel(mk){
+  if(!mk)return "ללא תאריך";
+  const a=mk.split("-");
+  return ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"][+a[1]-1]+" "+a[0];
+}
+function movesHistory(all){
+  if(!all.length) return "";
+  const F=S.mf||(S.mf={type:"all",month:"all",cat:"all",q:""});
+  const months=Array.from(new Set(all.map(x=>(x.date||"").slice(0,7)).filter(Boolean))).sort().reverse();
+  const q=(F.q||"").trim().toLowerCase();
+  const list=all.filter(function(x){
+    if(F.type!=="all"&&x.kind!==F.type)return false;
+    if(F.month!=="all"&&(x.date||"").slice(0,7)!==F.month)return false;
+    if(F.cat!=="all"&&(x.kind!=="exp"||x.cat!==F.cat))return false;
+    if(q){const cat=EXP_CATS.find(c=>c[0]===x.cat);
+      const txt=[x.kind==="pay"?"תשלום הכנסה":"הוצאה",cat?cat[1]:"",x.size?x.size+"k":"",x.date,heDate(x.date),
+        x.kind==="pay"?(Math.round(x.net*100)/100)+" "+x.gross:x.amount].join(" ").toLowerCase();
+      if(txt.indexOf(q)<0)return false}
+    return true});
+  const inn=list.filter(x=>x.kind==="pay").reduce((s2,x)=>s2+x.net,0);
+  const out=list.filter(x=>x.kind==="exp").reduce((s2,x)=>s2+x.amount,0);
+  const lim=S.mLimit||30, shown=list.slice(0,lim);
+  const filtered=F.type!=="all"||F.month!=="all"||F.cat!=="all"||q;
+  let rows="",cur=null;
+  shown.forEach(function(x){
+    const mk=(x.date||"").slice(0,7);
+    if(mk!==cur){cur=mk;rows+=`<div data-k="mh${mk}" class="mhead">${monthLabel(mk)}</div>`}
+    const cat=EXP_CATS.find(c=>c[0]===x.cat);
+    const ek=x.kind+"|"+x.id,ed=S.editMove===ek;
+    rows+=`<div data-k="m${x.kind}${x.id}" class="mrowi${ed?" on":""}">
+      <div class="row" style="padding:12px 0">
+        <div><div style="font-size:13.5px;color:var(--ink)">
+          ${x.kind==="pay"?"תשלום":esc(cat?cat[1]:x.cat)}${x.size?" · "+esc(x.size)+"K":""}</div>
+          <div style="font-size:11.5px;color:var(--faint);margin-top:2px">${x.date?heDay(x.date)+" "+heDate(x.date):"—"}${x.kind==="pay"?" · ברוטו "+money(x.gross):""}</div></div>
+        <span style="display:flex;align-items:center;gap:12px">
+          <span style="font-family:var(--disp);font-weight:600;font-size:17px;color:${x.kind==="pay"?"var(--sage)":"var(--clay)"}">
+            ${x.kind==="pay"?"+":"−"}${money(x.kind==="pay"?x.net:x.amount)}</span>
+          <button class="chip sm ${ed?"on":""}" data-act="mvEdit" data-arg="${ek}">${ed?"סגור":"ערוך"}</button>
+        </span></div>${ed?moveEditor(x):""}</div>`;
+  });
+  return `<div>${head("היסטוריה מלאה",all.length+" רשומות")}
+    <div class="panel p5">
+      <div class="chips" style="margin-bottom:14px">
+        ${chip("הכל",F.type==="all","mf-type","all","sm")}${chip("הכנסות",F.type==="pay","mf-type","pay","sm sage")}${chip("הוצאות",F.type==="exp","mf-type","exp","sm clay")}</div>
+      <div class="mrow" style="margin-bottom:12px">${chip("כל החודשים",F.month==="all","mf-month","all","sm")}${months.map(mk=>chip(monthLabel(mk),F.month===mk,"mf-month",mk,"sm")).join("")}</div>
+      ${F.type!=="pay"?`<div class="mrow" style="margin-bottom:12px">${chip("כל הסוגים",F.cat==="all","mf-cat","all","sm")}${EXP_CATS.map(c=>chip(c[1],F.cat===c[0],"mf-cat",c[0],"sm")).join("")}</div>`:""}
+      <input id="mq" data-model="mq" value="${esc(F.q||"")}" placeholder="חיפוש — סכום, סוג או תאריך">
+      <div class="strip" style="margin:14px 0 0">
+        <div><b>${list.length}</b><span>רשומות</span></div>
+        <div><b style="color:var(--sage)">${money(inn)}</b><span>הכנסות נטו</span></div>
+        <div><b style="color:var(--clay)">${money(out)}</b><span>הוצאות</span></div>
+      </div>
+      ${filtered?`<button style="font-size:12px;color:var(--brass);margin-top:12px" data-act="mfClear">נקה סינון ✕</button>`:""}
+    </div>
+    <div class="panel px5" style="margin-top:10px;padding-top:2px;padding-bottom:6px">
+      ${list.length?rows:`<div style="padding:18px 0;font-size:13px;color:var(--muted)">אין רשומות שמתאימות לסינון.</div>`}
+    </div>
+    ${list.length>lim?`<button class="btn" style="margin-top:10px;font-size:12.5px" data-act="mMore">הצג עוד (${list.length-lim} נוספות)</button>`:""}
+  </div>`;
+}
+
+function moveEditor(x){
+  const e=S.mv||{};
+  const btns=`<div style="display:flex;gap:8px;margin-top:16px">
+      <button class="btn brass" data-act="mvSave">שמור</button>
+      <button class="btn" data-act="mvCancel">ביטול</button></div>
+    <button class="btn danger" style="margin-top:10px${S.confirmDel===x.kind+x.id?";border-color:var(--clay)":""}" data-act="delMove" data-arg="${x.kind}|${x.id}">
+      ${S.confirmDel===x.kind+x.id?"בטוח? לחץ שוב כדי למחוק":"מחק את התנועה"}</button>`;
+  if(x.kind==="pay") return `<div class="picker drawer" style="margin:2px 0 14px">
+    <div style="font-size:14px;color:var(--bright);margin-bottom:14px">עריכת תשלום</div>
+    <div class="lbl">תאריך</div>
+    <input type="date" value="${esc(e.date)}" data-model="mv" data-arg="date">
+    <div class="grid2" style="margin-top:14px">
+      <div><div class="lbl">ברוטו</div><input inputmode="decimal" value="${esc(e.gross)}" data-model="mv" data-arg="gross"></div>
+      <div><div class="lbl">נטו שהתקבל</div><input id="mvNet" inputmode="decimal" value="${esc(e.net)}" data-model="mv" data-arg="net"></div></div>
+    <div style="font-size:11.5px;color:var(--faint);line-height:1.7;margin-top:10px">
+      שינוי בברוטו מחשב את הנטו מחדש (${S.settings.splitPct}% ועמלה של ${money(S.settings.wireFee)}). אפשר לתקן את הנטו ידנית.</div>
+    ${btns}</div>`;
+  return `<div class="picker drawer" style="margin:2px 0 14px">
+    <div style="font-size:14px;color:var(--bright);margin-bottom:14px">עריכת הוצאה</div>
+    <div class="grid2">
+      <div><div class="lbl">תאריך</div><input type="date" value="${esc(e.date)}" data-model="mv" data-arg="date"></div>
+      <div><div class="lbl">סכום</div><input inputmode="decimal" value="${esc(e.amount)}" data-model="mv" data-arg="amount"></div></div>
+    <div class="lbl" style="margin-top:14px">סוג</div>
+    <div class="chips" style="margin-bottom:14px">${EXP_CATS.map(c=>chip(c[1],e.cat===c[0],"mvCat",c[0],"sm")).join("")}</div>
+    <div class="lbl">גודל תיק</div>
+    <div class="chips">${chip("ללא",!e.size,"mvSize","none","sm")}${S.settings.sizes.map(sz=>chip(sz+"K",+e.size===sz,"mvSize",sz,"sm")).join("")}</div>
+    ${btns}</div>`;
 }
 
 function addAcctExpense(size,unit){
@@ -1298,15 +1641,16 @@ function backupAge(){
 
 function viewPlaybook(){
   return `<div class="stack">
-   <div>${head("הפלייבוק","Stacey Burke")}
-     <div style="display:flex;flex-direction:column;gap:8px">${CARDS.map((c,i)=>`<div class="panel px5">
+   ${["יסודות","הסטאפים","ביצוע"].map(function(grp){
+     return `<div>${head(grp==="יסודות"?"הפלייבוק · יסודות":grp,grp==="יסודות"?"Stacey Burke":"")}
+     <div style="display:flex;flex-direction:column;gap:8px">${CARDS.map((c,i)=>c.g!==grp?"":`<div class="panel px5">
        <button style="width:100%;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:12px"
          data-act="card" data-arg="${i}">
          <span style="font-size:13.5px;color:${S.openCard===i?"var(--brass)":"var(--ink)"}">${esc(c.t)}</span>
          <span style="font-size:15px;color:var(--faint);flex-shrink:0;line-height:1">${S.openCard===i?"−":"+"}</span></button>
        ${S.openCard===i?`<div class="drawer" style="padding-bottom:18px"><div class="hair"></div>
          <div class="bullets" style="padding-top:16px">${c.b.map(x=>`<div><span class="dot"></span><p>${esc(x)}</p></div>`).join("")}</div>
-       </div>`:""}</div>`).join("")}</div></div>
+       </div>`:""}</div>`).join("")}</div></div>`}).join("")}
 
    <div>${head("הכללים שלי")}
      <div class="panel p5">
@@ -1392,7 +1736,7 @@ function renderWave(){
     :(done?"הגל עבר.":p<0.35?"הגל עולה. את החלק הזה אתה מכיר."
        :p<0.62?"זה השיא. מכאן הוא יורד.":"הוא כבר יורד. אתה עדיין כאן.");
   const cx=(p*W).toFixed(1),cy=(base-amp*Math.sin(Math.PI*p)).toFixed(1);
-  $("#waveHost").innerHTML=`<div id="wave"><div class="in" style="position:relative">
+  patch($("#waveHost"),`<div id="wave"><div class="in" style="position:relative">
     <div class="ring"></div>
     <div style="position:relative">
       <div style="text-align:center;color:var(--brass);font-size:14px;margin-bottom:6px">${title}</div>
@@ -1410,7 +1754,7 @@ function renderWave(){
           <button class="btn brass" data-act="resisted">עבר לי. לא נכנסתי</button>
           <button class="btn" data-act="proceed">הדחף נשאר — לבדיקת הסטאפ</button></div>`
         :`<button class="btn" data-act="closeWave">סגור</button>`}
-    </div></div></div>`;
+    </div></div></div>`);
 }
 
 function statusStrip(){
@@ -1656,25 +2000,69 @@ function evRow(e,compact){
 /* RENDER */
 const TABS=[["today","היום"],["gate","כניסה"],["journal","יומן"],["numbers","מספרים"],["news","חדשות"],["acct","תיקים"],["playbook","ספר"]];
 const VIEWS={today:viewToday,gate:viewGate,journal:viewJournal,numbers:viewNumbers,news:viewNews,acct:viewAccounts,playbook:viewPlaybook};
+/* ── DOM patching: update only what changed, so the page never jumps ── */
+function sameNode(a,b){
+  if(a.nodeType!==b.nodeType||a.nodeName!==b.nodeName)return false;
+  if(a.nodeType!==1)return true;
+  if((a.id||"")!==(b.id||""))return false;
+  const ka=a.getAttribute("data-k"),kb=b.getAttribute("data-k");
+  if(ka!==kb)return false;
+  if(a.nodeName==="INPUT"||a.nodeName==="TEXTAREA")
+    return a.getAttribute("type")===b.getAttribute("type")&&a.getAttribute("data-model")===b.getAttribute("data-model")
+      &&a.getAttribute("data-arg")===b.getAttribute("data-arg");
+  return true;
+}
+function morphEl(from,to){
+  const fa=from.attributes,ta=to.attributes;
+  for(let i=fa.length-1;i>=0;i--){const n=fa[i].name;if(!to.hasAttribute(n))from.removeAttribute(n)}
+  for(let i=0;i<ta.length;i++){const a=ta[i];if(from.getAttribute(a.name)!==a.value)from.setAttribute(a.name,a.value)}
+  const nn=from.nodeName;
+  if(nn==="INPUT"||nn==="TEXTAREA"){
+    if(document.activeElement!==from){
+      const v=nn==="TEXTAREA"?to.value:to.getAttribute("value");
+      if(v!=null&&from.value!==v)from.value=v;
+    }
+    if(nn==="TEXTAREA")return;
+  }
+  morphKids(from,to);
+}
+function morphKids(from,to){
+  let f=from.firstChild,t=to.firstChild;
+  while(t){
+    const next=t.nextSibling;
+    const key=t.nodeType===1?t.getAttribute("data-k"):null;
+    if(key){let m=f;while(m&&!(m.nodeType===1&&m.getAttribute("data-k")===key))m=m.nextSibling;
+      if(m){if(m!==f)from.insertBefore(m,f);morphEl(m,t);f=m.nextSibling;t=next;continue}}
+    if(!f){from.appendChild(t)}
+    else if(sameNode(f,t)){
+      if(f.nodeType===1)morphEl(f,t);else if(f.nodeValue!==t.nodeValue)f.nodeValue=t.nodeValue;
+      f=f.nextSibling}
+    else{from.replaceChild(t,f);f=t.nextSibling}
+    t=next;
+  }
+  while(f){const n=f.nextSibling;from.removeChild(f);f=n}
+}
+function patch(el,html){const tpl=document.createElement("div");tpl.innerHTML=html;morphKids(el,tpl)}
+
 function render(){
-  const y=window.pageYOffset||document.documentElement.scrollTop||0;
   const changed=S._lastTab!==S.tab;
   const app=$("#app");
-  if(!changed&&app.offsetHeight) app.style.minHeight=app.offsetHeight+"px";
   _hn=0;
-  app.innerHTML=statusStrip()+VIEWS[S.tab]();
-  if(changed){const st=app.querySelector&&app.querySelector(".stack");if(st)st.classList.add("anim")}
+  const html=statusStrip()+VIEWS[S.tab]();
+  if(changed){
+    app.innerHTML=html;
+    const st=app.querySelector&&app.querySelector(".stack");if(st)st.classList.add("anim");
+  } else patch(app,html);
   const i=TABS.findIndex(t=>t[0]===S.tab),w=100/TABS.length;
-  $("#nav").innerHTML=TABS.map(t=>`<button class="${S.tab===t[0]?"on":""}" data-act="tab" data-arg="${t[0]}">
+  patch($("#nav"),TABS.map(t=>`<button class="${S.tab===t[0]?"on":""}" data-act="tab" data-arg="${t[0]}">
       <svg viewBox="0 0 24 24">${ICONS[t[0]]}</svg>${t[1]}</button>`).join("")
-    +`<div class="ind" style="right:${i*w}%;width:${w}%"></div>`;
+    +`<div class="ind" style="right:${i*w}%;width:${w}%"></div>`);
   const c=$("#clock"); if(c) c.textContent=hhmm(mins());
   const g=$("#glow");
   if(g){const n=mins(),cur=SESSIONS.find(x=>n>=x.start&&n<=x.end);
     g.style.background=cur?({asia:T.glowA,london:T.glowL,ny:T.glowN,nypm:T.glowN})[cur.id]:T.line}
-  if(changed){S._lastTab=S.tab;window.scrollTo(0,0);app.style.minHeight=""}
-  else{window.scrollTo(0,y);
-    requestAnimationFrame(function(){window.scrollTo(0,y);app.style.minHeight=""})}
+  if(changed){S._lastTab=S.tab;window.scrollTo(0,0)}
+  if(S.view)renderViewer();
 }
 
 /* EVENTS */
@@ -1683,8 +2071,10 @@ document.addEventListener("click",function(e){
   const b=e.target.closest("[data-act]");if(!b)return;
   buzz(b.classList.contains("brass")?14:8);
   const act=b.dataset.act,arg=b.dataset.arg,d=day();
+  if(S.confirmDel&&act!=="delTrade"&&act!=="delMove"&&act!=="delShot")S.confirmDel=null;
   switch(act){
-    case "tab": S.tab=arg; S.picker=null; if(arg==="gate"){S.gateStep=1;gateDefaults()} render(); return;
+    case "tab": S.tab=arg; S.picker=null; S.editMove=null; S.mv=null; S.editTrade=null; S.openTrade=null;
+      if(arg==="gate"){S.gateStep=1;gateDefaults()} render(); return;
     case "prep": d.prep[arg]=!d.prep[arg]; persist.d(); render(); return;
     case "dayType": d.dayType=d.dayType===arg?"":arg; persist.d(); render(); return;
     case "cycle": d.cycleDay=d.cycleDay===+arg?0:+arg; persist.d(); render(); return;
@@ -1704,13 +2094,13 @@ document.addEventListener("click",function(e){
       S.trades.push({id:Date.now(),date:f.date||today(),time:f.time||new Date().toTimeString().slice(0,5),
         instrument:f.instrument,dir:f.dir,setup:f.setup,session:f.session,
         entry:f.entry||"",stopP:f.stopP||"",tpP:f.tpP||"",rr:rrOf(f),
-        cycleDay:d.cycleDay,dayType:d.dayType,tag:"a",r:null,note:"",
-        unchecked:CHECKS.some(c=>!S.gateChecks[c[0]])});
+        cycleDay:+f.cycleDay||0,dayType:f.dayType||"",tag:"a",r:null,note:"",
+        unchecked:CHECKS.some(c=>!S.gateChecks[c[0]]),imgs:(f.imgs||[]).slice()});
       persist.t(); gateDefaults(); S.gateStep=1; S.tab="journal"; render(); return}
     case "backfill": {gateDefaults();
       const y2=new Date();y2.setDate(y2.getDate()-1);
       S.gateForm.date=iso(y2);S.gateStep=2;S.tab="gate";S._lastTab=null;render();return}
-    case "openTrade": S.openTrade=S.openTrade===+arg?null:+arg; render(); return;
+    case "openTrade": S.openTrade=S.openTrade===+arg?null:+arg; S.editTrade=null; render(); return;
     case "setPnl": {const a2=arg.split("|"),t=S.trades.find(x=>x.id===+a2[0]);
       const el=document.getElementById("pnl-"+a2[0]); if(!t||!el)return;
       const v=Math.abs(parseFloat(el.value)); if(!(v>=0)||el.value===""){el.focus();return}
@@ -1718,28 +2108,26 @@ document.addEventListener("click",function(e){
       if(S.settings.coolOn!==false) openCool(t.pnl<0);
       return}
     case "setTag": {const a2=arg.split("|"),t=S.trades.find(x=>x.id===+a2[0]); if(t){t.tag=a2[1];persist.t()} render(); return}
-    case "delTrade": S.trades=S.trades.filter(x=>x.id!==+arg); persist.t(); S.openTrade=null; render(); return;
-    case "addImg": {const inp=document.createElement("input");inp.type="file";inp.accept="image/*";
-      inp.onchange=function(){const f=inp.files[0];if(!f)return;
-        const fr=new FileReader();
-        fr.onload=function(){const im=new Image();
-          im.onload=function(){
-            const max=1000,sc=Math.min(1,max/Math.max(im.width,im.height));
-            const cv=document.createElement("canvas");
-            cv.width=Math.round(im.width*sc);cv.height=Math.round(im.height*sc);
-            cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);
-            const t2=S.trades.find(function(x){return x.id===+arg});
-            if(t2){t2.img=cv.toDataURL("image/jpeg",0.6);
-              try{persist.t()}catch(err){alert("אין מספיק מקום בזיכרון המכשיר לתמונה")}
-              render()}};
-          im.src=fr.result};
-        fr.readAsDataURL(f)};
-      inp.click(); return}
-    case "delImg": {const t3=S.trades.find(x=>x.id===+arg);
-      if(t3){delete t3.img;persist.t()} render(); return}
+    case "delTrade": if(S.confirmDel!=="t"+arg){S.confirmDel="t"+arg;render();return}
+      S.confirmDel=null;
+      {const dt=S.trades.find(x=>x.id===+arg);(dt&&dt.imgs||[]).forEach(function(i){delete IMG.cache[i];imgDel(i).catch(function(){})})}
+      S.trades=S.trades.filter(x=>x.id!==+arg); persist.t(); S.openTrade=null; S.editTrade=null; render(); return;
+    case "addShot": if(!S.shotBusy)pickImages(arg); return;
+    case "delShot": {const a2=arg.split("|"),id=a2.slice(1).join("|");
+      if(S.confirmDel!=="s"+id){S.confirmDel="s"+id;render();return}
+      S.confirmDel=null;const L=shotList(a2[0]);
+      if(L){const k=L.indexOf(id);if(k>-1)L.splice(k,1)}
+      if(a2[0]!=="gate")persist.t();
+      delete IMG.cache[id];imgDel(id).catch(function(){});render();return}
+    case "viewImg": {const a2=arg.split("|"),id=a2.slice(1).join("|");
+      S.view={id:id,list:(shotList(a2[0])||[id]).slice(),zoom:false};renderViewer();return}
+    case "vClose": S.view=null; renderViewer(); return;
+    case "vZoom": if(S.view){S.view.zoom=!S.view.zoom;renderViewer()} return;
+    case "vStep": if(S.view){const L=S.view.list,i=L.indexOf(S.view.id);
+      S.view.id=L[(i+(+arg)+L.length)%L.length];S.view.zoom=false;renderViewer()} return;
     case "card": S.openCard=S.openCard===+arg?-1:+arg; render(); return;
     case "delRule": S.settings.rules.splice(+arg,1); persist.s(); render(); return;
-    case "addRule": {const v=$("#newRule").value.trim(); if(v){S.settings.rules.push(v);persist.s();render()} return}
+    case "addRule": {const v=$("#newRule").value.trim(); if(v){S.settings.rules.push(v);persist.s();$("#newRule").value="";render()} return}
     case "limit": S.settings.dailyLimit=+arg; persist.s(); render(); return;
     case "theme": S.settings.theme=arg; persist.s(); applyTheme(arg); render(); return;
     case "hm": S.hmCell=S.hmCell===arg?null:arg; render(); return;
@@ -1766,7 +2154,7 @@ document.addEventListener("click",function(e){
       const sz=+arg; addAcctExpense(sz,S.settings.prices[S.picker.kind][sz]||0); return}
     case "pickCustom": {if(!S.picker)return;
       const el=document.getElementById("pickCustom"),v=parseFloat(el.value);
-      if(!v||v<=0){el.focus();return} addAcctExpense(null,v); return}
+      if(!v||v<=0){el.focus();return} el.value=""; addAcctExpense(null,v); return}
     case "expCat": S.expCat=arg; render(); return;
     case "evMonth": S.evMonth=arg; render(); return;
     case "addEvent": {const nm=document.getElementById("evName").value.trim();
@@ -1775,29 +2163,64 @@ document.addEventListener("click",function(e){
       const a3=dv.split("-"),b3=tv.split(":");
       const when=new Date(+a3[0],+a3[1]-1,+a3[2],+b3[0],+b3[1]);
       S.settings.customEvents=(S.settings.customEvents||[]).concat([{name:nm,t:when.getTime(),impact:"high"}]);
+      document.getElementById("evName").value="";
       persist.s(); _events=null; render(); return}
     case "delEvent": {S.settings.customEvents.splice(+arg,1); persist.s(); _events=null; render(); return}
     case "addPay": {const el=document.getElementById("payIn"),g=parseFloat(el.value);
       if(!g||g<=0){el.focus();return}
-      S.pay.push({id:Date.now(),date:today(),gross:g,net:netOf(g)}); persist.p(); render(); return}
+      const pd=(document.getElementById("payDate")||{}).value||today();
+      S.pay.push({id:Date.now(),date:pd,gross:g,net:netOf(g)}); persist.p(); el.value=""; render(); previewNet(); return}
     case "addExp": {const el=document.getElementById("expIn"),v=parseFloat(el.value);
       if(!v||v<=0){el.focus();return}
-      S.exp.push({id:Date.now(),date:today(),cat:S.expCat||"other",amount:v}); persist.e(); render(); return}
+      const ed2=(document.getElementById("expDate")||{}).value||today();
+      S.exp.push({id:Date.now(),date:ed2,cat:S.expCat||"other",amount:v}); persist.e(); el.value=""; render(); return}
+    case "mvEdit": {const a2=arg.split("|");
+      if(S.editMove===arg){S.editMove=null;S.mv=null;render();return}
+      const src=(a2[0]==="pay"?S.pay:S.exp).find(x=>x.id===+a2[1]); if(!src)return;
+      S.editMove=arg; S.mv=Object.assign({},src);
+      if(typeof S.mv.net==="number")S.mv.net=Math.round(S.mv.net*100)/100;
+      render(); return}
+    case "mvCancel": S.editMove=null; S.mv=null; render(); return;
+    case "mvCat": if(S.mv){S.mv.cat=arg;render()} return;
+    case "mvSize": if(S.mv){S.mv.size=arg==="none"?null:+arg;render()} return;
+    case "mvSave": {if(!S.editMove||!S.mv)return;
+      const a2=S.editMove.split("|"),src=(a2[0]==="pay"?S.pay:S.exp).find(x=>x.id===+a2[1]); if(!src)return;
+      if(a2[0]==="pay"){const g=parseFloat(S.mv.gross),n=parseFloat(S.mv.net);
+        if(!(g>0))return; src.gross=g; src.net=isNaN(n)?netOf(g):n; src.date=S.mv.date||src.date; persist.p()}
+      else{const v=parseFloat(S.mv.amount); if(!(v>0))return;
+        src.amount=v; src.cat=S.mv.cat||"other"; src.size=S.mv.size||null; src.date=S.mv.date||src.date; persist.e()}
+      S.editMove=null; S.mv=null; render(); return}
+    case "mMore": S.mLimit=(S.mLimit||30)+30; render(); return;
+    case "mfClear": S.mf={type:"all",month:"all",cat:"all",q:""}; S.mLimit=30;
+      {const mq=document.getElementById("mq"); if(mq){mq.value="";mq.blur()}} S.editMove=null; S.mv=null; render(); return;
+    case "editTrade": S.editTrade=S.editTrade===+arg?null:+arg; render(); return;
+    case "editDone": S.editTrade=null; render(); return;
+    case "te": {const a2=arg.split("|"),t=S.trades.find(x=>x.id===+a2[0]); if(!t)return;
+      const fld=a2[1],v=a2.slice(2).join("|");
+      if(fld==="cycleDay") t.cycleDay=(+t.cycleDay===+v)?0:+v;
+      else if(fld==="dayType") t.dayType=t.dayType===v?"":v;
+      else if(fld==="unchecked") t.unchecked=v==="1";
+      else t[fld]=v;
+      persist.t(); render(); return}
     case "delMove": {const a2=arg.split("|");
+      if(S.confirmDel!==a2[0]+a2[1]){S.confirmDel=a2[0]+a2[1];render();return}
+      S.confirmDel=null; S.editMove=null; S.mv=null;
       if(a2[0]==="pay"){S.pay=S.pay.filter(x=>x.id!==+a2[1]);persist.p()}
       else{S.exp=S.exp.filter(x=>x.id!==+a2[1]);persist.e()}
       render(); return}
-    case "export": {const blob=new Blob([JSON.stringify({settings:S.settings,trades:S.trades,days:S.days,
-        acct:S.acct,exp:S.exp,pay:S.pay},null,2)],{type:"application/json"});
-      const a3=document.createElement("a");a3.href=URL.createObjectURL(blob);a3.download="sadna-"+today()+".json";a3.click();
-      S.settings.lastExport=Date.now();persist.s();render();return}
+    case "export": {const go=function(imgs){
+        const blob=new Blob([JSON.stringify({settings:S.settings,trades:S.trades,days:S.days,
+          acct:S.acct,exp:S.exp,pay:S.pay,weeks:S.weeks,imgs:imgs||{}})],{type:"application/json"});
+        const a3=document.createElement("a");a3.href=URL.createObjectURL(blob);a3.download="sadna-"+today()+".json";a3.click();
+        S.settings.lastExport=Date.now();persist.s();render()};
+      imgAll().then(go).catch(function(){go({})});return}
     case "csv": {
-      const head2=["תאריך","שעה","מכשיר","כיוון","סטאפ","סשן","יום במחזור","כניסה","סטופ פיפס","טייק פיפס","יחס","תיוג","בדיקה מלאה","רווח","הערה"];
+      const head2=["תאריך","שעה","מכשיר","כיוון","סטאפ","סשן","יום במחזור","יום אות","כניסה","סטופ פיפס","טייק פיפס","יחס","תיוג","בדיקה מלאה","רווח","הערה"];
       const rows2=S.trades.slice().sort(function(a,b){return a.id-b.id}).map(function(t){
         const su3=SETUPS.find(function(x){return x.id===t.setup});
         const tg3=TAGS.find(function(x){return x[0]===t.tag});
         return [t.date,t.time,t.instrument,t.dir==="long"?"לונג":"שורט",su3?su3.he:t.setup,
-          t.session||"",t.cycleDay||"",t.entry||"",t.stopP||"",t.tpP||"",t.rr?(+t.rr).toFixed(2):"",
+          t.session||"",t.cycleDay||"",dtName(t.dayType),t.entry||"",t.stopP||"",t.tpP||"",t.rr?(+t.rr).toFixed(2):"",
           tg3?tg3[1]:"",t.unchecked?"לא":"כן",
           isClosed(t)?pnlOf(t):"",(t.note||"").replace(/[\r\n]+/g," ")];
       });
@@ -1807,18 +2230,33 @@ document.addEventListener("click",function(e){
       const blob2=new Blob([csv],{type:"text/csv;charset=utf-8"});
       const a4=document.createElement("a");a4.href=URL.createObjectURL(blob2);
       a4.download="sadna-trades-"+today()+".csv";a4.click();
-      S.settings.lastExport=Date.now();persist.s();render();return}
+      return}
     case "import": {const inp=document.createElement("input");inp.type="file";inp.accept="application/json";
-      inp.onchange=function(){const fr=new FileReader();fr.onload=function(){try{const o=JSON.parse(fr.result);
-        if(o.settings)S.settings=Object.assign({},DEF,o.settings);
+      inp.onchange=function(){if(!inp.files||!inp.files[0])return;
+        const fr=new FileReader();fr.onload=function(){try{const o=JSON.parse(fr.result);
+        if(o.settings){const os=o.settings,pr=os.prices||{};
+          S.settings=Object.assign({},DEF,os,{sizes:os.sizes||DEF.sizes,rules:os.rules||DEF.rules,
+            prices:{eval:Object.assign({},DEF.prices.eval,pr.eval),act:Object.assign({},DEF.prices.act,pr.act),
+                    reset:Object.assign({},DEF.prices.reset,pr.reset)}})}
         if(o.trades)S.trades=o.trades; if(o.days)S.days=o.days;
         if(o.acct)S.acct=Object.assign({ev:0,exTotal:0,exActive:0},o.acct);
-        if(o.exp)S.exp=o.exp; if(o.pay)S.pay=o.pay;
-        persist.s();persist.t();persist.d();persist.a();persist.e();persist.p();render()
+        if(o.exp)S.exp=o.exp; if(o.pay)S.pay=o.pay; if(o.weeks)S.weeks=o.weeks;
+        if(o.imgs)Object.keys(o.imgs).forEach(function(k){IMG.cache[k]=o.imgs[k];imgPut(k,o.imgs[k]).catch(function(){})});
+        setTimeout(migrateImgs,300);
+        persist.s();persist.t();persist.d();persist.a();persist.e();persist.p();persist.w();
+        _events=null; applyTheme(S.settings.theme||"brass"); S._lastTab=null; render()
       }catch(err){alert("הקובץ לא תקין")}};fr.readAsText(inp.files[0])};
       inp.click();return}
   }
-  if(act.indexOf("gf-")===0){S.gateForm[act.slice(3)]=arg;render()}
+  if(act.indexOf("mf-")===0){S.mf=S.mf||{type:"all",month:"all",cat:"all",q:""};
+    const k=act.slice(3); S.mf[k]=arg; if(k==="type"&&arg==="pay")S.mf.cat="all";
+    S.mLimit=30; S.editMove=null; S.mv=null; render(); return}
+  if(act.indexOf("gf-")===0){const k=act.slice(3);
+    if((k==="dayType"||k==="cycleDay")&&String(S.gateForm[k])===String(arg))S.gateForm[k]=k==="cycleDay"?0:"";
+    else S.gateForm[k]=arg;
+    if(k==="dir"){const su=SETUPS.find(x=>x.id===S.gateForm.setup);
+      if(su&&su.dir!=="both"&&su.dir!==arg)S.gateForm.setup=""}
+    render()}
 });
 
 document.addEventListener("input",function(e){
@@ -1833,6 +2271,11 @@ document.addEventListener("input",function(e){
   else if(m==="qty"){if(S.picker)S.picker.qty=Math.max(1,parseInt(el.value)||1)}
   else if(m==="price"){const a=el.dataset.arg.split("|");S.settings.prices[a[0]][a[1]]=parseFloat(el.value)||0;persist.s()}
   else if(m==="wk"){const k=weekKey();S.weeks[k]=S.weeks[k]||{};S.weeks[k][el.dataset.arg]=el.value;persist.w()}
+  else if(m==="te"){const a=el.dataset.arg.split("|"),t=S.trades.find(x=>x.id===+a[0]);
+    if(t&&!(a[1]==="date"&&!el.value)){t[a[1]]=el.value; if(a[1]==="stopP"||a[1]==="tpP")t.rr=rrOf(t); persist.t()}}
+  else if(m==="mv"){if(S.mv){const f2=el.dataset.arg;S.mv[f2]=el.value;
+    if(f2==="gross"){const g=parseFloat(el.value);
+      if(g>0){S.mv.net=Math.round(netOf(g)*100)/100;const n=document.getElementById("mvNet");if(n)n.value=S.mv.net}}}}
   else if(m==="gdate"){S.gateForm.date=el.value;render()}
   else if(m==="gtime"){S.gateForm.time=el.value}
   else if(m==="gentry"){S.gateForm.entry=el.value}
@@ -1841,6 +2284,8 @@ document.addEventListener("input",function(e){
     const r=rrOf(S.gateForm),box=document.getElementById("rrLine");
     if(box){box.textContent=r?"יחס סיכוי־סיכון 1 : "+r.toFixed(2).replace(/\.00$/,""):"הזן סטופ וטייק כדי לראות את היחס";
       box.className="rr "+(r?(r>=2?"good":r>=1.5?"mid":"bad"):"")}}
+  else if(m==="mq"){S.mf=S.mf||{type:"all",month:"all",cat:"all",q:""};S.mf.q=el.value;S.mLimit=30;
+    clearTimeout(S._mqT);S._mqT=setTimeout(render,300)}
   else if(m==="jq"){S.jq=el.value;
     clearTimeout(S._jqT);
     S._jqT=setTimeout(function(){render();
@@ -1848,6 +2293,15 @@ document.addEventListener("input",function(e){
       if(i){i.focus();try{i.setSelectionRange(i.value.length,i.value.length)}catch(err){}}},350)}
 });
 
+document.addEventListener("paste",function(e){
+  const items=(e.clipboardData&&e.clipboardData.items)||[];
+  const files=[];for(let i=0;i<items.length;i++){if(items[i].type&&items[i].type.indexOf("image")===0){const f=items[i].getAsFile();if(f)files.push(f)}}
+  if(!files.length)return;
+  const tgt=(S.tab==="gate"&&S.gateStep===2)?"gate":(S.tab==="journal"&&S.openTrade?S.openTrade:null);
+  if(tgt===null)return;
+  e.preventDefault();addImages(files,tgt);
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&S.view){S.view=null;renderViewer()}});
 document.addEventListener("focusin",function(e){
   const el=e.target;
   if(el.dataset&&el.dataset.model==="cnt") S._before[el.dataset.arg.split("|")[0]]=parseInt(el.value)||0;
@@ -1878,6 +2332,8 @@ function checkReminder(){
 
 applyTheme(S.settings.theme||"brass");
 render();
+migrateImgs();
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(function(){})}catch(e){}
 checkReminder();
 setInterval(checkReminder,60000);
 setInterval(function(){
