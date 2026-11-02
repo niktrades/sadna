@@ -274,6 +274,369 @@ nav .ind{position:absolute;top:0;height:2px;background:linear-gradient(90deg,tra
 .ring{position:absolute;left:50%;top:50%;width:230px;height:230px;margin:-115px 0 0 -115px;
   border-radius:99px;border:1px solid rgba(217,166,72,.14);animation:breathe 5.5s ease-in-out infinite}
 @keyframes breathe{0%,100%{transform:scale(.92);opacity:.5}50%{transform:scale(1.06);opacity:1}}
+.qty{display:flex;align-items:stretch;gap:6px}
+.qty input{text-align:center;flex:1;min-width:0}
+.qbtn{width:44px;flex-shrink:0;border:1px solid var(--line,rgba(255,255,255,.12));border-radius:12px;color:var(--brass);font-size:20px;background:rgba(255,255,255,.03)}
+.qbtn:active{transform:scale(.94)}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.lbl.sm{font-size:11px}
+.parts{border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:4px 12px;margin-bottom:12px}
+.prow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.prow .pq{color:var(--bright);min-width:58px}.prow .pp{color:var(--muted);flex:1}.prow .pu{font-weight:600;direction:ltr;unicode-bidi:isolate}
+.psum{font-size:12px;color:var(--muted);padding:10px 0 8px}.psum b{color:var(--bright);direction:ltr;unicode-bidi:isolate}
+select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;font:inherit;font-size:15px;-webkit-appearance:none;appearance:none}
+.pctx{font-size:12px;color:var(--muted);line-height:1.85;padding:10px 12px;border-radius:12px;background:rgba(217,166,72,.06);border:1px solid var(--hair);margin-bottom:16px}
+.pcfg{display:flex;justify-content:space-between;width:100%;margin:16px 0 8px;padding:10px 12px;border-radius:11px;border:1px dashed rgba(255,255,255,.14);font-size:12px;color:var(--muted);direction:rtl}
+.pcfg i{font-style:normal;color:var(--brass)}
+.pout{margin-top:10px}
+.ptitle{font-size:16px;color:var(--bright);margin:8px 0 6px}
+.pzone{border-radius:14px;padding:12px 14px;margin-bottom:10px;border:1px solid rgba(255,255,255,.08)}
+.pzone.short{background:rgba(204,102,71,.07);border-color:rgba(204,102,71,.35)}
+.pzone.long{background:rgba(140,173,104,.07);border-color:rgba(140,173,104,.35)}
+.pzone .row b{font-size:13px;color:var(--bright);font-weight:500}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;margin-top:10px}
+.pgrid span{display:block;font-size:10.5px;color:var(--faint);margin-bottom:3px}
+.pgrid b{font-size:13.5px;color:var(--bright);font-weight:600;direction:ltr;unicode-bidi:isolate;display:inline-block}
+.pwarn{margin-top:10px;font-size:12px;color:var(--brass);line-height:1.7}
+.psec{font-size:12.5px;color:var(--ink,var(--muted));line-height:1.85;padding:12px 0;border-top:1px solid rgba(255,255,255,.06)}
+.psec span{display:block;font-size:11px;color:var(--brass);letter-spacing:.3px;margin-bottom:4px}
+.psec p{margin:0 0 4px}.psec.kill span{color:var(--clay)}
+.pnote{font-size:12.5px;color:var(--muted);line-height:1.8;padding:6px 0}
+.ruler{margin:12px 0 4px;border-right:2px solid rgba(255,255,255,.08)}
+.rr2{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 10px;font-size:12.5px;color:var(--muted);position:relative}
+.rr2 b{direction:ltr;unicode-bidi:isolate;min-width:78px;font-weight:600;color:var(--ink,var(--bright));font-size:13.5px}
+.rr2::before{content:"";position:absolute;right:-6px;top:50%;width:10px;height:2px;background:rgba(255,255,255,.25)}
+.rr2.r b{color:var(--brass)}.rr2.w b,.rr2.w span{color:var(--faint)}.rr2.m span{color:var(--faint)}
+.rr2.in.short{background:rgba(204,102,71,.14)}.rr2.in.long{background:rgba(140,173,104,.14)}
+.rr2.in.short::before{background:var(--clay);width:14px;height:3px}.rr2.in.long::before{background:var(--sage);width:14px;height:3px}
+.rr2.in b{color:var(--bright)}.rr2.zlabel{padding:4px 12px;font-size:11.5px}.rr2.zlabel::before{display:none}
+.rr2.in.short.zlabel span{color:var(--clay)}.rr2.in.long.zlabel span{color:var(--sage)}
+.pzone{border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid rgba(255,255,255,.08)}
+.ztop{display:flex;align-items:center;gap:10px}.ztop b{font-size:20px;color:var(--bright);direction:ltr;unicode-bidi:isolate;font-weight:600}
+.zside{font-size:12px;padding:3px 10px;border-radius:99px;border:1px solid}
+.pzone.short .zside{color:var(--clay);border-color:var(--clay)}.pzone.long .zside{color:var(--sage);border-color:var(--sage)}
+.zwhy{font-size:12px;color:var(--muted);margin-top:6px}
+.zwait{font-size:12.5px;color:var(--bright);line-height:1.8;margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(217,166,72,.07);border:1px solid var(--hair)}
+.zwait span{display:block;font-size:10.5px;color:var(--brass);margin-bottom:2px}
+.ladder{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
+.lr{display:grid;grid-template-columns:82px 1fr auto auto;gap:8px;align-items:center;padding:9px 12px;font-size:12.5px;border-top:1px solid rgba(255,255,255,.05)}
+.lr:first-child{border-top:0}
+.lr b{direction:ltr;unicode-bidi:isolate;font-weight:600;color:var(--bright);text-align:right}
+.lr span{color:var(--muted)}.lr em{font-style:normal;color:var(--faint);direction:ltr;unicode-bidi:isolate;font-size:11.5px}
+.lr i{font-style:normal;direction:ltr;unicode-bidi:isolate;font-size:12px;min-width:44px;text-align:left}
+.lr.sl{background:rgba(204,102,71,.10)}.lr.sl i,.lr.sl span{color:var(--clay)}
+.lr.en{background:rgba(217,166,72,.10)}.lr.en span{color:var(--brass)}
+.lr.tp{background:rgba(140,173,104,.07)}.lr.tp i{color:var(--sage)}
+.lr.ob{opacity:.75}.lr.ob b{color:var(--faint)}.lr.ob span{color:var(--faint);font-size:11.5px}
+.psum2{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-top:10px}
+.psum2 b{direction:ltr;unicode-bidi:isolate}
+.scn{display:grid;gap:6px;margin-top:4px}.scn div{display:flex;justify-content:space-between}.scn em{font-style:normal;color:var(--muted)}
+.scn b{direction:ltr;unicode-bidi:isolate;font-weight:600}
+.pcfg span{text-align:right}
+.scaleline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:10px 12px;border-radius:12px;border:1px solid var(--brassDeep);font-size:12px;color:var(--muted);line-height:1.6}
+.scaleline b{color:var(--brass);font-weight:500}.scaleline button{color:var(--faint);font-size:11.5px;flex-shrink:0}
+.scaleline.off{width:100%;justify-content:center;color:var(--brass);border-style:dashed}
+.legs{display:grid;gap:10px}.leg{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.08)}
+.lh{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px}.lh b{font-weight:500;color:var(--bright)}
+.lh i{font-style:normal;direction:ltr;unicode-bidi:isolate;font-weight:600}
+.zchart{width:100%;height:auto;display:block;margin:12px 0 0;font-family:inherit}
+.zchart.tv{border-radius:14px;box-shadow:0 0 0 1px rgba(255,255,255,.06)}
+.zchart .cnd{animation:cin .35s ease-out both}@keyframes cin{from{opacity:0;transform:translateY(4px)}}
+.zedges{display:grid;gap:4px;font-size:12px;color:var(--muted);margin:6px 4px 0}.zedges b{direction:ltr;unicode-bidi:isolate;color:var(--bright);font-weight:600;margin-left:6px}
+.zmore{display:block;margin:12px auto 4px;font-size:12px;color:var(--brass);padding:6px 14px;border-radius:99px;border:1px solid var(--hair)}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.trend{font-size:12px;padding:4px 11px;border-radius:99px;font-weight:600}
+.trend.up{color:var(--sage);background:rgba(140,173,104,.14)}.trend.down{color:var(--clay);background:rgba(204,102,71,.14)}
+.ptrap{font-size:12.5px;color:var(--muted);line-height:1.8;margin:8px 0 14px}.ptrap span{color:var(--brass);margin-left:6px}
+.otabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.otab{text-align:right;padding:11px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.02);transition:all .2s}
+.otab small{display:block;font-size:10.5px;color:var(--faint)}.otab b{display:block;font-size:14px;color:var(--muted);font-weight:600;margin:2px 0}
+.otab em{font-style:normal;font-size:11px;color:var(--faint)}
+.otab.on.short{border-color:var(--clay);background:rgba(204,102,71,.12)}.otab.on.long{border-color:var(--sage);background:rgba(140,173,104,.12)}
+.otab.on b{color:var(--bright)}.otab.on.short em{color:var(--clay)}.otab.on.long em{color:var(--sage)}
+.zwhen{font-size:13px;color:var(--bright);line-height:1.7;margin-bottom:12px}.zwhen span{display:block;font-size:10.5px;color:var(--faint);margin-bottom:2px}
+.conds{display:grid;gap:7px}
+.cond{display:flex;align-items:center;gap:10px;text-align:right;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.08);font-size:12.5px;color:var(--muted);line-height:1.6;transition:all .2s}
+.cond i{flex-shrink:0;width:24px;height:24px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:11.5px;border:1px solid rgba(255,255,255,.18);color:var(--faint)}
+.cond.on{border-color:var(--sage);background:rgba(140,173,104,.10);color:var(--bright)}.cond.on i{background:var(--sage);border-color:var(--sage);color:#111;font-weight:700}
+.zkill{font-size:12px;color:var(--muted);line-height:1.7;margin-top:12px;padding:9px 12px;border-radius:12px;border:1px dashed rgba(204,102,71,.45)}
+.zkill span{color:var(--clay);margin-left:6px;font-weight:600}
+.btn.go{box-shadow:0 0 0 3px rgba(140,173,104,.25)}
+.pinsum{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:right;padding:12px 14px;border-radius:14px;border:1px solid var(--hair);background:rgba(255,255,255,.02);font-size:14px;color:var(--bright);line-height:1.6}
+.pinsum small{font-size:11.5px;color:var(--muted)}.pinsum i{font-style:normal;font-size:12px;color:var(--brass);flex-shrink:0}
+.pempty{font-size:13px;color:var(--muted);line-height:2.1;padding:6px 2px}.pempty b{color:var(--brass)}
+.zidea{font-size:15.5px;color:var(--bright);line-height:1.7;font-weight:500}
+.zsrc{display:inline-block;font-size:10.5px;color:var(--sage);margin:6px 0 2px;padding:2px 9px;border-radius:99px;border:1px solid rgba(140,173,104,.35)}
+.zsrc.est{color:var(--brass);border-color:var(--brassDeep)}
+.zex{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(217,166,72,.08);border:1px solid var(--brassDeep);font-size:12px;color:var(--muted);line-height:1.7}
+.zex b{color:var(--brass)}.zexin{display:flex;align-items:center;gap:10px;margin-top:8px}.zexin span{color:var(--bright);flex-shrink:0}.zexin input{padding:9px 12px}
+.zrange{margin:14px 0 2px}.zrange span{display:block;font-size:11px;color:var(--faint)}
+.zrange b{display:block;font-size:24px;color:var(--bright);font-weight:600;direction:ltr;unicode-bidi:isolate;text-align:right;margin:2px 0}
+.zrange em{font-style:normal;font-size:12px;color:var(--muted)}
+.zrules{display:grid;gap:8px;margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);font-size:12.5px;color:var(--bright);line-height:1.6}
+.zrules span{display:inline-block;min-width:74px;color:var(--brass);font-size:11.5px}
+.ptrap{margin-top:14px}
+.lchart{width:100%;height:auto;display:block;margin:12px 0 4px;border-radius:16px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 10px 30px rgba(0,0,0,.35)}
+.lchart .lpath{stroke-dasharray:1400;stroke-dashoffset:1400;animation:ldraw 1.5s .15s ease-out forwards}@keyframes ldraw{to{stroke-dashoffset:0}}
+.lchart .lturn{animation:lpop .35s 1.1s both;transform-box:fill-box;transform-origin:center}@keyframes lpop{from{opacity:0;transform:scale(.2)}}
+.otab small{font-size:11px}.otab.on.short small{color:var(--clay)}.otab.on.long small{color:var(--sage)}
+.zc2{border-radius:18px;padding:16px 14px 14px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.025),transparent)}
+.zc2.short{border-color:rgba(239,111,80,.35)}.zc2.long{border-color:rgba(127,209,106,.35)}
+.zw span{display:block;font-size:12.5px;color:var(--muted)}
+.zw b{display:block;font-size:30px;font-weight:700;letter-spacing:.3px;direction:ltr;unicode-bidi:isolate;text-align:right;margin:2px 0 4px}
+.zc2.short .zw b{color:#ff8a6a}.zc2.long .zw b{color:#9be27f}
+.zw em{font-style:normal;font-size:12px;color:var(--faint)}.zw em i{font-style:normal;color:var(--brass)}
+.zex2{display:flex;align-items:center;gap:10px;margin-top:12px;padding:8px 10px 8px 8px;border-radius:12px;background:rgba(217,166,72,.08);border:1px solid var(--brassDeep);font-size:12px;color:var(--brass)}
+.zex2 span{flex:1}.zex2 input{width:130px;flex-shrink:0;padding:9px 10px}
+.zfoot{font-size:12.5px;color:var(--muted);line-height:1.7;margin-top:10px}.zfoot span{color:var(--clay);margin-left:8px;font-weight:600}
+.zgo{display:block;margin:12px 0 0 auto;font-size:13px;color:var(--brass);padding:8px 14px;border-radius:99px;border:1px solid var(--brassDeep)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.phint{font-size:12.5px;color:var(--muted);margin:2px 0 10px}
+.lchart .lnum{animation:lpop .35s both;transform-box:fill-box;transform-origin:center}
+.lsteps{display:grid;gap:8px;margin-top:12px}
+.lsteps div{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--bright);line-height:1.65}
+.lsteps i{flex-shrink:0;width:22px;height:22px;border-radius:99px;background:#f0b84a;color:#120e0b;font-style:normal;font-weight:800;font-size:11.5px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.lsteps i.short{background:#ff7a5c}.lsteps i.long{background:#7fe08a}
+.locs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.loc{padding:11px 6px;border-radius:12px;border:1px solid rgba(255,255,255,.1);font-size:12.5px;color:var(--muted);line-height:1.35;transition:all .2s}
+.loc.on{border-color:#f0b84a;color:#f0b84a;background:rgba(240,184,74,.1);font-weight:600}
+.pmap{width:100%;height:auto;display:block;margin:14px 0 12px;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 12px 30px rgba(0,0,0,.35)}
+.pmap .here{animation:hpulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes hpulse{50%{transform:scale(1.6);opacity:.05}}
+.oc{position:relative;border-radius:16px;padding:14px 14px 12px;margin-top:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);cursor:pointer;transition:all .2s}
+.oc::before{content:"";position:absolute;right:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:rgba(255,255,255,.15)}
+.oc.short::before{background:#ff7a5c}.oc.long::before{background:#7fe08a}
+.oc.sel.short{border-color:rgba(255,122,92,.55);background:rgba(255,122,92,.06)}.oc.sel.long{border-color:rgba(127,224,138,.5);background:rgba(127,224,138,.05)}
+.oc:not(.sel){opacity:.72}
+.och{display:flex;align-items:center;gap:9px;margin-bottom:8px}.och b{flex:1;font-size:15px;color:var(--bright)}
+.och i{font-style:normal;width:22px;height:22px;border-radius:99px;background:#f0b84a;color:#120e0b;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center}
+.tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid rgba(255,255,255,.2);color:var(--muted)}
+.tag.short{color:#ff8a6a;border-color:rgba(255,122,92,.5)}.tag.long{color:#9be27f;border-color:rgba(127,224,138,.5)}
+.ocif{display:flex;gap:10px;font-size:13px;color:var(--bright);line-height:1.6;padding:3px 0}
+.ocif span{flex-shrink:0;width:52px;color:var(--brass);font-size:12px}.ocif.inv span{color:var(--clay)}.ocif.inv{color:var(--muted)}
+.ocz{margin:6px 0;padding:8px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+.ocz span{display:block;font-size:11.5px;color:var(--faint)}.ocz b{display:block;font-size:24px;font-weight:700;direction:ltr;unicode-bidi:isolate;text-align:right}
+.oc.short .ocz b{color:#ff8a6a}.oc.long .ocz b{color:#9be27f}.ocz em{font-style:normal;font-size:12px;color:var(--muted)}.ocz u{text-decoration:none;color:var(--brass)}
+.oc.no{cursor:default;opacity:1}.oc.no p{margin:0;font-size:13px;color:var(--muted);line-height:1.7}
+.pex{margin-top:12px;padding:11px 13px;border-radius:13px;background:rgba(140,173,104,.07);border:1px solid rgba(140,173,104,.3);font-size:12.5px;color:var(--bright);line-height:1.75}
+.pex span{display:block;font-size:11px;color:var(--sage);margin-bottom:3px;font-weight:600}
+.pex.lon{background:rgba(160,140,255,.07);border-color:rgba(160,140,255,.3)}.pex.lon span{color:#b7a8ff}
+.pex.warn{background:rgba(255,122,92,.08);border-color:rgba(255,122,92,.45)}.pex.warn span{color:#ff8a6a}
+.pex.mon{background:rgba(255,159,208,.07);border-color:rgba(255,159,208,.35);margin:0 0 14px}.pex.mon span{color:#ff9fd0}
+.pex b{direction:ltr;unicode-bidi:isolate;color:var(--bright)}
+.ptime{margin-top:10px;font-size:11.5px;color:var(--muted);line-height:1.7}
+.pflow{display:flex;flex-direction:column;gap:10px;position:relative}
+.pst{border-radius:20px;padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.08)}
+.pst.done{padding:13px 16px}
+.psh{display:flex;align-items:center;gap:10px}
+.psh i{font-style:normal;width:26px;height:26px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;background:rgba(240,184,74,.15);color:#f0b84a;border:1px solid rgba(240,184,74,.45);flex-shrink:0}
+.pst.done .psh i{background:#8cad68;color:#14100d;border-color:#8cad68}
+.psh b{flex:1;font-size:15px;color:var(--bright);font-weight:600}
+.psh button{font-size:12px;color:var(--brass);padding:4px 10px;border-radius:99px;border:1px solid var(--hair)}
+.pst:not(.done)>.psh{margin-bottom:14px}
+.pss{margin:6px 36px 0 0;font-size:13.5px;color:var(--bright);line-height:1.6}.pss small{display:block;font-size:11.5px;color:var(--muted);direction:rtl}
+.pnext{display:block;width:100%;margin-top:14px;padding:12px;border-radius:14px;background:rgba(240,184,74,.12);color:#f0b84a;font-weight:600;border:1px solid rgba(240,184,74,.35)}
+.pmore{margin-top:12px}.pmore summary{font-size:12px;color:var(--muted);cursor:pointer;margin-bottom:8px}
+.pst.final{border-color:rgba(240,184,74,.25);background:linear-gradient(180deg,rgba(240,184,74,.05),rgba(255,255,255,.01))}
+.pst.final>.psh{margin-bottom:12px}
+.pseg{display:flex;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.3);margin-bottom:12px}
+.pseg button{flex:1;padding:9px 6px;border-radius:11px;font-size:12.5px;color:var(--muted);line-height:1.3;transition:all .2s}
+.pseg button small{display:block;font-size:10px;opacity:.7}
+.pseg button.on{color:#14100d;font-weight:700}.pseg button.on.short{background:#ff8a6a}.pseg button.on.long{background:#9be27f}
+.phero{border-radius:18px;padding:16px;text-align:center;position:relative;overflow:hidden}
+.phero.short{background:radial-gradient(120% 140% at 50% 0%,rgba(255,122,92,.22),rgba(255,122,92,.04));border:1px solid rgba(255,122,92,.4)}
+.phero.long{background:radial-gradient(120% 140% at 50% 0%,rgba(127,224,138,.2),rgba(127,224,138,.03));border:1px solid rgba(127,224,138,.4)}
+.phs{display:flex;flex-direction:column;align-items:center;gap:6px}
+.pside{font-size:12px;font-weight:800;padding:3px 12px;border-radius:99px;color:#14100d}
+.phero.short .pside{background:#ff8a6a}.phero.long .pside{background:#9be27f}
+.phs em{font-style:normal;font-size:13px;color:var(--bright);line-height:1.6}
+.phz{font-size:clamp(21px,7vw,30px);white-space:nowrap;font-weight:800;letter-spacing:.3px;direction:ltr;margin:8px 0 2px}
+.phero.short .phz{color:#ffb19c}.phero.long .phz{color:#bdf0a8}
+.phl{font-size:12px;color:var(--muted)}.phl u{text-decoration:none;color:var(--brass)}
+.pwarn2{margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(255,122,92,.1);border:1px solid rgba(255,122,92,.45);color:#ffb19c;font-size:12.5px;line-height:1.7}
+.prows{display:grid;gap:2px;margin-top:4px;border-radius:14px;overflow:hidden}
+.prows div{display:flex;gap:12px;padding:10px 12px;background:rgba(255,255,255,.03)}
+.prows span{flex-shrink:0;width:52px;font-size:11.5px;color:var(--brass);padding-top:2px}
+.prows p{margin:0;font-size:13px;color:var(--bright);line-height:1.6}.prows .x span{color:var(--clay)}.prows .x p{color:var(--muted)}
+.pno{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px dashed rgba(255,255,255,.14);font-size:12.5px;color:var(--muted);line-height:1.7}
+.pno b{display:block;color:var(--bright);font-size:13px}
+.pwhy{display:block;width:100%;margin-top:12px;font-size:12.5px;color:var(--muted);padding:8px 0;text-align:center}
+.pwhyb p{margin:0 0 10px;font-size:12.5px;color:var(--bright);line-height:1.75}.pwhyb span{display:block;font-size:11px;color:var(--sage);font-weight:600}
+.pnews{margin-bottom:10px;padding:10px 14px;border-radius:14px;background:rgba(204,102,71,.12);border:1px solid var(--clay);color:#ffb19c;font-size:12.5px}
+.pmon{display:flex;width:100%;justify-content:space-between;align-items:center;padding:11px 14px;border-radius:14px;background:rgba(255,159,208,.08);border:1px solid rgba(255,159,208,.35);color:#ff9fd0;font-size:13px;font-weight:600;margin-bottom:10px}
+.pmon em{font-style:normal}
+.pmonb{margin:-4px 0 10px;padding:11px 14px;border-radius:14px;background:rgba(255,159,208,.05);font-size:12.5px;color:var(--bright);line-height:1.75}.pmonb b{direction:ltr;unicode-bidi:isolate;color:#ff9fd0}
+.pmap{margin:12px 0}
+.lad{margin:14px 0 12px;padding:14px 12px;border-radius:20px;background:linear-gradient(180deg,#141110,#0d0b0a);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 14px 34px rgba(0,0,0,.4)}
+.lfar{font-size:11px;color:#9b8f86;text-align:center;padding:2px 4px 8px;line-height:1.6}
+.lbox{position:relative}
+.lrail{position:absolute;right:13px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.12) 8%,rgba(255,255,255,.12) 92%,transparent)}
+.lrow{position:absolute;left:0;right:0;height:50px;display:flex;align-items:center;gap:10px;padding:0 4px 0 8px;z-index:2}
+.lrow i{width:12px;height:12px;border-radius:99px;margin-right:2px;flex-shrink:0;background:#0d0b0a;border:2px solid #8f847b}
+.lrow span{flex:1;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow b{font-size:15px;font-weight:700;direction:ltr;color:var(--bright);font-variant-numeric:tabular-nums}
+.lrow.lvl i{border-color:#f2c94c}.lrow.lvl span{color:#f2c94c}
+.lrow.close i{border-color:#5fe0a0}.lrow.close span{color:#5fe0a0}
+.lrow.wk i{border-color:#a08cff}.lrow.wk span{color:#b7a8ff}
+.lrow.mon i{border-color:#ff9fd0}.lrow.mon span{color:#ff9fd0}
+.lrow.today i{border-color:#e9e4dc}
+.lrow.zone span{color:var(--bright);font-weight:600}.lrow.zone b{font-size:17px}
+.lrow.tgt span{font-weight:700}.lrow.tgt b{font-size:16px}
+.lband{position:absolute;left:0;right:0;border-radius:14px;z-index:1}
+.lband.short{background:linear-gradient(90deg,rgba(255,122,92,.06),rgba(255,122,92,.24));box-shadow:inset 0 0 0 1.5px rgba(255,122,92,.75),0 0 24px rgba(255,122,92,.25)}
+.lband.long{background:linear-gradient(90deg,rgba(127,224,138,.06),rgba(127,224,138,.22));box-shadow:inset 0 0 0 1.5px rgba(127,224,138,.75),0 0 24px rgba(127,224,138,.22)}
+.lband em{position:absolute;left:50%;top:-11px;transform:translateX(-50%);white-space:nowrap;font-style:normal;font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px;color:#14100d}
+.lband.short em{background:#ff8a6a}.lband.long em{background:#9be27f}
+.lband.short~.lrow.inz i{border-color:#ff8a6a;background:#ff8a6a}.lband.long~.lrow.inz i{border-color:#9be27f;background:#9be27f}
+.lrow.tgt i{border-width:3px}
+.lband.short~.lrow.tgt i,.lband.short~.lrow.tgt span{border-color:#ff8a6a;color:#ffb19c}.lband.long~.lrow.tgt i,.lband.long~.lrow.tgt span{border-color:#9be27f;color:#bdf0a8}
+.lpath{position:absolute;right:12px;width:4px;border-radius:4px;z-index:1}
+.lpath.short{background:linear-gradient(180deg,#ff8a6a,rgba(255,138,106,.35))}.lpath.long{background:linear-gradient(0deg,#9be27f,rgba(155,226,127,.35))}
+.lpath.short.up{background:linear-gradient(0deg,#ff8a6a,rgba(255,138,106,.35))}.lpath.long.down{background:linear-gradient(180deg,#9be27f,rgba(155,226,127,.35))}
+.lpath span{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;direction:ltr;padding:2px 8px;border-radius:99px;background:#0d0b0a;white-space:nowrap;z-index:3}
+.lpath.short span{color:#ff8a6a;box-shadow:0 0 0 1px rgba(255,138,106,.6)}.lpath.long span{color:#9be27f;box-shadow:0 0 0 1px rgba(155,226,127,.6)}
+.lnow{position:absolute;right:4px;transform:translateY(-50%);display:flex;align-items:center;gap:6px;z-index:4;pointer-events:none}
+.lnow i{width:20px;height:20px;border-radius:99px;background:#f0b84a;box-shadow:0 0 0 4px rgba(240,184,74,.25),0 0 18px rgba(240,184,74,.6);animation:hpulse2 1.8s ease-in-out infinite}
+@keyframes hpulse2{50%{box-shadow:0 0 0 9px rgba(240,184,74,.06),0 0 18px rgba(240,184,74,.6)}}
+.nowb{text-decoration:none;font-size:10.5px;font-weight:800;color:#14100d;background:#f0b84a;padding:1px 7px;border-radius:99px;margin-right:4px}
+.distb{flex-shrink:0;text-decoration:none;font-size:10.5px;font-weight:800;padding:1px 7px;border-radius:99px;margin-right:4px;direction:ltr;display:inline-block}.distb.short{color:#ff8a6a;box-shadow:inset 0 0 0 1px rgba(255,138,106,.6)}.distb.long{color:#9be27f;box-shadow:inset 0 0 0 1px rgba(155,226,127,.6)}
+.lnow span{font-size:10.5px;font-weight:800;color:#14100d;background:#f0b84a;padding:2px 8px;border-radius:99px}
+#plan{--sell:#d98b84;--buy:#8fbfa5;--gold:#cfb57e;--ivory:#efe8dc;--mute:#8d867b;--line:rgba(239,232,220,.10)}
+.szform,.szcard{border-radius:20px;padding:18px 16px;background:linear-gradient(180deg,#1b1a18,#131211);border:1px solid var(--line)}
+.szrow2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.szrow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.szi{display:block}.szi span{display:block;font-size:11px;color:var(--mute);margin-bottom:5px}
+.szi input,.szi select{background:rgba(255,255,255,.025)!important;border-color:var(--line)!important;color:var(--ivory)!important}
+.szlbl{font-size:11px;letter-spacing:.6px;color:var(--gold);margin:16px 0 8px}
+.szgo{display:block;width:100%;margin-top:18px;padding:14px;border-radius:14px;font-size:15px;font-weight:700;color:#1a1814;background:var(--gold)}
+.szhint{margin-top:16px;text-align:center;font-size:12px;color:var(--mute)}
+.szhead{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.szhead small{display:block;font-size:11px;color:var(--mute);margin-bottom:3px}.szhead b{font-size:17px;font-weight:600;color:var(--ivory)}
+.szhead button{width:34px;height:34px;border-radius:10px;color:var(--gold);background:transparent;border:1px solid var(--line)}
+.szz{padding:14px 14px 12px;border-radius:14px;margin-bottom:10px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-right:3px solid}
+.szz.short{border-right-color:var(--sell)}.szz.long{border-right-color:var(--buy)}
+.szzt{display:flex;justify-content:space-between;align-items:center}
+.szzt span{font-size:12px;font-weight:700;letter-spacing:.5px}.szz.short .szzt span{color:var(--sell)}.szz.long .szzt span{color:var(--buy)}
+.szzt small{font-size:11px;color:var(--mute)}.szzt small.st-now{color:var(--gold)}
+.szz b{display:block;font-size:clamp(22px,7vw,28px);font-weight:600;direction:ltr;text-align:right;white-space:nowrap;margin:8px 0 4px;color:var(--ivory);font-variant-numeric:tabular-nums}
+.szz em{display:block;font-style:normal;font-size:12.5px;line-height:1.6;color:#b9b1a4}
+.szcard{margin-top:12px}
+.szbox{display:inline-block;margin:2px 0 10px;padding:4px 12px;border-radius:99px;font-size:12px;color:var(--mute);border:1px solid var(--line)}
+.szbox strong{color:var(--ivory);font-weight:700;margin-right:4px}
+.szz.short .szbox{border-color:rgba(217,139,132,.45)}.szz.long .szbox{border-color:rgba(143,191,165,.45)}
+.szon{margin-top:8px;font-size:11.5px;color:var(--gold)}.szon.off{color:var(--mute)}
+.szl{position:relative;margin:18px 0 8px}
+.szrail{position:absolute;right:13px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.szb{position:absolute;left:0;right:0;border-radius:10px;z-index:1}
+.szb.short{background:rgba(217,139,132,.09);border:1px solid rgba(217,139,132,.45)}
+.szb.long{background:rgba(143,191,165,.09);border:1px solid rgba(143,191,165,.45)}
+.szr{position:absolute;left:0;right:0;height:46px;display:flex;align-items:center;gap:10px;padding:0 6px 0 10px;z-index:2}
+.szr i{width:9px;height:9px;border-radius:99px;margin-right:4px;flex-shrink:0;background:#131211;border:1.5px solid var(--mute)}
+.szr span{flex:1;font-size:12.5px;color:var(--mute)}.szr b{font-size:15px;font-weight:600;direction:ltr;color:var(--ivory);font-variant-numeric:tabular-nums}
+.szr.lvl i,.szr.cl i{border-color:var(--gold)}.szr.lvl span,.szr.cl span{color:var(--gold)}
+.szr.td span{color:#c9c1b4}.szr.td i{border-color:#c9c1b4}
+.szr.in.short i{background:var(--sell);border-color:var(--sell)}.szr.in.long i{background:var(--buy);border-color:var(--buy)}
+.szr.in.short b{color:var(--sell)}.szr.in.long b{color:var(--buy)}
+.szfoot{font-size:12px;color:var(--mute);text-align:center;line-height:1.7;margin-top:10px;padding-top:12px;border-top:1px solid var(--line)}
+.cal{padding:16px 12px}
+.calnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.calnav b{font-size:16px;color:var(--bright);font-weight:600}
+.calnav button{width:34px;height:34px;border-radius:10px;font-size:20px;line-height:1;color:var(--brass);border:1px solid rgba(255,255,255,.08)}
+.calsum{display:grid;grid-template-columns:1.2fr .8fr 1.3fr;gap:6px;margin-bottom:14px;text-align:center}
+.calsum div{padding:10px 4px;border-radius:12px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06)}
+.calsum b{display:block;font-size:16px;font-weight:700;color:var(--bright);direction:ltr}.calsum span{display:block;font-size:10.5px;color:var(--faint);margin-top:3px}
+.calsum em{font-style:normal}.cal .w{color:#8fbfa5}.cal .l{color:#d98b84}
+.crow{display:grid;gap:4px;margin-bottom:4px}
+.chd div{font-size:10.5px;color:var(--faint);text-align:center;padding:2px 0}
+.cc{position:relative;min-height:66px;border-radius:9px;padding:5px 3px 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);overflow:hidden}
+.cc.empty{background:none;border:none}
+.cc i{position:absolute;top:3px;right:5px;font-style:normal;font-size:10px;color:var(--faint)}
+.cc.has i{color:rgba(255,255,255,.7)}
+.cc b{font-size:12px;font-weight:700;color:#fff;direction:ltr;white-space:nowrap;letter-spacing:-.4px;margin-top:9px}
+.cc s{white-space:nowrap;text-decoration:none;font-size:9.5px;color:rgba(255,255,255,.75)}
+.cc u{text-decoration:none;font-size:9px;color:var(--brass);margin-top:1px}
+.cc:not(.has) u{margin-top:12px}
+.cc.tdy{box-shadow:inset 0 0 0 1.5px var(--brass)}
+.cwk{min-height:66px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.1)}
+.cwk span{font-size:9.5px;color:var(--faint)}.cwk b{white-space:nowrap;font-size:12px;font-weight:700;color:var(--muted);direction:ltr}.cwk.w b{color:#8fbfa5}.cwk.l b{color:#d98b84}
+.cwk s{text-decoration:none;font-size:9.5px;color:var(--faint)}
+.calfoot{font-size:11px;color:var(--faint);text-align:center;margin-top:10px}
+#plan{--b0:var(--panelB);--b1:var(--panelB);--b2:var(--panelA);--ln:var(--line);--tx:var(--bright);--mu:var(--muted);--ice:var(--brass);--sh:var(--clay);--lo:var(--sage);--mono:var(--disp)}
+#plan [class^="br"] b,#plan .brf input{font-variant-numeric:tabular-nums}
+#plan .brform,#plan .brcard{border-radius:20px;padding:16px 14px 18px;background:linear-gradient(180deg,var(--b2),var(--b0));border:1px solid var(--ln)}
+.brsec{display:flex;align-items:baseline;gap:8px;font-size:12px;color:var(--tx);margin:18px 0 9px;font-weight:600}
+.brsec:first-child{margin-top:0}.brsec b{font-family:var(--mono);font-size:10px;color:var(--ice);font-weight:500;letter-spacing:.1em}
+.brsec small{font-size:10.5px;color:var(--mu);font-weight:400}
+.brg2{display:grid;grid-template-columns:1fr 1fr;gap:7px}.brg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.brf{display:block;padding:8px 10px 6px;border-radius:12px;background:rgba(255,255,255,.025);border:1px solid var(--ln)}
+.brf:focus-within{border-color:rgba(217,166,72,.55);background:rgba(217,166,72,.05)}
+.brf span{display:block;font-size:10.5px;color:var(--mu);margin-bottom:2px}
+.brf input,.brf select{width:100%;background:none!important;border:none!important;padding:2px 0!important;font-family:var(--mono);font-size:16px;color:var(--tx)!important;direction:ltr;text-align:right;box-shadow:none!important;min-height:0!important}
+.brf.opt{opacity:.8}
+.brmiss{margin-top:16px;font-size:12px;color:var(--mu);text-align:center}
+.brgo{display:block;width:100%;margin-top:18px;padding:14px;border-radius:14px;font-size:15px;font-weight:700;color:#1a130c;background:linear-gradient(180deg,var(--brassHi),var(--brass))}
+.brsum{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;margin-bottom:8px;border-radius:14px;background:var(--b1);border:1px solid var(--ln);font-size:11.5px;color:var(--mu);flex-wrap:wrap}
+.brsum b{font-family:var(--mono);color:var(--tx);font-weight:500}.brsum em{margin-right:auto;font-style:normal;color:var(--ice)}
+.brtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.brtop small{display:block;font-size:11px;color:var(--mu);margin-bottom:2px}
+.brtop b{font-size:26px;font-weight:800;letter-spacing:.02em}.brtop b.short{color:var(--sh)}.brtop b.long{color:var(--lo)}
+.brclock{font-size:11px;padding:6px 10px;border-radius:99px;border:1px solid var(--ln);color:var(--mu);white-space:nowrap;margin-top:4px}
+.brclock.open{color:var(--ice);border-color:rgba(217,166,72,.45);background:rgba(217,166,72,.07)}
+.brtl{position:relative;height:6px;border-radius:99px;background:rgba(255,255,255,.05);margin:14px 0 4px}
+.brtl i{position:absolute;top:0;bottom:0;border-radius:99px}.brtl .lon{background:rgba(165,145,122,.25)}.brtl .ny{background:rgba(217,166,72,.3)}.brtl .h2{background:var(--ice)}
+.brtl b{position:absolute;top:-4px;width:2px;height:14px;background:#fff;border-radius:2px;box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+.brtll{position:relative;height:14px;font-size:9.5px;color:var(--mu);font-family:var(--mono)}.brtll span{position:absolute;transform:translateX(50%)}
+.brzone{margin-top:14px;padding:16px 14px 14px;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid var(--ln);position:relative;overflow:hidden}
+.brzone:before{content:"";position:absolute;inset:0 0 auto 0;height:2px}
+.brzone.short:before{background:linear-gradient(90deg,transparent,var(--sh))}.brzone.long:before{background:linear-gradient(90deg,transparent,var(--lo))}
+.brzl{font-size:11.5px;color:var(--mu)}
+.brzn{display:flex;align-items:baseline;justify-content:flex-end;gap:10px;direction:ltr;margin:6px 0 10px;font-family:var(--mono)}
+.brzn b{font-size:clamp(25px,8.4vw,34px);font-weight:600;color:var(--tx);letter-spacing:-.02em}.brzn i{font-style:normal;color:var(--mu);font-size:20px}
+.brzone.short .brzn b{color:var(--bright)}.brzone.long .brzn b{color:var(--bright)}
+.brchips{display:flex;flex-wrap:wrap;gap:6px}
+.brchips span{font-size:11.5px;padding:4px 10px;border-radius:99px;border:1px solid var(--ln);color:var(--mu)}
+.brchips b{font-family:var(--mono);color:var(--tx);font-weight:600}
+.brchips .st-in{color:var(--ice);border-color:rgba(217,166,72,.45)}.brchips .st-far,.brchips .st-broke{color:var(--brassHi);border-color:rgba(217,166,72,.4)}
+.brzone p{font-size:13px;color:var(--ink);line-height:1.7;margin:10px 0 0}
+.brwarn{margin-top:10px;font-size:12px;color:var(--brassHi);line-height:1.6;padding:8px 10px;border-radius:10px;background:rgba(217,166,72,.07)}
+.brev{margin-top:10px;padding:12px 14px;border-radius:14px;background:rgba(217,166,72,.04);border:1px solid rgba(217,166,72,.14)}
+.brev div{display:flex;justify-content:space-between;align-items:baseline}.brev small{font-size:11px;color:var(--mu)}.brev b{font-size:13px;color:var(--ice);font-weight:700}
+.brev p{font-size:12px;color:var(--ink);line-height:1.65;margin:6px 0 0}
+.brsect{font-size:10.5px;letter-spacing:.08em;color:var(--mu);margin:18px 0 8px;display:flex;align-items:center;gap:8px}
+.brsect:after{content:"";flex:1;height:1px;background:var(--ln)}
+.brchk{display:grid;gap:6px}
+.brchk div{display:grid;grid-template-columns:22px 82px 1fr;align-items:center;gap:8px;padding:9px 10px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid var(--ln)}
+.brchk i{font-style:normal;width:22px;height:22px;border-radius:99px;display:grid;place-items:center;font-size:12px;border:1px solid var(--ln);color:var(--mu)}
+.brchk .ok i{background:rgba(140,173,104,.15);border-color:rgba(140,173,104,.5);color:var(--lo)}.brchk .no i{background:rgba(204,102,71,.1);border-color:rgba(204,102,71,.4);color:var(--sh)}
+.brchk b{font-size:12.5px;color:var(--tx);font-weight:600}.brchk span{font-size:11.5px;color:var(--mu);line-height:1.5}
+.brtrade{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.brtrade div{padding:10px 6px;border-radius:12px;text-align:center;background:rgba(255,255,255,.02);border:1px solid var(--ln)}
+.brtrade small{display:block;font-size:10.5px;color:var(--mu)}.brtrade b{display:block;font-family:var(--mono);font-size:14px;color:var(--tx);font-weight:600;margin:3px 0 1px}
+.brtrade span{display:block;font-family:var(--mono);font-size:11.5px;direction:ltr}.brtrade .sl span{color:var(--sh)}.brtrade .tp span{color:var(--lo)}
+.brtrade .sl{border-color:rgba(204,102,71,.25)}
+.brtg{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:10px;font-size:11.5px;color:var(--mu)}.brtg b{font-family:var(--mono);color:var(--tx);font-weight:500}
+.brlad{position:relative}
+.brband{position:absolute;left:0;right:0;border-radius:12px;z-index:0}
+.brband.short{background:linear-gradient(270deg,rgba(204,102,71,.16),rgba(204,102,71,.03));border:1px solid rgba(204,102,71,.4)}
+.brband.long{background:linear-gradient(270deg,rgba(140,173,104,.15),rgba(140,173,104,.03));border:1px solid rgba(140,173,104,.4)}
+.brband em{position:absolute;left:10px;top:-8px;padding:1px 7px;border-radius:99px;background:var(--panelB);font-style:normal;font-size:10px;letter-spacing:.06em;opacity:.8}
+.brband.short em{color:var(--sh)}.brband.long em{color:var(--lo)}
+.brr{position:absolute;left:0;right:0;height:40px;display:grid;grid-template-columns:14px 1fr auto 62px;align-items:center;gap:8px;padding:0 10px;z-index:1}
+.brr i{width:8px;height:8px;border-radius:99px;border:1.5px solid var(--mu);justify-self:center}
+.brr span{font-size:12px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brr b{font-family:var(--mono);font-size:14.5px;color:var(--tx);font-weight:500;direction:ltr}
+.brr s{text-decoration:none;font-family:var(--mono);font-size:11px;color:var(--mu);direction:ltr;text-align:left}
+.brr.lvl i{border-color:var(--brassLo)}.brr.lvl span{color:var(--ink)}
+.brr.tg i{border-color:var(--ice);border-style:dashed}.brr.tg span{color:var(--ice)}
+.brr.inq.short i{background:var(--sh);border-color:var(--sh)}.brr.inq.long i{background:var(--lo);border-color:var(--lo)}
+.brr.brnow{background:rgba(217,166,72,.1);border-radius:10px;box-shadow:inset 0 0 0 1px rgba(217,166,72,.5)}
+.brr.brnow i{background:var(--ice);border-color:var(--ice);box-shadow:0 0 0 4px rgba(217,166,72,.18);animation:brp 1.8s infinite}
+.brr.brnow span{color:var(--ice);font-weight:600}.brr.brnow b{color:#fff;font-weight:700}
+@keyframes brp{50%{box-shadow:0 0 0 7px rgba(217,166,72,0)}}
+.bralt{margin-top:12px;padding:11px 14px;border-radius:14px;border:1px dashed var(--ln)}
+.bralt small{display:block;font-size:11px;color:var(--mu)}.bralt b{display:block;font-family:var(--mono);font-size:17px;direction:ltr;text-align:right;margin:3px 0}
+.bralt.short b{color:#e3957d}.bralt.long b{color:#b5cf96}.bralt span{font-size:11.5px;color:var(--mu)}
+.brkill{margin-top:12px;font-size:12px;color:var(--ink);line-height:1.6}.brkill b{color:var(--sh)}
+.brnote{margin-top:10px;font-size:10.5px;color:var(--mu);line-height:1.6}
+.brnone{font-size:13px;color:var(--mu);text-align:center;padding:10px}
 </style>
 </head>
 <body>
@@ -335,7 +698,7 @@ const SETUPS=[
 
 const INSTR=["MNQ","NQ","MGC","GC","XAUUSD","MYM","YM","MES","M2K","RTY","MCL","WTI","HG","6E","6B","6A"];
 
-const DAY_TYPES=[["pump","יום פאמפ","פאמפ"],["dump","יום דאמפ","דאמפ"],
+const DAY_TYPES=[["mon","יום שני — טווח הפתיחה","שני"],["pump","יום פאמפ","פאמפ"],["dump","יום דאמפ","דאמפ"],
  ["frd","יום אדום ראשון","אדום"],["fgd","יום ירוק ראשון","ירוק"],
  ["id","יום פנימי","פנימי"],["dbl","יום פנימי כפול","פנ׳×2"],
  ["d1","פריצת יום 1","D1"],["d2","פריצת יום 2","D2"],["d3","פריצת יום 3","D3"],
@@ -384,7 +747,7 @@ const CARDS=[
   "תחילת נר 15 דק', שעה, 4 שעות, יום ושבוע חשובה בדיוק כמו המחיר."]},
  {g:"יסודות",t:"מודדים: רמות תנועה ואזור פגיעה",b:[
   "שלוש רמות עלייה/ירידה (ספר): מטבעות 75·150·250 · זהב 150·250·300 · מדדים 250·500·750.",
-  "ביומי: רמה אחת ≈ 16% מה-ATR היומי (NQ ≈ 75 נק').",
+  "אזור הפגיעה (ספר): 2–3 רמות מהנמוך/גבוה של היום — מטבעות 50–75 פיפס · זהב, נפט ומדדים 100–150.",
   "אדום ראשון: מהנמוך של היום מודדים 2–3 רמות למעלה → שם מחפשים מכירה.",
   "ירוק ראשון: מהגבוה של היום מודדים 2–3 רמות למטה → שם מחפשים קנייה.",
   "האזור הכי חזק כשהמדידה פוגשת רמה אמיתית. אם עבר אותו בסגירות חזקות — מודדים מחדש."]},
@@ -438,7 +801,7 @@ const CARDS=[
   "סטופ: מתחת לדשדוש. יעד: 50 עד 250+. אחד הגדולים."]},
  {g:"הסטאפים",t:"פרי נמוך — המשך",b:[
   "זיהוי: התנועה כבר פרצה בסשן הקודם ועדיין במגמה.",
-  "מחכים לתיקון של 15–30 דק' נגד המגמה, 25–50 פיפס מה-LOD/HOD (NQ ≈ 75–150).",
+  "מחכים לתיקון של 15–30 דק' נגד המגמה, 25–50 פיפס מה-LOD/HOD (1–2 רמות).",
   "כניסה: נתקע באזור → סגירת 5 דק' מעבר ל-EMA לכיוון המגמה.",
   "יעד: 25–50. לרוב הרגל האחרונה — לוקחים ויוצאים.",
   "זו העסקה כשפספסת את התנועה בלונדון."]},
@@ -454,6 +817,42 @@ const CARDS=[
   "יעד: 50+ / הנמוך או הגבוה של השבוע. חייב לזוז מיד."]},
 
  /* ── ביצוע ── */
+ /* ── מהדוגמאות ── */
+ {g:"מהדוגמאות",t:"צורת היום — מה חוזר כמעט תמיד",b:[
+  "סשן אחד זז ~3 רמות (בדרך כלל אסיה + לונדון).",
+  "הבלוק הבא נכנס לקופסה בקיצון. ראש הקופסה = HB MR, תחתית = 'קו המוות'. לפעמים יש פריצה כוזבת קטנה מעבר לקופסה.",
+  "ניו יורק שוברת את הקופסה נגד התנועה וחוזרת למקור שלה — או, במגמה, קונה/מוכרת את התיקון הקטן (פרי נמוך).",
+  "'רמות + תזמון': עסקה קיימת רק כשרמה שלך (אתמול, שבוע, חודש, שני) נבדקת בחלון של פתיחת סשן."]},
+ {g:"מהדוגמאות",t:"תזמון",b:[
+  "רוב הכניסות: ניו יורק 15:30–17:30. סטייסי מסמן שוב ושוב את 'השעה השנייה' (16:30–17:30) כשעת ציד הסטופים.",
+  "לונדון 09:00–10:00 — לרוב שם נבנית המלכודת.",
+  "הטריגר תמיד: סגירת 5 דק׳ (או דקה) חזרה מעבר ל-20 EMA, כשהמחיר שובר את הקופסה. אף פעם לא על הספייק הראשון."]},
+ {g:"מהדוגמאות",t:"מדידות במדדים (NAS100 / DJ30)",b:[
+  "קופסה של ניו יורק בשיא היום ≈ 0.3–0.6% (ב-NQ סביב 25,000 ≈ 75–150 נק׳).",
+  "רגל של סשן ≈ 1–2% (≈ 250–500 נק׳ NQ). סחיטת שורטים עד ~3%.",
+  "תיקון של פרי נמוך ב-DJ ≈ 0.75%.",
+  "מכאן רמה אחת ב-NQ ≈ 40–75 נק׳. 50 זה סביר — אבל זו הסקה שלי מהגרפים, לא מספר שסטייסי כתב."]},
+ {g:"מהדוגמאות",t:"יום שני — טווח הפתיחה",b:[
+  "שני קובע את טווח השבוע. סטייסי מודד 75 פיפס במטבעות / $7.5–15 בזהב מהפתיחה או מ-HOW/LOW.",
+  "כשלונדון מגיעה לשם (לרוב בנמוך/גבוה של השבוע הקודם) — ניו יורק הפכה ברוב 21 הדוגמאות.",
+  "שלישי שפורץ את גבוה/נמוך שני ונכשל → לרוב למחרת יום אדום/ירוק ראשון.",
+  "קצב שבועי: שני טווח/פריצה · רביעי פנימי/אדום/ירוק · שישי חזרה לצד השני של השבוע.",
+  "לא נלחמים בפריצת יום 1 שעדיין בתוך הטווח של השבוע הקודם."]},
+ {g:"מהדוגמאות",t:"אדום / ירוק ראשון — מה קרה למחרת",b:[
+  "אדום ראשון, 10 דוגמאות: 4 — לונדון עלתה 2–3 רמות לקופסה, ניו יורק שברה למטה. 3 — דשדוש סביב הסגירה, הסגירה = התנגדות. 3 — לונדון כבר מתחת לנמוך אתמול, ניו יורק בדקה אותו מלמטה ונכשלה.",
+  "ירוק ראשון, 17 דוגמאות: הירידה למחרת עצרה בסגירה / תחתית הקופסה, או קצת מתחת לשפל (ציד סטופים) וחזרה. כמעט אף פעם לא מתחת לשפל הקודם.",
+  "באינדקס היומי (NAS100 2024–25): אדום ראשון בשיא שבוע/חודש אחרי פאמפ → 3–5 ימי ירידה."]},
+ {g:"מהדוגמאות",t:"יום 3 · פנימי · 'השפל ננעל'",b:[
+  "יום 3: הפריצה השלישית באסיה/לונדון, 1–2 רמות מעבר, קופסה בקיצון — ניו יורק הופכת. 'רוב הפריצות נכשלות'.",
+  "יום פנימי: 7 מתוך 9 יצאו לכיוון המגמה הקודמת. סשן אחד מזייף את הצד השני, וניו יורק נכשלת שם.",
+  "'השפל ננעל': לונדון שוברת את נמוך אסיה / אתמול וחוזרת. אם ניו יורק מחזיקה מעל — השפל של היום במקום, והמחיר עולה.",
+  "הבדיקה השלישית של רמה לרוב שוברת אותה (פרבולי)."]},
+ {g:"מהדוגמאות",t:"פרי נמוך · סחיטה · פרבולי",b:[
+  "פרי נמוך: תיקון 15–60 דק׳ של רמה אחת או 50% מהרגל, אל הקופסה של הסשן הקודם. יעד רגל אחת — לרוב הרגל האחרונה.",
+  "סחיטת שורטים: אחרי 1–3 ימי ירידה לשפל שבוע/חודש, לונדון עושה שפל כוזב קטן וקופסה; ניו יורק מתפוצצת למעלה. NAS100: בסיס 50–70, רגל +300–400.",
+  "פרבולי: מלבן של 3 ימים, ערוץ צר מתחת לראש — פריצה בפתיחת סשן, יעד 100–200% מגובה המלבן.",
+  "סטייסי מראה כמעט רק הצלחות — אין כאן אחוזי הצלחה, רק איך זה נראה כשזה עובד."]},
+
  {g:"ביצוע",t:"מודל הכניסה",b:[
   "הסטאפ על 15 דק'. הכניסה על 5 דק': סגירה חזרה מעבר ל-20 EMA בכיוון העסקה.",
   "שיא → נתקע → סגירה מעבר ל-EMA. הרמה אומרת איפה להסתכל, הסגירה אומרת מתי.",
@@ -556,6 +955,8 @@ const S={
 const persist={s:()=>saveLS(K.s,S.settings),t:()=>saveLS(K.t,S.trades),d:()=>saveLS(K.d,S.days),
   a:()=>saveLS(K.a,S.acct),e:()=>saveLS(K.e,S.exp),p:()=>saveLS(K.p,S.pay),w:()=>saveLS(K.w,S.weeks)};
 const today=()=>iso();
+(function(){try{const t=new URLSearchParams(location.search).get("tab");
+  if(t==="gate"||t==="journal"||t==="today"||t==="numbers"){S.tab=t; if(t==="gate")S.gateStep=1}}catch(e){}})();
 function day(){if(!S.days[today()])S.days[today()]=emptyDay();return S.days[today()]}
 function hexA(h,a){const x=String(h).replace("#","");
   return "rgba("+parseInt(x.slice(0,2),16)+","+parseInt(x.slice(2,4),16)+","+parseInt(x.slice(4,6),16)+","+a+")"}
@@ -669,19 +1070,686 @@ function streak(){
   return n;
 }
 
+/* SESSION PLAN */
+/* level = one "level of rise/fall". Book: 2–3 levels from today's low/high = currencies 50–75 pips, gold/oil/indexes 100–150 */
+const PLAN_DEF={MNQ:[50,50,[50,75,150]],NQ:[50,50,[50,75,150]],MES:[10,10,[15]],MYM:[75,65,[100]],YM:[75,65,[100]],
+  M2K:[5,5,[8]],RTY:[5,5,[8]],MGC:[5,2.5,[5]],GC:[5,2.5,[5]],XAUUSD:[5,2.5,[5]],MCL:[0.5,0.25,[0.5]],WTI:[0.5,0.25,[0.5]],
+  HG:[0.02,0.012,[0.02]],"6E":[0.0025,0.0015,[0.005]],"6B":[0.0025,0.0015,[0.005]],"6A":[0.0025,0.0015,[0.005]]};
+const TICK={MNQ:.25,NQ:.25,MES:.25,MYM:1,YM:1,M2K:.1,RTY:.1,MGC:.1,GC:.1,XAUUSD:.01,MCL:.01,WTI:.01,HG:.0005,"6E":.00005,"6B":.0001,"6A":.00005};
+function planIns(d){return d.planIns||((S.trades[S.trades.length-1]||{}).instrument)||"MNQ"}
+function planCfg(ins){const df=PLAN_DEF[ins]||[0,0,[0]],o=((S.settings.plan||{})[ins])||{};
+  let tps=("t1" in o||"t2" in o||"t3" in o)?[o.t1,o.t2,o.t3].map(Number).filter(x=>x>0):(+o.tp?[+o.tp]:df[2].slice());
+  if(!tps.length)tps=df[2].slice();
+  return {lv:+o.lv||df[0],stop:+o.stop||df[1],tps:tps,per:Math.max(1,+o.per||1),tp:tps[0]}}
+function pq(ins,x){const t=TICK[ins]||.01,dec=(String(t).split(".")[1]||"").length;
+  return String(+(Math.round(x/t)*t).toFixed(dec))}
+function fp(ins,x){const v=+pq(ins,x),dec=(String(TICK[ins]||.01).split(".")[1]||"").length;
+  return v.toLocaleString("en-US",{maximumFractionDigits:dec})}
+const isFX=ins=>/^6[EBA]$/.test(ins);
+const fd=(ins,x)=>isFX(ins)?Math.round(Math.abs(x)*10000)+" פיפס":fp(ins,Math.abs(x))+" נק׳";
+const usd=x=>(x<0?"−":"+")+"$"+Math.abs(Math.round(x)).toLocaleString("en-US");
+const DIR_Q={d3:["לאן היו הפריצות?","למעלה","למטה"],d2:["לאן היו הפריצות?","למעלה","למטה"],
+  fb:["איפה הייתה הכוזבת?","מעל הגבוה","מתחת לנמוך"],bo:["לאן הפריצה?","למעלה","למטה"],
+  news:["איפה נסגר יום החדשות?","בקיצון למעלה","בקיצון למטה"]};
+/* which of today's levels a signal is measured from */
+const NEED_TODAY={frd:"lod",fgd:"hod",pump:"hodlod",dump:"hodlod",bo:"hodlod"};
+/* visual strike-zone chart — zoomed on the trade, all numbers on it */
+function nudge(arr,gap,minY,maxY){arr.sort((a,b)=>a.y-b.y);
+  for(let i=0;i<arr.length;i++){arr[i].ly=Math.max(arr[i].y,i?arr[i-1].ly+gap:minY)}
+  for(let i=arr.length-1;i>=0;i--){if(arr[i].ly>maxY-(arr.length-1-i)*gap)arr[i].ly=maxY-(arr.length-1-i)*gap;
+    if(i<arr.length-1&&arr[i].ly>arr[i+1].ly-gap)arr[i].ly=arr[i+1].ly-gap}
+  return arr}
+/* TradingView-style picture: candles, your yellow/green lines, the zone box and a position tool */
+function zoneChart(P,q,idx){
+  const ins=P.ins,cf=P.cf,pv=pxVal(ins),sgn=q.side==="short"?-1:1,per=cf.per,n=cf.tps.length;
+  const W=360,H=390,top=26,bot=H-26,PX0=6,PX1=282,AX=288;
+  const zr=(q.hi-q.lo)||cf.stop*0.5,stop=q.e-sgn*cf.stop,tg=cf.tps.map(t=>q.e+sgn*t),last=tg[tg.length-1];
+  /* story keyframes (t: 0..1, price) */
+  const kf=q.kind==="break"
+    ?[[0,q.e-sgn*zr*1.7],[.10,q.e-sgn*zr*1.45],[.18,q.e-sgn*zr*1.6],[.30,q.e+sgn*zr*1.1],[.36,q.e+sgn*zr*0.95],[.47,q.e-sgn*zr*0.30],[.53,q.e-sgn*zr*0.2],[.58,q.e+sgn*zr*0.05],[.72,tg[0]],[.78,tg[0]-sgn*cf.stop*0.2],[1,last]]
+    :[[0,q.e+sgn*zr*1.7],[.10,q.e+sgn*zr*1.3],[.17,q.e+sgn*zr*1.5],[.33,q.e+sgn*zr*0.25],[.44,q.e-sgn*zr*0.38],[.52,q.e-sgn*zr*0.1],[.58,q.e+sgn*zr*0.05],[.72,tg[0]],[.78,tg[0]-sgn*cf.stop*0.2],[1,last]];
+  if(q.anchor&&q.kind==="reject"){const A0=q.anchor.p,dz=Math.abs(q.e-A0);
+    kf[0]=[0,A0+sgn*-0.02*dz];kf[1]=[.10,A0-sgn*dz*0.25];kf[2]=[.17,A0-sgn*dz*0.12];}
+  const at=t=>{for(let i=1;i<kf.length;i++)if(t<=kf[i][0]){const a=kf[i-1],b=kf[i],u=(t-a[0])/(b[0]-a[0]);return a[1]+(b[1]-a[1])*u}return kf[kf.length-1][1]};
+  const N=30,dx=(PX1-PX0)/N,rnd=i=>{const x=Math.sin(i*12.9898+idx*7.1+(q.kind==="break"?3:0))*43758.5453;return x-Math.floor(x)};
+  const C=[];let prev=at(0);
+  for(let i=0;i<N;i++){const c=at((i+1)/N)+(rnd(i)-.5)*zr*0.18;const o=prev;
+    let h=Math.max(o,c)+rnd(i+50)*zr*0.16,l=Math.min(o,c)-rnd(i+90)*zr*0.16;C.push({o:o,c:c,h:h,l:l});prev=c}
+  if(q.anchor){const A0=q.anchor.p;for(let i=0;i<=Math.round(.58*N);i++){const k=C[i];
+      if(q.side==="short"){k.l=Math.max(k.l,A0);k.o=Math.max(k.o,A0);k.c=Math.max(k.c,A0)}else{k.h=Math.min(k.h,A0);k.o=Math.min(k.o,A0);k.c=Math.min(k.c,A0)}}}
+  const ie=Math.round(.58*N)-1,iz=Math.round((q.kind==="break"?.30:.33)*N)-1,ip=Math.round((q.kind==="break"?.47:.44)*N)-1;
+  /* stall candle: long wick into / beyond the zone edge */
+  if(q.side==="short")C[ip].h=Math.max(C[ip].h,q.kind==="break"?q.e+zr*0.4:q.hi-zr*0.05); else C[ip].l=Math.min(C[ip].l,q.kind==="break"?q.e-zr*0.4:q.lo+zr*0.05);
+  const vals=[q.hi,q.lo,stop].concat(tg).concat(q.anchor?[q.anchor.p]:[]);C.forEach(k=>{vals.push(k.h,k.l)});
+  let mx=Math.max.apply(null,vals),mn=Math.min.apply(null,vals);const pd=(mx-mn)*0.07||1;mx+=pd;mn-=pd;
+  const y=v=>top+(mx-v)/(mx-mn)*(bot-top),X=i=>PX0+dx*(i+.5);
+  const UP="#3fd3dc",DN="#d64be8",YEL="#f2c94c",GRN="#6fd37b";
+  const zc0=q.side==="short"?"#e0664a":"#7dbb5e";
+  let g=`<defs><marker id="mA${idx}" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:${zc0}"/></marker></defs>
+    <rect x="0" y="0" width="${W}" height="${H}" rx="14" style="fill:#0e0c0b"/>`;
+  for(let i=1;i<8;i++){const yy=top+(bot-top)*i/8;g+=`<line x1="0" x2="${AX}" y1="${yy}" y2="${yy}" style="stroke:rgba(255,255,255,.035)"/>`}
+  for(let i=1;i<6;i++){const xx=PX0+(PX1-PX0)*i/6;g+=`<line x1="${xx}" x2="${xx}" y1="0" y2="${H}" style="stroke:rgba(255,255,255,.025)"/>`}
+  /* your lines: PDH/PDL yellow, close green */
+  const refs=[["PDH",P.H,YEL,""],["סגירה",P.C,GRN,"6 4"],["PDL",P.L,YEL,""],["HOW",P.how,"#9b8f86","2 4"],["LOW",P.low,"#9b8f86","2 4"]].filter(r=>!isNaN(r[1]));
+  const inR=refs.filter(r=>r[1]<=mx&&r[1]>=mn),out=refs.filter(r=>r[1]>mx||r[1]<mn);
+  inR.forEach(r=>{g+=`<line x1="0" x2="${AX}" y1="${y(r[1])}" y2="${y(r[1])}" style="stroke:${r[2]};opacity:.75" stroke-width="1.2" ${r[3]?`stroke-dasharray="${r[3]}"`:""}/>
+    <text x="5" y="${y(r[1])-4}" font-size="10" font-weight="600" style="fill:${r[2]}">${r[0]}</text>`});
+  /* strike zone box */
+  const zc=q.side==="short"?"#e0664a":"#7dbb5e",zx1=X(ie)+dx*1.5;
+  g+=`<rect x="0" y="${y(q.hi)}" width="${zx1}" height="${Math.max(4,y(q.lo)-y(q.hi))}" style="fill:${zc};fill-opacity:.16;stroke:${zc};stroke-width:1.3;stroke-dasharray:5 3"/>
+    <text x="6" y="${y(q.hi)+14}" font-size="11.5" font-weight="700" style="fill:${zc};paint-order:stroke;stroke:#0e0c0b;stroke-width:3px">אזור הפגיעה</text>`;
+  /* measurement: from today's low/high to the zone */
+  if(q.anchor){const ay=y(q.anchor.p),far=q.side==="short"?y(q.hi):y(q.lo),bx=zx1-16;
+    g+=`<line x1="0" x2="${AX}" y1="${ay}" y2="${ay}" style="stroke:#e9e4dc;opacity:.55" stroke-dasharray="2 3"/>
+      <text x="5" y="${ay+(q.side==="short"?13:-5)}" font-size="10" font-weight="600" style="fill:#e9e4dc">${esc(q.anchor.lbl)}${q.anchor.ex?" (דוגמה)":""}</text>
+      <line x1="${bx}" x2="${bx}" y1="${ay}" y2="${far}" style="stroke:${zc}" stroke-width="1.6" marker-start="url(#mA${idx})" marker-end="url(#mA${idx})"/>
+      <text x="${bx-5}" y="${(ay+far)/2+4}" text-anchor="end" font-size="11" font-weight="700" style="fill:${zc};paint-order:stroke;stroke:#0e0c0b;stroke-width:3px">${esc(q.anchor.steps)}</text>`}
+  /* position tool */
+  const px=X(ie),ty=y(last),sy=y(stop),ey=y(q.e);
+  g+=`<rect x="${px}" y="${Math.min(ey,sy)}" width="${PX1-px+4}" height="${Math.abs(sy-ey)}" style="fill:#e0664a;fill-opacity:.22"/>
+    <rect x="${px}" y="${Math.min(ey,ty)}" width="${PX1-px+4}" height="${Math.abs(ty-ey)}" style="fill:#6fd37b;fill-opacity:.13"/>
+    <line x1="${px}" x2="${PX1+4}" y1="${ey}" y2="${ey}" style="stroke:#e9e4dc" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+  tg.forEach((t,i)=>{g+=`<line x1="${px}" x2="${PX1+4}" y1="${y(t)}" y2="${y(t)}" style="stroke:${GRN}" stroke-width="${i===n-1?1.6:1}" ${i<n-1?'stroke-dasharray="3 3"':""}/>
+    <text x="${PX1}" y="${y(t)+(sgn>0?12:-4)}" text-anchor="end" font-size="10" font-weight="600" style="fill:${GRN}">${n>1?"T"+(i+1)+" ":""}${pv?"+$"+Math.round(cf.tps[i]*pv*per):""}</text>`});
+  g+=`<text x="${px+4}" y="${ey+(sgn>0?12:-4)}" font-size="9.5" style="fill:#e9e4dc;opacity:.8">כניסה לדוגמה</text>`;
+  g+=`<text x="${PX1}" y="${sy+(sgn>0?12:-4)}" text-anchor="end" font-size="10" font-weight="600" style="fill:#ff8a6a">סטופ ${pv?"\u2066−$"+Math.round(cf.stop*pv*per*n)+"\u2069":""}</text>`;
+  /* candles */
+  C.forEach((k,i)=>{const x=X(i),upC=k.c>=k.o,col=upC?UP:DN,after=i>ie;
+    g+=`<g class="cnd" style="animation-delay:${(i*0.035).toFixed(2)}s;opacity:${after?.55:1}"><line x1="${x}" x2="${x}" y1="${y(k.h)}" y2="${y(k.l)}" style="stroke:${col}" stroke-width="1.2"/>
+      <rect x="${x-3.2}" y="${Math.min(y(k.o),y(k.c))}" width="6.4" height="${Math.max(1.2,Math.abs(y(k.o)-y(k.c)))}" style="fill:${col}"/></g>`});
+  /* numbered markers linked to the conditions list */
+  const used=[],ci=re=>{const k=q.conds.findIndex((c,j)=>re.test(c)&&used.indexOf(j)<0);if(k>-1)used.push(k);return k};
+  const ir=Math.round(.42*N)-1,trig=ci(/סגירת 5 דק/);
+  const mk=(q.kind==="break"
+    ?[[iz,ci(/סגירת 15|סגירות 15|2 סגירות/)],[ir,ci(/תיקון/)],[ip,ci(/מחזיק|לא נסגר/)]]
+    :[[iz,ci(/לתוך האזור|תיקון|פריצה שלישית|שבר מתחת|פרץ מעל|חזר לאזור|נגיעה|פיק דרך|3 רמות/)],[ip,ci(/פיק:|נתקע|בולע|נסגר חזרה פנימה|קופסה/)]])
+    .concat([[ie,trig]]).filter(m=>m[1]>-1);
+  mk.forEach(m=>{const k=C[m[0]],away=q.side==="short";const yy=away?y(k.h)-13:y(k.l)+13;
+    g+=`<circle cx="${X(m[0])}" cy="${yy}" r="8" style="fill:#f0b84a"/><text x="${X(m[0])}" y="${yy+3.8}" text-anchor="middle" font-size="10.5" font-weight="800" style="fill:#1a1310">${m[1]+1}</text>`});
+  /* right price axis with tags */
+  g+=`<rect x="${AX}" y="0" width="${W-AX}" height="${H}" style="fill:#151210"/><line x1="${AX}" x2="${AX}" y1="0" y2="${H}" style="stroke:rgba(255,255,255,.08)"/>`;
+  const tags=[{v:q.hi,c:zc,o:1},{v:q.lo,c:zc,o:1},{v:q.e,c:"#e9e4dc"},{v:stop,c:"#ff7a5c"}].concat(tg.map(t=>({v:t,c:GRN}))).concat(inR.map(r=>({v:r[1],c:r[2]})));
+  const T2=[];tags.forEach(t=>{if(!T2.some(u=>Math.abs(u.v-t.v)<1e-9))T2.push({v:t.v,c:t.c,o:t.o,y:y(t.v)})});
+  nudge(T2,16,10,H-10).forEach(t=>{g+=`<rect x="${AX+3}" y="${t.ly-7.5}" width="${W-AX-6}" height="15" rx="3" style="${t.o?`fill:#0e0c0b;stroke:${t.c};stroke-width:1.4`:`fill:${t.c}`}"/>
+    <text x="${(AX+W)/2}" y="${t.ly+3.8}" text-anchor="middle" font-size="10" font-weight="700" style="fill:${t.o?t.c:"#14100d"}">${fp(ins,t.v)}</text>`});
+  [true,false].forEach(upE=>{const L2=out.filter(r=>(r[1]>mx)===upE);if(!L2.length)return;
+    g+=`<text x="${AX-4}" y="${upE?14:H-6}" text-anchor="end" font-size="10" style="fill:#b9aea4">${upE?"▲":"▼"} ${L2.map(r=>r[0]+" "+fp(ins,r[1])).join(" · ")}</text>`});
+  return `<svg viewBox="0 0 ${W} ${H}" class="zchart tv" direction="ltr">${g}</svg>`;
+}
+/* the strike-zone ruler: evenly spaced rows, sorted by price */
+function zoneRuler(P,q){
+  const ins=P.ins,rows=[];
+  const add=(p,l,k)=>{if(!isNaN(p)&&!rows.some(r=>Math.abs(r.p-p)<1e-9))rows.push({p:p,l:l,k:k})};
+  add(q.hi,q.hiL,"z");add(q.lo,q.loL,"z");
+  q.marks.forEach(m=>add(m[0],m[1],"m"));
+  add(P.H,"גבוה אתמול","r");add(P.C,"סגירה אתמול","r");add(P.L,"נמוך אתמול","r");
+  const span=(P.H-P.L)*1.6;
+  if(!isNaN(P.how)&&Math.abs(P.how-q.e)<span)add(P.how,"גבוה השבוע","w");
+  if(!isNaN(P.low)&&Math.abs(P.low-q.e)<span)add(P.low,"נמוך השבוע","w");
+  rows.sort((a,b)=>b.p-a.p);
+  let html="",inZ=false;
+  rows.forEach(function(r,i){
+    const z=r.p<=q.hi+1e-9&&r.p>=q.lo-1e-9;
+    if(z&&!inZ){inZ=true}
+    html+=`<div class="rr2 ${z?"in "+q.side:""} ${r.k}"><b>${fp(ins,r.p)}</b><span>${esc(r.l)}</span></div>`;
+    if(z&&r.p===q.hi&&q.hi!==q.lo)html+=`<div class="rr2 in ${q.side} zlabel"><b></b><span>◆ אזור הפגיעה · ${fd(ins,q.hi-q.lo)}</span></div>`;
+  });
+  return `<div class="ruler">${html}</div>`;
+}
+/* the trade ladder: stop, entry, targets — with $ per contract */
+function tradeLadder(P,q,compact){
+  const ins=P.ins,cf=P.cf,pv=pxVal(ins),sgn=q.side==="short"?-1:1,per=cf.per,n=cf.tps.length;
+  const rows=[{p:q.e-sgn*cf.stop,l:"סטופ",d:-cf.stop,k:"sl"},{p:q.e,l:"כניסה (טריגר באזור)",d:0,k:"en"}]
+    .concat(cf.tps.map((t,i)=>({p:q.e+sgn*t,l:n>1?"יעד "+(i+1)+" · "+per+(per===1?" חוזה":" חוזים"):"יעד",d:t,k:"tp"})));
+  const lo=Math.min.apply(null,rows.map(r=>r.p)),hi=Math.max.apply(null,rows.map(r=>r.p));
+  [["גבוה אתמול",P.H],["נמוך אתמול",P.L],["סגירה",P.C],["גבוה השבוע",P.how],["נמוך השבוע",P.low]].forEach(function(x){
+    if(!isNaN(x[1])&&x[1]>lo&&x[1]<hi&&!rows.some(r=>Math.abs(r.p-x[1])<1e-9))rows.push({p:x[1],l:x[0],k:"ob"})});
+  rows.sort((a,b)=>b.p-a.p);
+  const money1=pts=>pv?usd(pts*pv*per):"";
+  const risk=cf.stop*pv*per*n,max=cf.tps.reduce((a,t)=>a+t*pv*per,0);
+  const obs=rows.filter(r=>r.k==="ob"&&(sgn>0?r.p>q.e:r.p<q.e));
+  return `${compact?"":`<div class="ladder">${rows.map(r=>`<div class="lr ${r.k}"><b>${fp(ins,r.p)}</b><span>${esc(r.l)}</span>
+      <em>${r.k==="ob"?"":r.d?(r.d>0?"+":"−")+(isFX(ins)?Math.round(Math.abs(r.d)*10000):fp(ins,Math.abs(r.d))):""}</em><i>${r.k==="tp"?money1(r.d):r.k==="sl"?"−$"+Math.round(cf.stop*pv*per*n).toLocaleString("en-US")+" סה״כ":""}</i></div>`).join("")}</div>`}
+    ${(q.side==="short"?q.e+cf.stop<q.hi:q.e-cf.stop>q.lo)?`<div class="pwarn">⚠ הסטופ (${fp(ins,cf.stop)}) נגמר בתוך האזור — האזור רחב מהסטופ. נכנסים רק אחרי שהקיצון נוצר, והסטופ מעבר לו.</div>`:""}
+    ${obs.length?`<div class="pwarn">⚠ ${obs.map(o=>esc(o.l)+" ב-"+fp(ins,o.p)).join(" · ")} — בדרך ליעדים. שם המחיר עלול לעצור.</div>`:""}
+    ${pv?`<div class="psum2"><span>סיכון <b style="color:var(--clay)">−$${Math.round(risk).toLocaleString("en-US")}</b></span><span>כל היעדים <b style="color:var(--sage)">+$${Math.round(max).toLocaleString("en-US")}</b></span><span>${per*n} ${per*n===1?"חוזה":"חוזים"}</span></div>`:""}`;
+}
+function scaleScenarios(cf,ins){
+  const pv=pxVal(ins),per=cf.per,n=cf.tps.length; if(!pv||n<2)return "";
+  const st=cf.stop,T=cf.tps,v=x=>x*pv*per;
+  const sc=[["סטופ מלא",-st*n]];
+  sc.push(["יעד 1, השאר בסטופ",T[0]-st*(n-1)]);
+  sc.push(["יעד 1, השאר בכניסה (BE)",T[0]]);
+  if(n>=3)sc.push(["יעד 1+2, השאר בכניסה",T[0]+T[1]]);
+  sc.push(["כל היעדים",T.reduce((a,b)=>a+b,0)]);
+  return `<div class="psec"><span>מה יכול לצאת</span><div class="scn">${sc.map(s=>`<div><em>${s[0]}</em><b style="color:${s[1]>=0?"var(--sage)":"var(--clay)"}">${usd(v(s[1]))}</b></div>`).join("")}</div></div>`;
+}
+function weekNote(){const w=new Date().getDay();
+  return w===1?"יום שני — בונים את טווח השבוע. לא ממהרים, ייתכן שאין עסקה."
+   :w===2?"שלישי — משלים את האיזון. הגבוה או הנמוך של השבוע עלול להיווצר היום."
+   :w===3||w===4?"אמצע שבוע — הגבוה/נמוך של השבוע כנראה במקום. כאן יום 3 נפוץ."
+   :w===5?"שישי — לוקחים יעד ראשון ויוצאים. לא מחזיקים לסוף השבוע.":"סוף שבוע — אין מסחר. זמן להכין את השבוע."}
+/* the day as a story: yesterday's bar on the left, today's expected path on the right */
+function storyOf(P,q){
+  const ins=P.ins,sh=q.side==="short",sgn=sh?-1:1,zr=(q.hi-q.lo)||P.cf.lv*0.5,f=x=>fp(ins,x);
+  const L0=planLv(),hod=parseFloat(L0.hod),lod=parseFloat(L0.lod);
+  const named=[["גבוה אתמול",P.H],["נמוך אתמול",P.L],["הסגירה",P.C],["גבוה היום",hod],["נמוך היום",lod]];
+  const gl=v=>{const m=named.find(n=>!isNaN(n[1])&&Math.abs(n[1]-v)<1e-6);return m?m[0]+" "+f(v):f(v)};
+  const near=sh?q.lo:q.hi,far=sh?q.hi:q.lo; /* near = the edge price reaches first */
+  const S5=sh?"סגירת 5 דק׳ מתחת ל-20 EMA → מכירה":"סגירת 5 דק׳ מעל 20 EMA → קנייה";
+  const pts=[[P.C,"פתיחה"]];let steps;
+  if(q.kind==="break"){const lvl=q.lvl!==undefined?q.lvl:q.e;
+    pts.push([q.e+sgn*zr*0.6,""],[q.e+sgn*zr*1.6,"1"],[q.e+sgn*zr*1.1,""],[q.e-sgn*zr*0.25,"2"],[q.e+sgn*zr*0.3,""],[q.goal,"3"]);
+    steps=["המחיר "+(sh?"שובר מתחת ל":"פורץ מעל ")+(q.lvlN?q.lvlN+" ":"")+f(lvl)+" ומחזיק שם בסגירות 15 דק׳",
+      "חוזר לבדוק את הרמה — האזור "+f(q.lo)+"–"+f(q.hi)+" — ולא נכנס פנימה. "+S5,
+      "יעד: "+gl(q.goal)];}
+  else if(q.anchor){const A=q.anchor.p,dA=Math.abs(A-P.C)>zr*0.6;
+    if(dA)pts.push([A,q.anchor.lbl]);
+    pts.push([near,"1"],[far+sgn*zr*0.12,"2"],[q.e,""],[q.goal,"3"]);
+    steps=["המחיר "+(sh?"עולה":"יורד")+" מ"+q.anchor.lbl+" ("+f(A)+(q.anchor.ex?", דוגמה":"")+") אל האזור "+f(q.lo)+"–"+f(q.hi),
+      "נתקע שם — לא נסגר "+(sh?"מעליו":"מתחתיו")+". "+S5,"יעד: "+gl(q.goal)];}
+  else{pts.push([near-sgn*zr*0.8,""],[near,"1"],[far+sgn*zr*0.12,"2"],[near+sgn*zr*0.4,""],[q.goal,"3"]);
+    steps=["המחיר "+(sh?"עולה מעל ":"יורד מתחת ל-")+f(near)+" — לתוך האזור "+f(q.lo)+"–"+f(q.hi),
+      "לא מחזיק: נר 15 דק׳ נסגר חזרה "+(sh?"מתחת":"מעל")+" ל-"+f(near)+". "+S5,"יעד: "+gl(q.goal)];}
+  return {pts:pts,steps:steps};
+}
+function lineChart(P,q,idx){
+  const ins=P.ins,sh=q.side==="short",W=360,H=330,top=24,bot=H-30,BX=34,TX0=78,TX1=262,AX=272;
+  const L0=planLv(),hod=parseFloat(L0.hod),lod=parseFloat(L0.lod),st=storyOf(P,q);
+  const lines=[["גבוה אתמול",P.H,"#f2c94c",""],["סגירה",P.C,"#5fe0a0","6 4"],["נמוך אתמול",P.L,"#f2c94c",""]];
+  if(!isNaN(hod))lines.push(["גבוה היום",hod,"#e9e4dc","2 4"]);
+  if(!isNaN(lod))lines.push(["נמוך היום",lod,"#e9e4dc","2 4"]);
+  const rg=P.H-P.L;
+  if(!isNaN(P.how)&&P.how<=P.H+rg*0.6)lines.push(["גבוה השבוע",P.how,"#a08cff","1 3"]);
+  if(!isNaN(P.low)&&P.low>=P.L-rg*0.6)lines.push(["נמוך השבוע",P.low,"#a08cff","1 3"]);
+  const zr0=(q.hi-q.lo)||P.cf.lv*0.5,core=[q.hi,q.lo].concat(st.pts.map(p=>p[0]));
+  const cmx=Math.max.apply(null,core),cmn=Math.min.apply(null,core),span=Math.max(cmx-cmn,zr0*5);
+  const near=lines.filter(l=>l[1]<=cmx+span*0.45&&l[1]>=cmn-span*0.45),far=lines.filter(l=>near.indexOf(l)<0);
+  lines.length=0;near.forEach(l=>lines.push(l));
+  const vals=core.concat(lines.map(l=>l[1]));
+  let mx=Math.max.apply(null,vals),mn=Math.min.apply(null,vals);const pd=(mx-mn)*0.08||1;mx+=pd;mn-=pd;
+  const y=v=>top+(mx-v)/(mx-mn)*(bot-top),cl=v=>Math.min(mx,Math.max(mn,v));
+  const zc=sh?"#ff7a5c":"#7fe08a";
+  let g=`<defs>
+    <linearGradient id="bg${idx}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#17120f"/><stop offset="1" style="stop-color:#0c0a09"/></linearGradient>
+    <linearGradient id="zg${idx}" x1="0" x2="1"><stop offset="0" style="stop-color:${zc};stop-opacity:.10"/><stop offset="1" style="stop-color:${zc};stop-opacity:.34"/></linearGradient>
+    <filter id="gl${idx}" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="5"/></filter>
+    <marker id="pa${idx}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:${zc}"/></marker></defs>
+    <rect width="${W}" height="${H}" rx="18" style="fill:url(#bg${idx})"/>`;
+  /* yesterday / today */
+  g+=`<rect x="8" y="8" width="${TX0-22}" height="${H-16}" rx="12" style="fill:rgba(255,255,255,.025)"/>
+    <text x="${(8+TX0-14)/2}" y="${H-12}" text-anchor="middle" font-size="10.5" font-weight="600" style="fill:#8f847b">אתמול</text>
+    <text x="${(TX0+TX1)/2}" y="${H-12}" text-anchor="middle" font-size="10.5" font-weight="600" style="fill:#8f847b">היום</text>`;
+  /* level lines across both */
+  lines.forEach(l=>{const yy=y(l[1]);g+=`<line x1="12" x2="${AX}" y1="${yy}" y2="${yy}" style="stroke:${l[2]};opacity:${l[0]==="סגירה"?.9:.7}" stroke-width="${l[0]==="סגירה"?1.5:1.1}" ${l[3]?`stroke-dasharray="${l[3]}"`:""}/>`});
+  /* yesterday bar: high-low with the close tick */
+  const bc=P.C>=(P.H+P.L)/2?"#5fe0a0":"#ff7a5c";
+  g+=`<line x1="${BX}" x2="${BX}" y1="${y(cl(P.H))}" y2="${y(cl(P.L))}" style="stroke:#e9e4dc" stroke-width="3" stroke-linecap="round"/>
+    ${P.H>mx?`<path d="M${BX-5},${top+2} L${BX},${top-6} L${BX+5},${top+2}" style="fill:none;stroke:#e9e4dc;stroke-width:2"/>`:""}
+    ${P.L<mn?`<path d="M${BX-5},${bot-2} L${BX},${bot+6} L${BX+5},${bot-2}" style="fill:none;stroke:#e9e4dc;stroke-width:2"/>`:""}
+    ${P.C<=mx&&P.C>=mn?`<line x1="${BX}" x2="${BX+13}" y1="${y(P.C)}" y2="${y(P.C)}" style="stroke:${bc}" stroke-width="3" stroke-linecap="round"/>`:""}`;
+  [true,false].forEach(function(upE){const F=far.filter(l=>(l[1]>mx)===upE);if(!F.length)return;
+    g+=`<text x="${(TX0+AX)/2}" y="${upE?16:bot+14}" text-anchor="middle" font-size="10" style="fill:#b9aea4">${upE?"▲":"▼"} ${F.map(l=>esc(l[0])+" "+fp(ins,l[1])).join(" · ")}</text>`});
+  /* strike zone, today only */
+  const zy=y(q.hi),zh=Math.max(14,y(q.lo)-y(q.hi));
+  g+=`<rect x="${TX0}" y="${zy}" width="${AX-TX0}" height="${zh}" rx="7" style="fill:${zc};opacity:.30" filter="url(#gl${idx})"/>
+    <rect x="${TX0}" y="${zy}" width="${AX-TX0}" height="${zh}" rx="7" style="fill:url(#zg${idx});stroke:${zc};stroke-width:1.4"/>
+    <text x="${TX0+8}" y="${zy+zh/2+4.5}" font-size="12" font-weight="800" style="fill:#fff;paint-order:stroke;stroke:#0c0a09;stroke-width:3.5px">אזור פגיעה</text>`;
+  /* the path through the story points */
+  const n=st.pts.length,P2=st.pts.map((p,i)=>[TX0+6+i*(TX1-TX0-12)/(n-1),y(p[0]),p[1]]);
+  let d="M"+P2[0][0].toFixed(1)+","+P2[0][1].toFixed(1);
+  for(let i=0;i<n-1;i++){const p0=P2[i-1]||P2[i],p1=P2[i],p2=P2[i+1],p3=P2[i+2]||p2;
+    d+=` C${(p1[0]+(p2[0]-p0[0])/6).toFixed(1)},${(p1[1]+(p2[1]-p0[1])/10).toFixed(1)} ${(p2[0]-(p3[0]-p1[0])/6).toFixed(1)},${(p2[1]-(p3[1]-p1[1])/10).toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`}
+  g+=`<path d="${d}" style="fill:none;stroke:#f0b84a;stroke-width:7;opacity:.18" filter="url(#gl${idx})"/>
+    <path class="lpath" d="${d}" style="fill:none;stroke:#f0b84a;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round" marker-end="url(#pa${idx})"/>`;
+  /* points: open, today's low/high, numbered steps */
+  P2.forEach(function(p,i){if(!p[2])return;
+    if(/^[123]$/.test(p[2])){const c=p[2]==="3"?zc:"#f0b84a",up=i>0&&P2[i-1][1]>p[1];const ly=p[1]+(up?-14:14);
+      g+=`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" style="fill:${c}"/><circle class="lnum" cx="${p[0]}" cy="${ly}" r="9" style="fill:${c};animation-delay:${0.5+i*0.18}s"/>
+        <text class="lnum" x="${p[0]}" y="${ly+3.8}" text-anchor="middle" font-size="11" font-weight="800" style="fill:#120e0b;animation-delay:${0.5+i*0.18}s">${p[2]}</text>`}
+    else g+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" style="fill:#e9e4dc"/><text x="${p[0]}" y="${p[1]-9}" text-anchor="middle" font-size="9.5" style="fill:#d8cfc6;paint-order:stroke;stroke:#0c0a09;stroke-width:3px">${esc(p[2])}</text>`});
+  /* names (left of the price axis) and prices */
+  const N=nudge(lines.map(l=>({t:l[0],c:l[2],y:y(l[1])})),12,10,H-24);
+  N.forEach(t=>{g+=`<text x="${AX-4}" y="${(t.ly-3).toFixed(1)}" text-anchor="end" font-size="9.5" font-weight="600" style="fill:${t.c};opacity:.9;paint-order:stroke;stroke:#0c0a09;stroke-width:3px">${esc(t.t)}</text>`});
+  g+=`<rect x="${AX}" y="0" width="${W-AX}" height="${H}" rx="0" style="fill:rgba(255,255,255,.03)"/>`;
+  const T=lines.map(l=>({v:l[1],c:l[2],y:y(l[1])})).concat([{v:q.hi,c:zc,z:1,y:y(q.hi)},{v:q.lo,c:zc,z:1,y:y(q.lo)}]);
+  const U=[];T.forEach(t=>{if(!U.some(u=>Math.abs(u.v-t.v)<1e-9))U.push(t)});
+  nudge(U,16,10,H-10).forEach(t=>{g+=`<rect x="${AX+4}" y="${t.ly-7.5}" width="${W-AX-8}" height="15" rx="7.5" style="${t.z?`fill:${t.c}`:`fill:#0c0a09;stroke:${t.c};stroke-width:1.2`}"/>
+    <text x="${(AX+W)/2}" y="${t.ly+3.8}" text-anchor="middle" font-size="10" font-weight="700" style="fill:${t.z?"#0c0a09":t.c}">${fp(ins,t.v)}</text>`});
+  return {svg:`<svg viewBox="0 0 ${W} ${H}" class="lchart" direction="ltr">${g}</svg>`,steps:st.steps};
+}
+const SCN={frd:["עולה קודם — ונכשל","יורד ישר — ותיקון"],fgd:["יורד קודם — ונכשל","עולה ישר — ותיקון"],
+  id:["פריצה כוזבת","פריצה אמיתית"],dbl:["פריצה כוזבת","פריצה אמיתית"],d3:["הפריצה נכשלת","הפריצה מחזיקה"],d2:["הפריצה נכשלת","הפריצה מחזיקה"],
+  fb:["הכוזבת עובדת","הכוזבת נכשלת"],pump:["תיקון — והמשך","מהלך מוגזם — היפוך"],dump:["תיקון — והמשך","מהלך מוגזם — היפוך"],bo:["תיקון — והמשך","מהלך מוגזם — היפוך"],
+  news:["המשך","היפוך"],range:["פריצה למעלה","שבירה למטה"]};
+function planLv(){return (day().levels)||{}}
+/* ══ SESSION PLAN v5 — by where price is before New York ══ */
+const LOCS=[["above","מעל גבוה אתמול"],["inside","בתוך הטווח של אתמול"],["below","מתחת לנמוך אתמול"]];
+function planOf(d){
+  const ins=planIns(d),L0=d.levels||{},H=parseFloat(L0.pdh),L=parseFloat(L0.pdl),C=parseFloat(L0.pdc);
+  const how=parseFloat(L0.how),low=parseFloat(L0.low),hod=parseFloat(L0.hod),lod=parseFloat(L0.lod);
+  const dt=d.dayType||"",cf=planCfg(ins),lv=cf.lv,f=x=>fp(ins,x),loc=d.planLoc||"";
+  if(!(H>L)||isNaN(C)) return {need:true};
+  if(!dt||dt==="none") return {none:true};
+  const up=(d.planDir||"up")==="up";
+  const base={ins:ins,cf:cf,H:H,L:L,C:C,how:how,low:low,hod:hod,lod:lod,loc:loc,key:dt,opts:[],outs:[]};
+  if(!loc) return Object.assign(base,{askLoc:true,title:dtName(dt)});
+  /* building blocks — every zone is tied to one of your levels */
+  const S5=s=>s==="short"?"סגירת 5 דק׳ מתחת ל-20 EMA":"סגירת 5 דק׳ מעל 20 EMA";
+  const around=(lvl,name)=>({z:[lvl-lv*0.25,lvl+lv*0.25],zl:"סביב "+name+" "+f(lvl)});
+  const beyond=(lvl,name,dir)=>dir>0?{z:[lvl,lvl+lv],zl:name+" "+f(lvl)+" ועד רמה מעליו"}:{z:[lvl-lv,lvl],zl:name+" "+f(lvl)+" ועד רמה מתחתיו"};
+  const T=(p,l)=>[p,l+" "+f(p)];
+  const out=(o)=>{if(o.z){o.lo=Math.min(o.z[0],o.z[1]);o.hi=Math.max(o.z[0],o.z[1]);o.e=(o.lo+o.hi)/2}return o};
+  const NO=(t,why)=>out({t:t,no:true,why:why});
+  let outs=[],title=dtName(dt),bias="";
+  const frdLike=(sh)=>{ /* sh: FRD (short). mirror for FGD */
+    const s=sh?"short":"long",sF=sh?"long":"short",k=sh?1:-1;
+    const top=sh?H:L,bot=sh?L:H,nT=sh?"גבוה אתמול":"נמוך אתמול",nB=sh?"נמוך אתמול":"גבוה אתמול";
+    const ext=sh?lod:hod,extN=sh?"נמוך היום":"גבוה היום",hasExt=!isNaN(ext);
+    const where=sh?loc:(loc==="above"?"below":loc==="below"?"above":"inside"); /* mirror the location for FGD */
+    bias=sh?"short":"long";
+    if(where==="above")outs=[
+      out(Object.assign({t:"הפריצה נכשלת",if:"ניו יורק חוזרת "+(sh?"מתחת ל":"מעל ")+nT+" "+f(top),side:s,src:"ספר",setup:dt,
+        tg:T(C,"הסגירה"),inv:"נסגר ומחזיק "+(sh?"מעל ":"מתחת ל")+nT},beyond(top,nT,k),{how:(sh?"נכשל בתוך":"נכשל בתוך")+" האזור → "+S5(s)})),
+      NO("הפריצה מחזיקה",(sh?"אם ניו יורק מחזיקה מעל ":"אם ניו יורק מחזיקה מתחת ל")+nT+" — "+(sh?"האדום הראשון":"הירוק הראשון")+" בוטל. לא נלחמים.")];
+    else if(where==="inside"){
+      const A0=hasExt?ext:(sh?Math.min(C,L+lv):Math.max(C,H-lv)),aN=hasExt?extN:extN+" (עוד אין — לפי הסגירה)";
+      let a=A0+k*2*lv,b=A0+k*3*lv; if(sh?b>H:b<L)b=top;
+      outs=[out({t:sh?"עולה לאזור ונכשל":"יורד לאזור ונכשל",if:"המחיר "+(sh?"עולה 2–3 רמות מ":"יורד 2–3 רמות מ")+aN+" "+f(A0),side:s,src:"ספר",setup:dt,
+          z:[a,b],zl:aN+(sh?" + ":" − ")+"2–3 רמות",how:"נתקע באזור → "+S5(s),tg:T(hasExt?ext:bot,hasExt?extN:nB),inv:"נסגר "+(sh?"מעל ה":"מתחת ל")+"אזור ב-15 דק׳ → מודדים מחדש מהקיצון החדש"}),
+        out(Object.assign({t:sh?"שובר את נמוך אתמול":"פורץ את גבוה אתמול",if:"ניו יורק "+(sh?"שוברת מתחת ל":"פורצת מעל ")+nB+" "+f(bot)+" בכוח",side:s,src:"ספר",setup:"lhf",
+          how:"לא רודפים. מחכים לתיקון חזרה ל"+nB+" שנתקע → "+S5(s),tg:T(bot-k*2*lv,"2 רמות "+(sh?"מתחת":"מעל")),inv:"חוזר ומחזיק בתוך הטווח"},around(bot,nB)))];}
+    else{ /* already beyond the far side */
+      const lhf=hasExt?{z:[ext+k*lv,ext+k*2*lv],zl:extN+(sh?" + ":" − ")+"1–2 רמות"}:around(bot,nB);
+      outs=[out(Object.assign({t:"ממשיך — פרי נמוך",if:"ניו יורק נשארת "+(sh?"מתחת ל":"מעל ")+nB+" "+f(bot),side:s,src:"ספר",setup:"lhf",
+          how:"תיקון קטן של 15–30 דק׳ "+(sh?"למעלה":"למטה")+" לאזור, נתקע → "+S5(s),tg:T(hasExt?ext-k*lv:bot-k*2*lv,hasExt?"רמה "+(sh?"מתחת ל":"מעל ")+extN:"2 רמות "+(sh?"מתחת":"מעל")),
+          inv:"התיקון עובר 3 רמות / חוזר לטווח"},lhf)),
+        out(Object.assign({t:sh?"חוזר מעל נמוך אתמול":"חוזר מתחת לגבוה אתמול",if:"ניו יורק מחזירה את המחיר "+(sh?"מעל ":"מתחת ל")+nB+" ומחזיקה שם",side:sF,src:"הערכה",setup:"",
+          how:(sh?"השורטים":"הלונגים")+" שנכנסו בלונדון לכודים. לא "+(sh?"מוכרים":"קונים")+". אפשר "+(sh?"קנייה":"מכירה")+" בבדיקה של הרמה → "+S5(sF),tg:T(C,"הסגירה"),inv:"נופל שוב "+(sh?"מתחת":"מעל")+" ל"+nB},around(bot,nB)))];}
+  };
+  if(dt==="frd"){title="יום אדום ראשון";frdLike(true)}
+  else if(dt==="fgd"){title="יום ירוק ראשון";frdLike(false)}
+  else if(dt==="id"||dt==="dbl"){title=dtName(dt);
+    if(loc==="inside")outs=[
+      out(Object.assign({t:"שבירה כוזבת למטה",if:"המחיר שובר מתחת לנמוך אתמול "+f(L)+" וחוזר פנימה",side:"long",src:"ספר",setup:"id",how:"חזר לתוך הטווח → "+S5("long"),tg:T(H,"גבוה אתמול"),inv:"נשאר מתחת בסגירות 15 דק׳"},beyond(L,"נמוך אתמול",-1))),
+      out(Object.assign({t:"פריצה כוזבת למעלה",if:"המחיר פורץ מעל גבוה אתמול "+f(H)+" וחוזר פנימה",side:"short",src:"ספר",setup:"id",how:"חזר לתוך הטווח → "+S5("short"),tg:T(L,"נמוך אתמול"),inv:"נשאר מעל בסגירות 15 דק׳"},beyond(H,"גבוה אתמול",1)))];
+    else{const ab=loc==="above",lvl=ab?H:L,n=ab?"גבוה אתמול":"נמוך אתמול",o=ab?L:H,oN=ab?"נמוך אתמול":"גבוה אתמול";
+      outs=[out(Object.assign({t:"הפריצה כוזבת",if:"ניו יורק מחזירה את המחיר לתוך הטווח, "+(ab?"מתחת ל":"מעל ")+f(lvl),side:ab?"short":"long",src:"ספר",setup:"id",
+          how:"חזר פנימה → "+S5(ab?"short":"long"),tg:T(o,oN),inv:"חוזר ומחזיק "+(ab?"מעל":"מתחת ל")+n},beyond(lvl,n,ab?1:-1))),
+        out(Object.assign({t:"הפריצה אמיתית",if:"ניו יורק מחזיקה "+(ab?"מעל ":"מתחת ל")+n+" — בודקת את הרמה ולא נכנסת פנימה",side:ab?"long":"short",src:"ספר · הכניסה הערכה",setup:"idtrend",
+          how:"בדיקה של "+n+" שמחזיקה → "+S5(ab?"long":"short"),tg:T(lvl+(ab?2:-2)*lv,"2 רמות "+(ab?"מעל":"מתחת")),inv:"נסגר חזרה בתוך הטווח"},around(lvl,n)))];}
+    if(dt==="dbl")outs.forEach(o=>{o.note="יום פנימי כפול — לרוב לפני תנועה חדה"})}
+  else if(dt==="d3"||dt==="d2"){title=dtName(dt);
+    const u=up,lvl=u?H:L,n=u?"גבוה אתמול":"נמוך אתמול",o=u?L:H,oN=u?"נמוך אתמול":"גבוה אתמול",past=(u&&loc==="above")||(!u&&loc==="below");
+    if(past)outs=[
+      out(Object.assign({t:"הפריצה השלישית נכשלת",if:"ניו יורק חוזרת "+(u?"מתחת ל":"מעל ")+n+" "+f(lvl),side:u?"short":"long",src:"ספר",setup:"d3",how:"נכשל באזור → "+S5(u?"short":"long"),tg:T(o,oN),inv:"מחזיק בחוץ בסגירות 15 דק׳"},beyond(lvl,n,u?1:-1))),
+      out(Object.assign({t:"הפריצה מחזיקה",if:"ניו יורק נשארת "+(u?"מעל ":"מתחת ל")+n+" ובודקת אותו",side:u?"long":"short",src:"הערכה",setup:"lhf",how:"בדיקה שמחזיקה → "+S5(u?"long":"short"),tg:T(lvl+(u?2:-2)*lv,"2 רמות "+(u?"מעל":"מתחת")),inv:"נסגר חזרה פנימה"},around(lvl,n)))];
+    else if(loc==="inside")outs=[out(Object.assign({t:"מחכים לפריצה השלישית",if:"המחיר פורץ "+(u?"מעל ":"מתחת ל")+n+" "+f(lvl)+" — ונתקע",side:u?"short":"long",src:"ספר",setup:"d3",how:"נתקע באזור → "+S5(u?"short":"long"),tg:T(o,oN),inv:"הפריצה מחזיקה בסגירות"},beyond(lvl,n,u?1:-1)))];
+    else outs=[NO("הסטאפ השתנה","המחיר שבר את הצד השני. זה כבר לא יום 3 — מחכים ליום הבא.")];
+    if(dt==="d2")outs.forEach(o=>{o.note="יום 2 — עדיף עסקת סשן קטנה. העסקה הגדולה מחר."})}
+  else if(dt==="fb"){title="אחרי פריצה כוזבת";
+    const u=up,lvl=u?H:L,n=u?"גבוה אתמול":"נמוך אתמול",o=u?L:H,oN=u?"נמוך אתמול":"גבוה אתמול",past=(u&&loc==="above")||(!u&&loc==="below"),done=(u&&loc==="below")||(!u&&loc==="above");
+    if(loc==="inside")outs=[out({t:"לצד השני",if:"המחיר "+(u?"עולה חזרה אל ":"יורד חזרה אל ")+n+" ונתקע",side:u?"short":"long",src:"ספר",setup:"",
+        z:u?[H-lv,H]:[L,L+lv],zl:n+" ורמה "+(u?"מתחתיו":"מעליו"),how:"נתקע באזור → "+S5(u?"short":"long"),tg:T(o,oN),inv:"נסגר "+(u?"מעל":"מתחת ל")+n})];
+    else if(past)outs=[out(Object.assign({t:"הכוזבת נכשלה",if:"המחיר חזר "+(u?"מעל ":"מתחת ל")+n+" ומחזיק",side:u?"long":"short",src:"הערכה",setup:"lhf",how:"בדיקה שמחזיקה → "+S5(u?"long":"short"),tg:T(lvl+(u?2:-2)*lv,"2 רמות "+(u?"מעל":"מתחת")),inv:"נסגר חזרה פנימה"},around(lvl,n)))];
+    else outs=[NO("היעד כבר הושג","המחיר כבר הגיע לצד השני. לא רודפים — מחכים לסטאפ חדש.")]}
+  else if(dt==="pump"||dt==="dump"||dt==="bo"){
+    const u=dt==="pump"?true:dt==="dump"?false:up;title=dtName(dt);
+    const lvl=u?H:L,n=u?"גבוה אתמול":"נמוך אתמול",ext=u?hod:lod,extN=u?"גבוה היום":"נמוך היום",hasExt=!isNaN(ext);
+    const withT=(u&&loc==="above")||(!u&&loc==="below"),against=(u&&loc==="below")||(!u&&loc==="above");
+    if(withT){const z=hasExt?{z:[ext-(u?1:-1)*lv,ext-(u?2:-2)*lv],zl:extN+(u?" − ":" + ")+"1–2 רמות"}:around(lvl,n);
+      outs=[out(Object.assign({t:"פרי נמוך — תיקון והמשך",if:"התיקון של ניו יורק נשאר "+(u?"מעל ":"מתחת ל")+n,side:u?"long":"short",src:"ספר",setup:"lhf",
+        how:"תיקון של 15–30 דק׳ לאזור, נתקע → "+S5(u?"long":"short"),tg:T((hasExt?ext:lvl)+(u?1:-1)*lv,"רמה "+(u?"מעל":"מתחת ל")+(hasExt?extN:n)),inv:"התיקון חוזר לתוך הטווח של אתמול"},z))];}
+    else if(loc==="inside")outs=[
+      out(Object.assign({t:u?"פורץ שוב למעלה":"שובר שוב למטה",if:"המחיר "+(u?"פורץ מעל ":"שובר מתחת ל")+n+" "+f(lvl)+" ומחזיק",side:u?"long":"short",src:"ספר · הכניסה הערכה",setup:"lhf",how:"בדיקה של "+n+" שמחזיקה → "+S5(u?"long":"short"),tg:T(lvl+(u?2:-2)*lv,"2 רמות "+(u?"מעל":"מתחת")),inv:"נסגר חזרה פנימה"},around(lvl,n))),
+      NO(u?"נסגר מתחת לפתיחה":"נסגר מעל הפתיחה",u?"אם היום נסגר אדום — זה אדום ראשון. העסקה מחר.":"אם היום נסגר ירוק — זה ירוק ראשון. העסקה מחר.")];
+    else outs=[NO("המגמה נשברה",(u?"הפאמפ":"הדאמפ")+" נשבר לצד השני. לא נכנסים עם המגמה של אתמול.")]}
+  else if(dt==="range"){title="מלבן של 3 ימים";const h=H-L;
+    if(loc==="above")outs=[out(Object.assign({t:"פריצה למעלה",if:"המחיר מחזיק מעל ראש המלבן",side:"long",src:"ספר",setup:"para",how:"תיקון ראשון שמחזיק → "+S5("long"),tg:T(H+h,"גובה המלבן"),inv:"חוזר לתוך המלבן"},around(H,"ראש המלבן")))];
+    else if(loc==="below")outs=[out(Object.assign({t:"שבירה למטה",if:"המחיר מחזיק מתחת לתחתית המלבן",side:"short",src:"ספר",setup:"para",how:"תיקון ראשון שמחזיק → "+S5("short"),tg:T(L-h,"גובה המלבן"),inv:"חוזר לתוך המלבן"},around(L,"תחתית המלבן")))];
+    else outs=[NO("מחכים לפריצה","עוד בתוך המלבן. לא סוחרים בתוכו — מחכים לפריצה חזקה של "+f(H)+" או "+f(L)+".")]}
+  else if(dt==="news"){title="יום שני אחרי חדשות";const u=up;
+    const withT=(u&&loc!=="below")||(!u&&loc!=="above");
+    outs=withT?[out(Object.assign({t:"המשך",if:"המומנטום של יום החדשות ממשיך",side:u?"long":"short",src:"ספר · האזור הערכה",setup:"second",how:"נגיעה קטנה → "+S5(u?"long":"short")+". חייב לזוז מיד",tg:T((u?H:L)+(u?1:-1)*lv,"רמה "+(u?"מעל גבוה":"מתחת לנמוך")+" אתמול"),inv:"לא זז מיד → יוצאים"},around(C,"הסגירה")))]
+      :[out(Object.assign({t:"היפוך",if:"יום החדשות היה פריצה כוזבת — המחיר כבר חזר",side:u?"short":"long",src:"ספר · האזור הערכה",setup:"second",how:"בדיקה של הסגירה שנכשלת → "+S5(u?"short":"long"),tg:T(u?L:H,u?"נמוך אתמול":"גבוה אתמול"),inv:"חוזר מעבר לסגירה ומחזיק"},around(C,"הסגירה")))]}
+  else if(dt==="mon"&&new Date().getDay()!==2){title="יום שני — טווח הפתיחה";
+    outs=[NO("מסמנים 'יום שני' ביום שלישי",new Date().getDay()===1?"היום יום שני — ראה את הכרטיס למעלה. מחר בבוקר בחר 'יום שני' כיום האות, והטווח שלו יישמר לכל השבוע.":"הטווח של שני כבר שמור ומופיע במפה (קו ורוד). בחר את יום האות של אתמול.")]}
+  else if(dt==="mon"){title="אחרי יום שני — טווח הפתיחה";
+    if(loc==="inside")outs=[
+      out(Object.assign({t:"פריצה כוזבת למעלה",if:"המחיר פורץ מעל גבוה שני "+f(H)+" ונכשל — חוזר לטווח",side:"short",src:"דוגמאות",setup:"fb",
+        how:"חזר מתחת ל"+f(H)+" → "+S5("short"),tg:T(L,"נמוך שני"),inv:"נשאר מעל גבוה שני בסגירות 15 דק׳"},beyond(H,"גבוה שני",1))),
+      out(Object.assign({t:"פריצה כוזבת למטה",if:"המחיר שובר מתחת לנמוך שני "+f(L)+" ונכשל — חוזר לטווח",side:"long",src:"דוגמאות",setup:"fb",
+        how:"חזר מעל "+f(L)+" → "+S5("long"),tg:T(H,"גבוה שני"),inv:"נשאר מתחת לנמוך שני בסגירות 15 דק׳"},beyond(L,"נמוך שני",-1)))];
+    else{const ab=loc==="above",lvl=ab?H:L,n=ab?"גבוה שני":"נמוך שני",o=ab?L:H,oN=ab?"נמוך שני":"גבוה שני";
+      outs=[out(Object.assign({t:"פריצת שני נכשלת",if:"ניו יורק מחזירה את המחיר לתוך טווח שני",side:ab?"short":"long",src:"דוגמאות",setup:"fb",
+          how:"חזר לטווח → "+S5(ab?"short":"long"),tg:T(o,oN),inv:"מחזיק מחוץ לטווח"},beyond(lvl,n,ab?1:-1))),
+        out(Object.assign({t:"פריצה אמיתית",if:"ניו יורק מחזיקה "+(ab?"מעל ":"מתחת ל")+n+" ובודקת אותו",side:ab?"long":"short",src:"הערכה",setup:"lhf",
+          how:"בדיקה שמחזיקה → "+S5(ab?"long":"short"),tg:T(lvl+(ab?2:-2)*lv,"2 רמות "+(ab?"מעל":"מתחת")),inv:"נסגר חזרה בתוך הטווח",
+          note:"לא נלחמים בפריצת יום 1 שעדיין בתוך הטווח של השבוע הקודם"},around(lvl,n)))];}}
+  else outs=[NO("עוד לא העסקה","יום 1 — מחכים ליום האות. לא נלחמים בפריצת יום 1.")];
+  /* what Burke's examples showed for this signal + location */
+  const EX={frd:{above:"4 מתוך 10 דוגמאות: לונדון עלתה 2–3 רמות מהנמוך ונכנסה לקופסה בשיא — ניו יורק שברה את הקופסה למטה, חזרה לנמוך היום ולנמוך אתמול.",
+      inside:"3 מתוך 10: דשדוש סביב הסגירה — הסגירה התנהגה כהתנגדות, ניו יורק שברה את נמוך לונדון.",
+      below:"3 מתוך 10 (כולל NAS100): לונדון כבר ירדה — ניו יורק חזרה לבדוק את נמוך אתמול / הסגירה מלמטה ונכשלה. לא רודפים שפלים."},
+    fgd:{all:"17 דוגמאות: הירידה למחרת עצרה בסגירה / תחתית הקופסה, או קצת מתחת לשפל (ציד סטופים) וחזרה. כמעט אף פעם לא מתחת לשפל הקודם. הרבה תחתיות כפולות (W)."},
+    id:{all:"7 מתוך 9: היציאה מהיום הפנימי הייתה לכיוון המגמה הקודמת. לרוב סשן אחד מזייף את הצד השני, וניו יורק נכשלת שם."},
+    dbl:{all:"שני ימים פנימיים = 'קפיץ'. סוחרים את הפריצה והבדיקה הראשונה. יעדים: 100% / 200% מגובה הטווח."},
+    d3:{all:"10 דוגמאות: הפריצה השלישית קרתה באסיה/לונדון, 1–2 רמות מעבר לגבוה/נמוך אתמול, לונדון בנתה קופסה בקיצון — וניו יורק הפכה. 'רוב הפריצות נכשלות'."},
+    d2:{all:"מחר יום 3. היום עדיף עסקת סשן קטנה."},
+    pump:{all:"פרי נמוך (28 דוגמאות): תיקון של 15–60 דק׳, כרמה אחת או 50% מהרגל האחרונה, אל הקופסה של הסשן הקודם. יעד: רגל אחת — לוקחים ויוצאים."},
+    dump:{all:"פרי נמוך (28 דוגמאות): תיקון של 15–60 דק׳, כרמה אחת או 50% מהרגל האחרונה, אל הקופסה של הסשן הקודם. יעד: רגל אחת — לוקחים ויוצאים."},
+    bo:{all:"פרי נמוך: תיקון של רמה אחת / 50% מהרגל, אל הקופסה של הסשן הקודם. יעד רגל אחת."},
+    range:{all:"פרבולי (36 עמ׳): ערוץ צר מתחת לראש הקופסה, פריצה בפתיחת סשן. הבדיקה השלישית של רמה שוברת אותה. יעד 100–200% מגובה הקופסה."},
+    news:{all:"יום שני אחרי חדשות: חייב לזוז מיד. אם לא — יוצאים."},
+    mon:{all:"21 דוגמאות: שני קובע את טווח השבוע. שלישי שפורץ את גבוה/נמוך שני ונכשל → לרוב יום אדום/ירוק ראשון. הקצב השבועי: שני טווח · רביעי פנימי/אדום/ירוק · שישי חזרה לצד השני."}};
+  const ex0=EX[dt]||{};base.ex=ex0[loc]||ex0.all||"";
+  if(dt==="mon"&&new Date().getDay()===2){S.weeks=S.weeks||{};const wk=weekKey();const w=S.weeks[wk]=S.weeks[wk]||{};
+    if(+w.h!==H||+w.l!==L){w.h=String(H);w.l=String(L);try{persist.w()}catch(e){}}}
+  const P=Object.assign(base,{title:title,bias:bias,outs:outs});
+  P.opts=outs.filter(o=>!o.no);P.zones=P.opts;
+  const oi=Math.min(+(d.planOpt||0),Math.max(0,P.opts.length-1));P.oi=oi;P.dir=P.opts.length?P.opts[oi].side:"";
+  return P;
+}
+const LON=[["up3","עלו ~3 רמות → קופסה בשיא"],["dn3","ירדו ~3 רמות → קופסה בשפל"],["fbh","פריצה כוזבת למעלה"],["fbl","פריצה כוזבת למטה"],["chop","דשדוש בלי כיוון"]];
+function lonNote(k,P){if(!k)return null;const f=x=>fp(P.ins,x),q=P.opts[P.oi]||{};
+  if(k==="up3")return {t:"ברוב הדוגמאות (פאמפ ודאמפ סשני): אחרי 3 רמות עלייה וקופסה בשיא, ניו יורק שברה את תחתית הקופסה וחזרה למקור התנועה"+(!isNaN(P.lod)?" — נמוך היום "+f(P.lod):"")+". לא קונים בשיא.",warn:q.side==="long"&&q.setup!=="lhf"};
+  if(k==="dn3")return {t:"ברוב הדוגמאות (דאמפ ופאמפ / סחיטת שורטים): אחרי 3 רמות ירידה וקופסה בשפל, ניו יורק שברה את ראש הקופסה וחזרה למקור התנועה"+(!isNaN(P.hod)?" — גבוה היום "+f(P.hod):"")+". לא מוכרים בשפל.",warn:q.side==="short"&&q.setup!=="lhf"};
+  if(k==="fbh")return {t:"לונדון פרצה למעלה ונכשלה — מי שקנה את הפריצה לכוד. בדוגמאות ניו יורק לרוב המשיכה לצד השני. 'רוב הפריצות נכשלות'.",warn:q.side==="long"};
+  if(k==="fbl")return {t:"'השפל ננעל' (LOD locked in): לונדון שברה למטה וחזרה. אם ניו יורק מחזיקה מעל — בדוגמאות היא עלתה.",warn:q.side==="short"};
+  return {t:"דשדוש בלי כיוון לפני ניו יורק — 'רמות + תזמון': עסקה רק אם ניו יורק נוגעת ברמה שלך בחלון 15:30–17:30. אחרת אין עסקה."};}
+/* the map: your levels, where price is now, the zones (A/B) and where each one goes */
+function planMap(P){
+  const ins=P.ins,lv=P.cf.lv,W=360,Hh=300,top=20,bot=Hh-20,X0=10,AX=270;
+  const hereV=P.loc==="above"?(!isNaN(P.hod)?P.hod:P.H+lv*0.8):P.loc==="below"?(!isNaN(P.lod)?P.lod:P.L-lv*0.8):P.C;
+  const lines=[["גבוה אתמול",P.H,"#f2c94c",""],["סגירה",P.C,"#5fe0a0","6 4"],["נמוך אתמול",P.L,"#f2c94c",""]];
+  if(!isNaN(P.hod))lines.push(["גבוה היום",P.hod,"#e9e4dc","2 4"]);
+  if(!isNaN(P.lod))lines.push(["נמוך היום",P.lod,"#e9e4dc","2 4"]);
+  {const w=(S.weeks||{})[weekKey()]||{},mh=parseFloat(w.h),ml=parseFloat(w.l);
+   if(P.key!=="mon"&&new Date().getDay()!==1){if(!isNaN(mh)&&Math.abs(mh-P.H)>1e-9)lines.push(["גבוה שני",mh,"#ff9fd0","4 3"]);
+     if(!isNaN(ml)&&Math.abs(ml-P.L)>1e-9)lines.push(["נמוך שני",ml,"#ff9fd0","4 3"]);}}
+  const rg=P.H-P.L;
+  if(!isNaN(P.how)&&P.how<P.H+rg)lines.push(["גבוה השבוע",P.how,"#a08cff","1 3"]);
+  if(!isNaN(P.low)&&P.low>P.L-rg)lines.push(["נמוך השבוע",P.low,"#a08cff","1 3"]);
+  const core=[hereV,P.C];P.outs.forEach(o=>{if(o.z)core.push(o.lo,o.hi,o.tg[0])});
+  const cmx=Math.max.apply(null,core),cmn=Math.min.apply(null,core),span=Math.max(cmx-cmn,lv*4);
+  const near=lines.filter(l=>l[1]<=cmx+span*0.6&&l[1]>=cmn-span*0.6),far=lines.filter(l=>near.indexOf(l)<0);
+  lines.length=0;near.forEach(l=>lines.push(l));
+  const vals=core.concat(lines.map(l=>l[1]));
+  let mx=Math.max.apply(null,vals),mn=Math.min.apply(null,vals);const pd=(mx-mn)*0.1||1;mx+=pd;mn-=pd;
+  const y=v=>top+(mx-v)/(mx-mn)*(bot-top);
+  let g=`<defs><filter id="mg" x="-20%" y="-80%" width="140%" height="260%"><feGaussianBlur stdDeviation="5"/></filter>
+    <marker id="ma" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:context-stroke"/></marker></defs>
+    <rect width="${W}" height="${Hh}" rx="18" style="fill:#0f0c0a"/>`;
+  /* the three regions — tap to choose */
+  const yc=v=>Math.min(Hh,Math.max(0,y(v)));
+  const reg=[["above",0,yc(P.H)],["inside",yc(P.H),yc(P.L)],["below",yc(P.L),Hh]];
+  reg.forEach(r=>{const on=P.loc===r[0];g+=`<rect data-act="planLoc" data-arg="${r[0]}" x="0" y="${Math.max(0,r[1])}" width="${AX}" height="${Math.max(0,Math.min(Hh,r[2])-Math.max(0,r[1]))}" style="fill:${on?"rgba(240,184,74,.07)":"transparent"};cursor:pointer"/>`});
+  lines.forEach(l=>{const yy=y(l[1]);g+=`<line x1="${X0}" x2="${AX}" y1="${yy}" y2="${yy}" style="stroke:${l[2]};opacity:.75;pointer-events:none" stroke-width="${l[0]==="סגירה"?1.5:1.1}" ${l[3]?`stroke-dasharray="${l[3]}"`:""}/>`});
+  /* zones and targets */
+  const xs=[118,200];
+  P.outs.filter(o=>o.z).forEach(function(o,i){const c=o.side==="short"?"#ff7a5c":"#7fe08a",zy=y(o.hi),zh=Math.max(10,y(o.lo)-y(o.hi)),cx=xs[i]||xs[0],sel=P.opts[P.oi]===o;
+    g+=`<rect x="${cx-34}" y="${zy}" width="68" height="${zh}" rx="6" style="fill:${c};opacity:${sel?.45:.18};pointer-events:none" filter="url(#mg)"/>
+      <rect x="${cx-34}" y="${zy}" width="68" height="${zh}" rx="6" style="fill:${c};fill-opacity:${sel?.32:.14};stroke:${c};stroke-width:${sel?1.8:1};pointer-events:none"/>
+      <text x="${cx}" y="${zy+zh/2+4.5}" text-anchor="middle" font-size="12.5" font-weight="800" style="fill:#fff;paint-order:stroke;stroke:#0f0c0a;stroke-width:3px;pointer-events:none">${i?"ב":"א"}</text>`;
+    const ty=y(o.tg[0]),from=o.side==="short"?y(o.lo):y(o.hi);
+    g+=`<line x1="${cx}" x2="${cx}" y1="${from}" y2="${ty}" style="stroke:${c};opacity:${sel?1:.45};pointer-events:none" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ma)"/>
+      <circle cx="${cx}" cy="${ty}" r="3" style="fill:${c};opacity:${sel?1:.5}"/>`});
+  [true,false].forEach(function(upE){const F=far.filter(l=>(l[1]>mx)===upE);if(!F.length)return;
+    g+=`<text x="${AX/2}" y="${upE?14:Hh-6}" text-anchor="middle" font-size="10.5" style="fill:#b9aea4;pointer-events:none">${upE?"▲":"▼"} ${F.map(l=>esc(l[0])+" "+fp(ins,l[1])).join(" · ")}</text>`});
+  /* you are here */
+  const hy=y(hereV);
+  g+=`<circle class="here" cx="44" cy="${hy}" r="10" style="fill:#f0b84a;opacity:.25"/><circle cx="44" cy="${hy}" r="5.5" style="fill:#f0b84a"/>
+    <text x="58" y="${hy+4}" font-size="10.5" font-weight="700" style="fill:#f0b84a;paint-order:stroke;stroke:#0f0c0a;stroke-width:3px">המחיר עכשיו</text>`;
+  /* names + prices */
+  nudge(lines.map(l=>({t:l[0],c:l[2],y:y(l[1])})),12,10,Hh-8).forEach(t=>{g+=`<text x="${AX-5}" y="${(t.ly-3).toFixed(1)}" text-anchor="end" font-size="9.5" font-weight="600" style="fill:${t.c};paint-order:stroke;stroke:#0f0c0a;stroke-width:3px;pointer-events:none">${esc(t.t)}</text>`});
+  g+=`<rect x="${AX}" y="0" width="${W-AX}" height="${Hh}" style="fill:rgba(255,255,255,.03)"/>`;
+  const T=lines.map(l=>({v:l[1],c:l[2],y:y(l[1])}));
+  nudge(T,16,10,Hh-10).forEach(t=>{g+=`<rect x="${AX+4}" y="${t.ly-7.5}" width="${W-AX-8}" height="15" rx="7.5" style="fill:#0f0c0a;stroke:${t.c};stroke-width:1.2"/>
+    <text x="${(AX+W)/2}" y="${t.ly+3.8}" text-anchor="middle" font-size="10" font-weight="700" style="fill:${t.c}">${fp(ins,t.v)}</text>`});
+  return `<svg viewBox="0 0 ${W} ${Hh}" class="pmap" direction="ltr">${g}</svg>`;
+}
+/* price ladder: every level on its own evenly spaced row — always readable */
+function planLadder(P,q){
+  const ins=P.ins,lv=P.cf.lv,f=x=>fp(ins,x),R=50;
+  const L0=planLv(),wk=(S.weeks||{})[weekKey()]||{};
+  const raw=[];
+  const add=(v,n,k,pr)=>{if(v===undefined||v===null||isNaN(v))return;raw.push({v:+v,n:n,k:k,pr:pr||1})};
+  add(P.H,"גבוה אתמול","lvl");add(P.C,"סגירה","close");add(P.L,"נמוך אתמול","lvl");
+  add(P.how,"גבוה השבוע","wk");add(P.low,"נמוך השבוע","wk");
+  add(P.hod,"גבוה היום","today");add(P.lod,"נמוך היום","today");
+  if(P.key!=="mon"&&new Date().getDay()!==1){add(parseFloat(wk.h),"גבוה שני","mon");add(parseFloat(wk.l),"נמוך שני","mon")}
+  const zc=q.side;
+  add(q.hi,"","zone",3);add(q.lo,"","zone",3);
+  add(q.tg[0],"יעד","tgt",2);
+  /* merge equal prices */
+  const rows=[];raw.sort((a,b)=>b.v-a.v).forEach(r=>{const m=rows.find(x=>Math.abs(x.v-r.v)<1e-9);
+    if(m){if(r.n&&m.n.indexOf(r.n)<0)m.n=!m.n?r.n:(r.pr>m.pr?r.n+" · "+m.n:m.n+" · "+r.n);if(r.pr>m.pr){m.k=r.k;m.pr=r.pr}}else rows.push(Object.assign({},r))});
+  /* keep the view focused: drop far rows beyond the first one on each side */
+  const span=[q.hi,q.lo,q.tg[0]],mx=Math.max.apply(null,span),mn=Math.min.apply(null,span);
+  let above=rows.filter(r=>r.v>mx),below=rows.filter(r=>r.v<mn),mid=rows.filter(r=>r.v<=mx&&r.v>=mn);
+  const far=[];if(above.length>2){far.push("▲ "+above.slice(0,above.length-2).map(r=>r.n+" "+f(r.v)).join(" · "));above=above.slice(-2)}
+  if(below.length>2){far.push("▼ "+below.slice(2).map(r=>r.n+" "+f(r.v)).join(" · "));below=below.slice(0,2)}
+  const list=above.concat(mid,below);
+  /* where price is now */
+  const hereV=P.loc==="above"?(!isNaN(P.hod)?P.hod:P.H+lv*0.5):P.loc==="below"?(!isNaN(P.lod)?P.lod:P.L-lv*0.5):P.C;
+  let ni=list.findIndex(r=>r.v<hereV);if(ni<0)ni=list.length;
+  const exact=list.some(r=>Math.abs(r.v-hereV)<1e-9);
+  const idx=v=>list.findIndex(r=>Math.abs(r.v-v)<1e-9);
+  const iHi=idx(q.hi),iLo=idx(q.lo),iT=idx(q.tg[0]);
+  const y=i=>i*R+R/2;
+  const nowY=exact?y(idx(hereV)):(ni===0?6:ni>=list.length?list.length*R-6:ni*R);
+  const H=list.length*R;
+  const band=`<div class="lband ${zc}" style="top:${y(iHi)-20}px;height:${y(iLo)-y(iHi)+40}px"><em>${zc==="short"?"מכירה":"קנייה"} כאן</em></div>`;
+  const zMid=(y(iHi)+y(iLo))/2,tY=y(iT),up=tY<zMid;
+  const dist=(up?"+":"−")+fd(ins,Math.abs(q.tg[0]-q.e));
+  const path=`<div class="lpath ${zc} ${up?"up":"down"}" style="top:${Math.min(zMid,tY)}px;height:${Math.abs(tY-zMid)}px"></div>`;
+  const rowsH=list.map((r,i)=>`<div class="lrow ${r.k} ${(i>=iHi&&i<=iLo)?"inz":""}" style="top:${i*R}px"><i></i><span>${r.k==="tgt"?"🎯 ":""}${esc(r.n||(i===iHi?"גבול עליון של האזור":"גבול תחתון של האזור"))}${exact&&Math.abs(r.v-hereV)<1e-9?' <u class="nowb">● עכשיו</u>':""}</span>${i===iT?`<u class="distb ${zc}">${dist}</u>`:""}<b>${f(r.v)}</b></div>`).join("");
+  return `<div class="lad">${far.length?`<div class="lfar">${esc(far[0])}</div>`:""}
+    <div class="lbox" style="height:${H}px">
+      <div class="lrail"></div>${band}${path}${rowsH}
+      ${exact?"":`<div class="lnow" style="top:${nowY}px"><i></i><span>המחיר עכשיו${(P.loc==="above"&&isNaN(P.hod))||(P.loc==="below"&&isNaN(P.lod))?" (בערך)":""}</span></div>`}
+    </div>${far.length>1?`<div class="lfar">${esc(far[1])}</div>`:""}</div>`;
+}
+/* ══ PRE-OPEN BRIEF — strike zone calibrated on Burke's examples ══ */
+const BR_DIR={id:["מה הייתה המגמה לפני היום הפנימי?","עלייה","ירידה"],dbl:["מה הייתה המגמה לפני?","עלייה","ירידה"],
+  d1:["לאן הפריצה?","למעלה","למטה"]};
+function brTxt(t){let h=esc(t);const k=h.indexOf(" — ");if(k>0&&/^[A-Z0-9&]/.test(h))h=`<bdi dir="ltr">${h.slice(0,k)}</bdi>`+h.slice(k);
+  return h.replace(/‎?[+−]\$?\d[\d.,]*\$?%?/g,m=>`<bdi dir="ltr">${m.replace("‎","")}</bdi>`)}
+/* level size: user override, else for NQ/MNQ ≈0.4% of price (calibrated on Nick's NQ charts), else table */
+function brLvUser(ins){if(!S.settings._lvMig){const P0=S.settings.plan||{};["MNQ","NQ"].forEach(k=>{if(P0[k]&&+P0[k].lv===50)delete P0[k].lv});S.settings._lvMig=1;try{persist.s()}catch(e){}}
+  const o=((S.settings.plan||{})[ins])||{};return +o.lv>0?+o.lv:0}
+function brLv(ins,px){const u=brLvUser(ins);if(u)return u;if(/^M?NQ$/.test(ins)&&px>0)return Math.max(25,Math.round(px*0.004/5)*5);return planCfg(ins).lv}
+function brQ(dt){return DIR_Q[dt]||BR_DIR[dt]}
+function brief(d){
+  const ins=planIns(d),L0=d.levels||{},n=k=>{const v=parseFloat(L0[k]);return isNaN(v)?NaN:v};
+  const H=n("pdh"),L=n("pdl"),C=n("pdc"),hod0=n("hod"),lod0=n("lod"),X=n("now"),HW=n("how"),LW=n("low");
+  const cf=planCfg(ins),lv=brLv(ins,isNaN(X)?C:X),zb=Math.max(TICK[ins]||.01,Math.round(lv*0.6/(lv>=10?5:1))*(lv>=10?5:1)),dt=d.dayType||"",up=(d.planDir||"up")==="up";
+  const miss=[[H,"גבוה אתמול"],[L,"נמוך אתמול"],[C,"סגירה"],[hod0,"גבוה היום"],[lod0,"נמוך היום"],[X,"מחיר עכשיו"]].filter(x=>isNaN(x[0])).map(x=>x[1]);
+  if(!dt)miss.push("סוג היום");
+  if(miss.length||!(H>L))return {need:true,miss:miss};
+  const hi=Math.max(hod0,lod0,X),lo=Math.min(hod0,lod0,X),mv=(hi-lo)/lv;
+  const where=X>H?"מעל גבוה אתמול":X<L?"מתחת לנמוך אתמול":X>=C?"בין הסגירה לגבוה":"בין הנמוך לסגירה";
+  const known=[[H,"גבוה אתמול"],[C,"סגירה"],[L,"נמוך אתמול"],[HW,"גבוה שבוע"],[LW,"נמוך שבוע"]].filter(k=>!isNaN(k[0]));
+  const Z=[];
+  const z=(side,a,b,o)=>{const q=Object.assign({side:side,hi:Math.max(a,b),lo:Math.min(a,b)},o);
+    q.on=known.filter(k=>k[0]>=q.lo-lv/2&&k[0]<=q.hi+lv/2).map(k=>k[1]);
+    q.tg=(q.tg||[]).filter(t=>!isNaN(t[0])&&(side==="short"?t[0]<q.lo:t[0]>q.hi));
+    Z.push(q);return q};
+  const sh=(a,b,o)=>z("short",a,b,o),lg=(a,b,o)=>z("long",a,b,o);
+  let set="",bias="";
+  if(dt==="frd"){set="יום אדום ראשון";bias="short";
+    if(X<L){
+      if(L-X<=2*lv)sh(L-lv/2,L+lv/2,{t:"חזרה לנמוך של אתמול מלמטה",why:"הנמוך שנשבר הופך להתנגדות. מוכרים כשהמחיר חוזר אליו ונכשל.",
+        ev:"3 מתוך 10",ex:"EURAUD 2-May-24 — לונדון ירדה 45 פיפס מתחת לנמוך, חזרה אליו ונכשלה ← עוד ‎−75",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל נמוך אתמול ומחזיקות"});
+      else sh(lo+lv/2,lo+1.5*lv,{t:"תיקון קטן במגמה (LHF)",why:"המחיר כבר ירד רחוק מתחת לנמוך. לא רודפים — מוכרים תיקון של בערך רמה אחת.",
+        ev:"3 מתוך 10",ex:"NAS100 5-Mar-24 — כל אסיה ולונדון מתחת לנמוך, תיקון של ~70, NY מכרה ← ‎−300",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל נמוך אתמול"})}
+    else if(X>=C){
+      if(mv>=2)sh(hi-zb,hi,{t:"קופסה בראש היום",why:"לונדון עלתה "+mv.toFixed(1)+" רמות מנמוך היום ונתקעה. הקונים שנכנסו למעלה לכודים.",
+        ev:"4 מתוך 10",ex:"EURAUD 28-Mar-24 — אסיה ירדה לנמוך, לונדון +70 · 3 רמות, קופסה, NY 15:30 מתחת ל-EMA ← חזרה לנמוך",tg:[[C,"סגירה"],[lo,"נמוך היום"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות מעל גבוה הקופסה"});
+      else sh(lo+2*lv,lo+3*lv,{t:"עלייה של 2–3 רמות מנמוך היום",why:"עוד לא עלה מספיק. האזור שבו הקונים ייתקעו הוא 2–3 רמות מעל נמוך היום.",
+        ev:"4 מתוך 10",ex:"USDCHF 28-Mar-24 — כל לונדון בקופסה מעל הסגירה, NY סגירה מתחת ל-EMA ← ‎−55",tg:[[C,"סגירה"],[lo,"נמוך היום"],[L,"נמוך אתמול"]],kill:"פריצה וסגירת 15 דק׳ מעל גבוה אתמול"})}
+    else sh(C-lv/2,C+lv/2,{t:"ראלי לסגירה שנכשל",why:"הסגירה של היום האדום היא התנגדות. מחכים לעלייה אליה ולכישלון שם.",
+        ev:"3 מתוך 10",ex:"USDCAD 15-Feb-24 — לונדון ירדה לנמוך, עלתה לסגירה ונכשלה, NY שברה את הנמוך ← ‎−150",tg:[[lo,"נמוך היום"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות מעל הסגירה ומחזיקות"})}
+  else if(dt==="fgd"){set="יום ירוק ראשון";bias="long";
+    if(X>H){
+      if(hi-H<=2*lv)lg(H-lv/2,H+lv/2,{t:"חזרה לגבוה של אתמול מלמעלה",why:"הגבוה שנפרץ הופך לתמיכה. קונים כשהמחיר חוזר אליו ומחזיק.",
+        ev:"המשך מגמה",ex:"XAUUSD Sep-18 — לונדון ירדה לאמצע הקופסה, החזיקה, NY פרצה ← ‎+8$",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לגבוה אתמול"});
+      else lg(hi-1.5*lv,hi-lv/2,{t:"תיקון קטן במגמה (LHF)",why:"כבר רחוק מעל הגבוה. קונים תיקון של בערך רמה אחת, לא רודפים.",
+        ev:"המשך מגמה",ex:"GBPUSD Sep-22 — יום 2, תיקון של 50% מהרגל ← יעד 200%",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לגבוה אתמול"})}
+    else if(lo<L)lg(lo,Math.min(L,lo+zb),{t:"ציד סטופים מתחת לנמוך",why:"המחיר ירד מתחת לנמוך של היום הירוק — המוכרים שם לכודים אם הוא חוזר מעל.",
+        ev:"4 מתוך 17",ex:"EURUSD Oct-20 — אסיה מתחת לנמוך היום הירוק, לונדון חזרה מעל ה-EMA ← ‎+150",tg:[[C,"סגירה"],[hi,"גבוה היום"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות מתחת לנמוך היום — היום הירוק נכשל"});
+    else lg(C-lv/2,C+lv/2,{t:"ירידה לסגירה של היום הירוק",why:"הסגירה של היום הירוק היא תמיכה. מחכים לירידה אליה ולהחזקה.",
+        ev:"8 מתוך 17",ex:"GBPUSD Jul-22 — הנמוך של אירופה נעצר בסגירה, סגירה מעל EMA ← ‎+250",tg:[[hi,"גבוה היום"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות מתחת לנמוך אתמול"})}
+  else if(dt==="id"||dt==="dbl"){set=dt==="dbl"?"יום פנימי כפול":"יום פנימי";bias=up?"long":"short";
+    const R=H-L;
+    if(!up){
+      if(X<L)sh(L-lv/2,L+lv/2,{t:"חזרה לנמוך הפנימי מלמטה",why:"השבירה למטה כבר קרתה. מוכרים את החזרה לרמה שנשברה.",
+        ev:"7 מתוך 9 בכיוון המגמה",ex:"AUDUSD 7-May-24 — אחרי השבירה, NY עלתה בחזרה ונכשלה ← שפל חדש",tg:[[lo,"נמוך היום"],[L-R,"100% מהטווח"]],kill:"15 דק׳ נסגרות מעל נמוך אתמול"});
+      else if(hi>H)sh(Math.min(H,hi-zb),hi,{t:"פריצה כוזבת מעל היום הפנימי",why:"פרצו מעל הגבוה נגד המגמה. אם המחיר חוזר מתחת — הקונים לכודים.",
+        ev:"7 מתוך 9 בכיוון המגמה",ex:"AUDUSD 7-May-24 — אסיה פרצה מעל הגבוה (כוזבת) ← ‎−70 דרך הנמוך",tg:[[C,"סגירה"],[L,"נמוך אתמול"],[L-R,"100% מהטווח"]],kill:"15 דק׳ נסגרות מעל גבוה היום"});
+      else if(hi>C+lv)sh(Math.max(C,hi-zb),hi,{t:"ראלי מעל הסגירה שנתקע",why:"העלייה כבר עברה את הסגירה ונתקעה. אם נכשלת שם — השבירה האמיתית למטה.",
+        ev:"7 מתוך 9 בכיוון המגמה",ex:"GBPUSD 7-May-24 — NY עלתה ~30 מעל הסגירה ונכשלה ← ‎−100",tg:[[C,"סגירה"],[L,"נמוך אתמול"],[L-R,"100% מהטווח"]],kill:"15 דק׳ נסגרות מעל גבוה היום"});
+      else sh(C,C+lv,{t:"ראלי לסגירה שנכשל",why:"סשן אחד בודק את הצד השני, ניו יורק עולה לסגירה ונכשלת — ואז השבירה האמיתית.",
+        ev:"7 מתוך 9 בכיוון המגמה",ex:"GBPUSD 7-May-24 — לונדון נגעה בנמוך, NY עלתה ~30 מעל הסגירה ונכשלה ← ‎−100",tg:[[L,"נמוך אתמול"],[L-R,"100% מהטווח"]],kill:"15 דק׳ נסגרות מעל גבוה אתמול"})}
+    else{
+      if(X>H)lg(H-lv/2,H+lv/2,{t:"חזרה לגבוה הפנימי מלמעלה",why:"הפריצה למעלה כבר קרתה. קונים את החזרה לרמה שנפרצה.",
+        ev:"7 מתוך 9 בכיוון המגמה",ex:"EURUSD 3-May-24 — אסיה/לונדון מעל הגבוה הפנימי, החזיקה ← המשך",tg:[[hi,"גבוה היום"],[H+R,"100% מהטווח"]],kill:"15 דק׳ נסגרות מתחת לגבוה אתמול"});
+      else if(lo<L)lg(lo,Math.max(L,lo+zb),{t:"פריצה כוזבת מתחת ליום הפנימי",why:"שברו מתחת לנמוך נגד המגמה. אם המחיר חוזר מעל — המוכרים לכודים.",
+        ev:"7 מתוך 9 בכיוון המגמה",ex:"XAUUSD 9-May-24 — ספייק למטה בניו יורק נכשל ← ‎+40$ דרך הגבוה",tg:[[C,"סגירה"],[H,"גבוה אתמול"],[H+R,"100% מהטווח"]],kill:"15 דק׳ נסגרות מתחת לנמוך היום"});
+      else if(lo<C-lv)lg(lo,Math.min(C,lo+zb),{t:"ירידה מתחת לסגירה שנתקעה",why:"הירידה כבר עברה את הסגירה ונתקעה. אם מחזיקה שם — הפריצה האמיתית למעלה.",
+        ev:"7 מתוך 9 בכיוון המגמה",ex:"הדפוס ההפוך של GBPUSD 7-May-24",tg:[[C,"סגירה"],[H,"גבוה אתמול"],[H+R,"100% מהטווח"]],kill:"15 דק׳ נסגרות מתחת לנמוך היום"});
+      else lg(C-lv,C,{t:"ירידה לסגירה שמחזיקה",why:"סשן אחד בודק את הצד השני, הירידה לסגירה מחזיקה — ואז הפריצה האמיתית למעלה.",
+        ev:"7 מתוך 9 בכיוון המגמה",ex:"GBPUSD 15-Apr-24 — הדפוס ההפוך: בדיקה של הצד השני ואז תנועה בכיוון המגמה",tg:[[H,"גבוה אתמול"],[H+R,"100% מהטווח"]],kill:"15 דק׳ נסגרות מתחת לנמוך אתמול"})}}
+  if(dt==="d3"){set="פריצת יום 3";bias=up?"short":"long";
+    if(up){
+      if(hi>H)sh(Math.max(H,hi-zb),hi,{t:"קופסה בקצה הפריצה השלישית",why:"הפורצים של יום 3 קנו למעלה. ניו יורק בדרך כלל הופכת את הפריצה.",
+        ev:"10 מתוך 10 התהפכו",ex:"USDJPY 7-Dec-22 — לונדון ~30 מעל הגבוה, קופסה 5 שעות, NY 15:30 שברה את תחתית הקופסה ← ‎−130",tg:[[H,"גבוה אתמול"],[C,"סגירה"]],kill:"15 דק׳ נסגרות חזק מעל גבוה היום — זה המשך ולא היפוך",
+        warn:hi-H>2.5*lv?"הפריצה כבר "+fd(ins,hi-H)+" מעל — רחוק. אם היא מחזיקה עם נרות חזקים, זה הופך לפרבולי.":""});
+      else sh(H+lv,H+2*lv,{t:"1–2 רמות מעל גבוה אתמול",why:"הפריצה השלישית עוד לא קרתה. בדוגמאות היא מגיעה 1–2 רמות מעל הגבוה ונעצרת.",
+        ev:"10 מתוך 10 התהפכו",ex:"EURJPY 7-Dec-22 — לונדון +90 מעל הגבוה, NY 15:00 התהפכה ← חזרה לגבוה",tg:[[H,"גבוה אתמול"],[C,"סגירה"]],kill:"15 דק׳ נסגרות חזק מעל האזור"})}
+    else{
+      if(lo<L)lg(lo,Math.min(L,lo+zb),{t:"קופסה בקצה השבירה השלישית",why:"המוכרים של יום 3 מכרו למטה. ניו יורק בדרך כלל הופכת את השבירה.",
+        ev:"10 מתוך 10 התהפכו",ex:"WTI 7-Dec-22 — לונדון שברה את הנמוך, NY חזרה מעל ה-EMA ← סקוויז לגבוה",tg:[[L,"נמוך אתמול"],[C,"סגירה"]],kill:"15 דק׳ נסגרות חזק מתחת לנמוך היום",
+        warn:L-lo>2.5*lv?"השבירה כבר "+fd(ins,L-lo)+" מתחת — רחוק. אם היא מחזיקה, זה המשך.":""});
+      else lg(L-2*lv,L-lv,{t:"1–2 רמות מתחת לנמוך אתמול",why:"השבירה השלישית עוד לא קרתה. בדוגמאות היא מגיעה 1–2 רמות מתחת לנמוך ונעצרת.",
+        ev:"10 מתוך 10 התהפכו",ex:"GBPUSD Dec-22 — 3 ימים למטה ועוד 50 בלונדון, NY החזירה את הרמה ← ‎+100",tg:[[L,"נמוך אתמול"],[C,"סגירה"]],kill:"15 דק׳ נסגרות חזק מתחת לאזור"})}}
+  else if(dt==="d1"||dt==="d2"||dt==="bo"){set=dtName(dt);bias=up?"long":"short";
+    const o={ev:"המשך מגמה (LHF)",ex:"EURUSD Sep-20 — אחרי השבירה, NY עשתה תיקון של 30 פיפס ל-EMA ונכשלה ← המשך"};
+    if(up){if(X>H&&hi-H>2*lv)lg(hi-1.5*lv,hi-lv/2,Object.assign({t:"תיקון קטן במגמה",why:"המגמה למעלה. קונים תיקון של רמה אחת מגבוה היום.",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לגבוה אתמול"},o));
+      else lg(H-lv/2,H+lv/2,Object.assign({t:"בדיקה של הגבוה שנפרץ",why:"הגבוה של אתמול הוא הרמה. קונים כשהמחיר חוזר אליו מלמעלה ומחזיק.",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לאזור"},o))}
+    else{if(X<L&&L-lo>2*lv)sh(lo+lv/2,lo+1.5*lv,Object.assign({t:"תיקון קטן במגמה",why:"המגמה למטה. מוכרים תיקון של רמה אחת מנמוך היום.",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל נמוך אתמול"},o));
+      else sh(L-lv/2,L+lv/2,Object.assign({t:"בדיקה של הנמוך שנשבר",why:"הנמוך של אתמול הוא הרמה. מוכרים כשהמחיר חוזר אליו מלמטה ונכשל.",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל האזור"},o))}}
+  else if(dt==="fb"){set="פריצה כוזבת";bias=up?"short":"long";
+    const o={ev:"13 מתוך 18 חזרו למקור",ex:"Pump & Dump — אחרי הכוזבת, חזרה לרמה ומשם למקור התנועה"};
+    if(up)sh(H-lv/2,H+lv/2,Object.assign({t:"חזרה לרמת הכוזבת",why:"פרצו מעל ונכשלו. כל חזרה לגבוה היא הזדמנות למכור.",tg:[[C,"סגירה"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות מעל גבוה אתמול"},o));
+    else lg(L-lv/2,L+lv/2,Object.assign({t:"חזרה לרמת הכוזבת",why:"שברו מתחת ונכשלו. כל חזרה לנמוך היא הזדמנות לקנות.",tg:[[C,"סגירה"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות מתחת לנמוך אתמול"},o))}
+  else if(dt==="mon"||dt==="range"){set=dt==="mon"?"טווח יום שני":"יום דשדוש / מלבן";
+    const nm=dt==="mon"?"שני":"המלבן",ev=dt==="mon"?"21 דוגמאות":"פרבולי — 36 עמודים";
+    const ex=dt==="mon"?"USDCHF 19-Jul-22 — שלישי: פריצה כוזבת מעל הגבוה של שני ← לונדון ‎−150":"NAS100 17-Oct-22 — בסיס של 70, פריצה בניו יורק ← ‎+300";
+    const s1=()=>sh(hi>H?Math.min(H,hi-zb):H,hi>H?hi:H+lv,{t:"פריצה כוזבת מעל גבוה "+nm,why:hi>H?"המחיר פרץ מעל. אם חוזר מתחת — הקונים לכודים.":"עוד לא נגע. מחכים לעקיצה מעל ולכישלון.",ev:ev,ex:ex,tg:[[C,"סגירה"],[L,"נמוך "+nm]],kill:"15 דק׳ נסגרות חזק מעל האזור"});
+    const l1=()=>lg(lo<L?lo:L-lv,lo<L?Math.max(L,lo+zb):L,{t:"פריצה כוזבת מתחת לנמוך "+nm,why:lo<L?"המחיר שבר מתחת. אם חוזר מעל — המוכרים לכודים.":"עוד לא נגע. מחכים לעקיצה מתחת ולכישלון.",ev:ev,ex:ex,tg:[[C,"סגירה"],[H,"גבוה "+nm]],kill:"15 דק׳ נסגרות חזק מתחת לאזור"});
+    if(hi>H&&!(lo<L)){s1();l1()}else if(lo<L&&!(hi>H)){l1();s1()}else if(H-X<=X-L){s1();l1()}else{l1();s1()}
+    bias=Z[0].side}
+  else if(dt==="pump"||dt==="dump"){const P=dt==="pump";set=P?"יום פאמפ":"יום דאמפ";
+    if(P){if(hi>=H&&X>=hi-lv){bias="short";sh(hi-zb,hi,{t:"קופסה בראש הפאמפ",why:"הפאמפ נמשך ונתקע בקופסה בגבוה. שבירת הקופסה מחזירה למקור התנועה.",
+        ev:"13 מתוך 18 חזרו למקור",ex:"NAS100 18-Nov-22 — לונדון +150 מהנמוך, NY טופ משולש בגבוה ← ‎−200",tg:[[H,"גבוה אתמול"],[lo,"מקור (נמוך היום)"]],kill:"15 דק׳ נסגרות מעל גבוה היום"})}
+      else{bias="long";lg(hi-2*lv,hi-lv,{t:"תיקון במגמה (LHF)",why:"אחרי פאמפ — קונים תיקון של 1–2 רמות מגבוה היום.",ev:"המשך מגמה (LHF)",ex:"GBPUSD Sep-22 — יום 2, תיקון של 50% ← יעד 200%",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לנמוך היום"})}}
+    else{if(lo<=L&&X<=lo+lv){bias="long";lg(lo,lo+zb,{t:"קופסה בתחתית הדאמפ",why:"הדאמפ נמשך ונתקע בקופסה בנמוך. שבירת הקופסה למעלה מחזירה למקור.",
+        ev:"13 מתוך 18 חזרו למקור",ex:"NAS100 Oct-22 — כל אסיה/לונדון בקופסה בנמוך, NY 16:30 סקוויז ← ‎+400",tg:[[L,"נמוך אתמול"],[hi,"מקור (גבוה היום)"]],kill:"15 דק׳ נסגרות מתחת לנמוך היום"})}
+      else{bias="short";sh(lo+lv,lo+2*lv,{t:"תיקון במגמה (LHF)",why:"אחרי דאמפ — מוכרים תיקון של 1–2 רמות מנמוך היום.",ev:"המשך מגמה (LHF)",ex:"DJ30 Dec-22 — NY חזרה לנמוך של אתמול ונכשלה ← ‎−250",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל גבוה היום"})}}}
+  else if(dt==="news"){set="יום חדשות";bias=up?"long":"short";
+    if(up)lg(C-lv,C,{t:"תיקון ראשון לסגירה",why:"אחרי יום חדשות שנסגר בקיצון — קונים את התיקון הראשון שמחזיק.",ev:"כניסה בקפיצה הראשונה",ex:"XAUUSD 9-May-24 — אחרי הספייק, חזרה ← ‎+40$",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לאזור"});
+    else sh(C,C+lv,{t:"תיקון ראשון לסגירה",why:"אחרי יום חדשות שנסגר בקיצון — מוכרים את התיקון הראשון שנכשל.",ev:"כניסה בקפיצה הראשונה",ex:"DJ30 30-Apr-24 — אחרי החדשות, NY עלתה ל-EMA ונכשלה ← ‎−600",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל האזור"})}
+  /* status of each zone vs the current price */
+  Z.forEach(q=>{const inZ=X>=q.lo&&X<=q.hi;
+    if(inZ){q.st="in";q.stT="המחיר בתוך האזור"}
+    else if(q.side==="short"){if(X<q.lo){q.st=q.lo-X>2*lv?"far":"wait";q.stT=fd(ins,q.lo-X)+" מתחת לאזור"+(q.st==="far"?" · רחוק, אולי לא יגיע":"")}else{q.st="broke";q.stT="המחיר מעל האזור — לצייר מחדש מהגבוה החדש"}}
+    else{if(X>q.hi){q.st=X-q.hi>2*lv?"far":"wait";q.stT=fd(ins,X-q.hi)+" מעל לאזור"+(q.st==="far"?" · רחוק, אולי לא יגיע":"")}else{q.st="broke";q.stT="המחיר מתחת לאזור — לצייר מחדש מהנמוך החדש"}}});
+  return {ins:ins,cf:cf,lv:lv,zb:zb,H:H,L:L,C:C,hod:hi,lod:lo,X:X,HW:HW,LW:LW,mv:mv,where:where,zones:Z,set:set,bias:bias,dt:dt};
+}
+/* time of day — NY window */
+function brClock(){const t=new Date(),m=t.getHours()*60+t.getMinutes(),o=15*60+30,c=17*60+30,h2=16*60+30;
+  const hm=x=>Math.floor(x/60)+":"+String(x%60).padStart(2,"0");
+  let s,st;if(m<o){s="ניו יורק נפתחת בעוד "+hm(o-m);st="pre"}else if(m<h2){s="חלון ניו יורק פתוח";st="open"}else if(m<c){s="השעה השנייה — שעת הציד";st="open"}else{s="חלון ניו יורק נסגר להיום";st="post"}
+  const p=x=>Math.max(0,Math.min(100,(x-8*60)/(10*60)*100));
+  return {s:s,st:st,now:p(m),bar:`<div class="brtl"><i class="lon" style="right:${p(9*60)}%;width:${p(11*60)-p(9*60)}%"></i><i class="ny" style="right:${p(o)}%;width:${p(c)-p(o)}%"></i><i class="h2" style="right:${p(h2)}%;width:${p(c)-p(h2)}%"></i><b style="right:${p(m)}%"></b></div>
+    <div class="brtll"><span style="right:${p(9*60)}%">לונדון</span><span style="right:${p(o)}%">15:30</span><span style="right:${p(c)}%">17:30</span></div>`}}
+function brLadder(P,q){
+  const ins=P.ins,rows=[],R=40;
+  const add=(v,n,k)=>{if(isNaN(v))return;const m=rows.find(r=>Math.abs(r.v-v)<1e-9);
+    if(m){if(n&&m.n.indexOf(n)<0)m.n=m.n?m.n+" · "+n:n;if(k==="brnow")m.k="brnow";else if(m.k!=="brnow"&&k!=="z")m.k=k}else rows.push({v:v,n:n,k:k})};
+  add(P.X,"עכשיו","brnow");
+  if(q){add(q.hi,"","z");add(q.lo,"","z");q.tg.forEach(t=>add(t[0],"יעד · "+t[1],"tg"))}
+  add(P.H,"גבוה אתמול","lvl");add(P.C,"סגירה","lvl");add(P.L,"נמוך אתמול","lvl");
+  add(P.hod,"גבוה היום","td");add(P.lod,"נמוך היום","td");add(P.HW,"גבוה שבוע","lvl");add(P.LW,"נמוך שבוע","lvl");
+  rows.sort((a,b)=>b.v-a.v);
+  const ix=v=>rows.findIndex(r=>Math.abs(r.v-v)<1e-9);
+  const band=q?(()=>{const a=ix(q.hi),b=ix(q.lo);return `<div class="brband ${q.side}" style="top:${a*R+4}px;height:${(b-a+1)*R-8}px"><em>${q.side==="short"?"אזור מכירה":"אזור קנייה"}</em></div>`})():"";
+  const sd=x=>{const v=x-P.X;if(Math.abs(v)<1e-9)return "";return (v>0?"+":"−")+fp(ins,Math.abs(v))};
+  return `<div class="brlad" style="height:${rows.length*R}px">${band}${rows.map((r,i)=>{
+    const inq=q&&r.v<=q.hi+1e-9&&r.v>=q.lo-1e-9;
+    return `<div class="brr ${r.k}${inq?" inq "+q.side:""}" style="top:${i*R}px"><i></i><span>${esc(r.n||"")}</span><b>${fp(ins,r.v)}</b><s>${r.k==="brnow"?"":sd(r.v)}</s></div>`}).join("")}</div>`;
+}
+function planPanel(d){
+  const ins=planIns(d),P=brief(d),cf=planCfg(ins),L0=d.levels||{},dq=brQ(d.dayType);
+  const ev=todayEvents().filter(e=>e.impact==="high");
+  const open=P.need||S.planIn;
+  const f=(k,l,opt)=>`<label class="brf${opt?" opt":""}"><span>${l}</span><input inputmode="decimal" value="${esc(L0[k]||"")}" placeholder="${opt?"לא חובה":"—"}" data-model="plv" data-arg="${k}"></label>`;
+  const form=`<div class="brform">
+    <div class="brsec"><b>01</b>מכשיר</div>
+    <div class="brg2"><label class="brf"><span>מכשיר</span><select data-model="planIns">${INSTR.map(x=>`<option ${x===ins?"selected":""}>${x}</option>`).join("")}</select></label>
+      <label class="brf"><span>גודל רמה${brLvUser(ins)?"":" · אוטומטי"}</span><input inputmode="decimal" value="${brLvUser(ins)||""}" placeholder="${(()=>{const px=parseFloat(L0.now)||parseFloat(L0.pdc);return /^M?NQ$/.test(ins)&&px>0?"≈"+brLv(ins,px):String(cf.lv)})()}" data-model="pset" data-arg="${ins}|lv"></label></div>
+    <div class="brsec"><b>02</b>אתמול</div>
+    <div class="brg3">${f("pdh","גבוה")}${f("pdl","נמוך")}${f("pdc","סגירה")}</div>
+    <div class="brsec"><b>03</b>היום עד עכשיו · אסיה + לונדון</div>
+    <div class="brg3">${f("hod","גבוה היום")}${f("lod","נמוך היום")}${f("now","מחיר עכשיו")}</div>
+    <div class="brsec"><b>04</b>שבוע <small>לא חובה · מחזק את האזור</small></div>
+    <div class="brg2">${f("how","גבוה שבוע",1)}${f("low","נמוך שבוע",1)}</div>
+    <div class="brsec"><b>05</b>איזה יום היה אתמול?</div>
+    <div class="chips">${DAY_TYPES.filter(x=>x[0]!=="none").map(([v,l])=>chip(l,d.dayType===v,"dayType",v,"sm")).join("")}</div>
+    ${dq?`<div class="brsec"><b>06</b>${dq[0]}</div><div class="chips">${chip(dq[1],(d.planDir||"up")==="up","planDir","up","sm")}${chip(dq[2],d.planDir==="down","planDir","down","sm")}</div>`:""}
+    ${P.need?`<div class="brmiss">חסר: ${P.miss.map(esc).join(" · ")}</div>`:`<button class="brgo" data-act="planIn">הצג תדריך</button>`}
+  </div>`;
+  if(open)return `<div id="plan">${head("תדריך לפני פתיחה")}${form}</div>`;
+  const ck=brClock(),q=P.zones[0],alt=P.zones[1];
+  const qty=d.planQty||cf.tps.length||1,pv=pxVal(ins);
+  const money=pts=>pv?usd(pts*pv):"";
+  const sumBar=`<button class="brsum" data-act="planIn"><span>${esc(ins)}</span><span>אתמול <b>${fp(ins,P.H)}</b> / <b>${fp(ins,P.L)}</b> / <b>${fp(ins,P.C)}</b></span><span>עכשיו <b>${fp(ins,P.X)}</b></span><span>רמה <b>${fp(ins,P.lv)}</b></span><em>✎</em></button>`;
+  if(!q)return `<div id="plan">${head("תדריך לפני פתיחה")}${sumBar}<div class="brcard"><div class="brnone">אין סטרייק זון ליום כזה. מחכים ליום אות.</div></div></div>`;
+  const box=q.hi-q.lo,big=box>cf.stop;
+  const chk=[[q.on.length>0,"רמה מוכרת",q.on.length?q.on.join(" · "):"האזור לא על רמה — פחות חזק"],
+    [ck.st==="open","חלון זמן",ck.s],[q.st==="in","המחיר באזור",q.stT]];
+  const card=`<div class="brcard">
+    <div class="brtop"><div><small>${esc(P.set)}${dq?" · "+esc((d.planDir||"up")==="up"?dq[1]:dq[2]):""}</small><b class="${q.side}">${q.side==="short"?"מכירה":"קנייה"}</b></div>
+      <div class="brclock ${ck.st}"><span>${esc(ck.s)}</span></div></div>
+    ${ck.bar}
+    <div class="brzone ${q.side}">
+      <div class="brzl">אזור כניסה · ${esc(q.t)}</div>
+      <div class="brzn"><b>${fp(ins,q.lo)}</b><i>—</i><b>${fp(ins,q.hi)}</b></div>
+      <div class="brchips"><span>בוקס <b>${fd(ins,box)}</b></span><span class="st-${q.st}">${esc(q.stT)}</span></div>
+      <p>${brTxt(q.why)}</p>
+      ${q.warn?`<div class="brwarn">${esc(q.warn)}</div>`:""}
+      ${big?`<div class="brwarn">הבוקס גדול מהסטופ שלך (${fd(ins,cf.stop)}). חכה לקופסה קטנה של 5 דק׳ בתוך האזור ושים את הסטופ מעליה.</div>`:""}
+    </div>
+    <div class="brev"><div><small>בדוגמאות של ברק</small><b>${brTxt(q.ev)}</b></div><p>${brTxt(q.ex)}</p></div>
+    <div class="brsect">לפני כניסה</div>
+    <div class="brchk">${chk.map(c=>`<div class="${c[0]===true?"ok":c[0]===false?"no":"man"}"><i>${c[0]===true?"✓":c[0]===false?"✕":"○"}</i><b>${esc(c[1])}</b><span>${esc(c[2])}</span></div>`).join("")}</div>
+    <div class="brsect">מפת מחירים</div>
+    ${brLadder(P,q)}
+    ${alt?`<div class="bralt ${alt.side}"><small>תוכנית ב׳ · ${alt.side==="short"?"מכירה":"קנייה"}</small><b>${fp(ins,alt.lo)} — ${fp(ins,alt.hi)}</b><span>${esc(alt.t)} · ${esc(alt.stT)}</span></div>`:""}
+    <div class="brkill"><b>מבטל:</b> ${esc(q.kill)}</div>
+    <div class="brnote">רמה = ${fd(ins,P.lv)}${/^M?NQ$/.test(ins)&&!brLvUser(ins)?" (≈0.4% מהמחיר, לפי הגרפים שלך)":""} · קופסה ≈ ${fd(ins,P.zb)}. ברק מראה כמעט רק דוגמאות מנצחות — אלה דפוסים, לא אחוזי הצלחה.</div>
+  </div>`;
+  return `<div id="plan">${head("תדריך לפני פתיחה")}
+    ${ev.length?`<div class="pnews">חדשות אדומות היום: ${ev.map(e=>esc(e.name)+" "+evTime(e)).join(" · ")} — לא נכנסים 15 דק׳ לפני</div>`:""}
+    ${sumBar}${card}</div>`;
+}
+
 /* TODAY */
 function viewToday(){
   const d=day(),tod=today();
   const used=S.trades.filter(t=>t.date===tod).length;
   const left=Math.max(0,S.settings.dailyLimit-used);
-  const PREP=[["pd","סימנתי את הגבוה והנמוך של אתמול","PDH / PDL"],
-   ["pw","סימנתי את הגבוה והנמוך של השבוע","HOW / LOW"],
-   ["signal","קבעתי איזה סוג יום אות היה אתמול","פאמפ / דאמפ / אדום ראשון / ירוק ראשון / פנימי / פריצת יום 1–3 / חדשות"],
-   ["news","בדקתי חדשות אדומות בסשן שלי","אין כניסה לפני הודעה"],
-   ["plan","כתבתי מה בדיוק יגרום לי להיכנס","אם זה לא כתוב, זה לא סטאפ"]];
-  const pn=PREP.filter(x=>d.prep[x[0]]).length;
-  const res=(d.urges||[]).filter(u=>u.resisted).length;
-  const LV=[["how","גבוה השבוע"],["low","נמוך השבוע"],["pdh","גבוה אתמול"],["pdl","נמוך אתמול"]];
 
   return `<div class="stack">
   <div>
@@ -717,33 +1785,7 @@ function viewToday(){
       :`<div style="text-align:center;font-size:14px;color:var(--clay);padding:4px 0">המכסה נגמרה. סגור את הפלטפורמה.</div>`}</div>
   </div>
 
-  <div class="panel p5" style="border-color:var(--brassDeep)">
-    <div style="font-size:15px;color:var(--bright);margin-bottom:6px">עולה לך דחף להיכנס?</div>
-    <div style="font-size:12.5px;color:var(--muted);line-height:1.8;margin-bottom:18px">
-      אל תילחם בו. סמן אותו ותן לו שלוש דקות. כל פעם שהוא עובר לבד, הפעם הבאה חלשה יותר.</div>
-    <button class="btn outline" data-act="wave" data-arg="manual">תסמן דחף</button>
-    ${res?`<div style="font-size:12px;color:var(--muted);margin-top:14px">היום: ${res} דחפים עברו לבד</div>`:""}
-  </div>
-
-  <div>${head("הכנה לפני הסשן",pn+"/5")}
-    <div class="panel px5" style="padding-top:6px;padding-bottom:6px">
-      ${PREP.map((x,i)=>(i?'<div class="hair"></div>':"")+check(!!d.prep[x[0]],x[1],x[2],"prep",x[0])).join("")}</div></div>
-
-  <div>${head("הרמות של היום")}
-    <div class="panel p5"><div class="grid2">
-      ${LV.map(([k,l])=>`<div><div class="lbl">${l}</div>
-        <input inputmode="decimal" value="${esc(d.levels[k]||"")}" placeholder="—" data-model="level" data-arg="${k}"></div>`).join("")}
-    </div></div></div>
-
-  <div>${head("מבנה השבוע")}
-    <div class="panel p5">
-      <div class="lbl">סוג יום האות של אתמול</div>
-      <div class="chips" style="margin-bottom:22px">${DAY_TYPES.map(([v,l])=>chip(l,d.dayType===v,"dayType",v,"sm")).join("")}</div>
-      <div class="lbl">איפה אני במחזור שלושת הימים</div>
-      <div class="chips" style="margin-bottom:22px">${[1,2,3].map(x=>chip("יום "+x,d.cycleDay===x,"cycle",x)).join("")}</div>
-      <div class="lbl">הטיה</div>
-      <div class="chips">${[["long","לונג","sage"],["short","שורט","clay"],["none","אין","mute"]]
-        .map(([v,l,c])=>chip(l,d.bias===v,"bias",v,c)).join("")}</div></div></div>
+  ${planPanel(d)}
 
   <div>${head("השבוע")}
     <div class="panel p5">
@@ -757,18 +1799,7 @@ function viewToday(){
           <em>${dt?(dt[2]||dt[1].replace("יום ","").slice(0,5)):"—"}</em>
           <u style="color:${!has?"var(--faint)":p>=0?"var(--sage)":"var(--clay)"}">${has?signed(p):"·"}</u>
         </div>`}).join("")}</div>
-      <div style="margin:16px 0"><div class="hair"></div></div>
-      <div class="lbl">טווח יום שני — הפתיחה של השבוע</div>
-      <div class="grid2">
-        <div><div style="font-size:11px;color:var(--faint);margin-bottom:5px">גבוה</div>
-          <input inputmode="decimal" placeholder="—" value="${esc(((S.weeks||{})[weekKey()]||{}).h||"")}"
-            data-model="wk" data-arg="h"></div>
-        <div><div style="font-size:11px;color:var(--faint);margin-bottom:5px">נמוך</div>
-          <input inputmode="decimal" placeholder="—" value="${esc(((S.weeks||{})[weekKey()]||{}).l||"")}"
-            data-model="wk" data-arg="l"></div>
-      </div></div></div>
-
-  <div class="panel p5">
+      <div style="margin:16px 0 14px"><div class="hair"></div></div>
     <div class="row"><span style="font-size:14px;color:var(--muted)">ימים ברצף לפי הכללים</span>
       <span class="stat">${streak()}</span></div>
     ${used===0?`<div style="margin:16px 0"><div class="hair"></div></div>
@@ -800,6 +1831,10 @@ function autoChecks(f){
                     :{ok:true,txt:"אין חדשות אדומות ב-45 הדקות הקרובות"}})()];
 }
 
+function applyScale(f,force){const cf=planCfg(f.instrument);
+  if(cf.tps.length>1||force){f.tps=cf.tps.length>1?cf.tps.slice():[];f.per=cf.per;f.stopP=String(cf.stop);
+    f.tpP=String(+(cf.tps.reduce((a,b)=>a+b,0)/cf.tps.length).toFixed(2));f.qty=cf.per*cf.tps.length}
+  else f.tps=[]}
 function gateDefaults(){
   const n=mins(),sess=SESSIONS.find(s=>n>=s.start&&n<=s.end);
   const last=S.trades[S.trades.length-1],d=day();
@@ -808,7 +1843,9 @@ function gateDefaults(){
     setup:"", session:sess?sess.label:(last?last.session:""),
     date:today(), time:new Date().toTimeString().slice(0,5),
     entry:"", stopP:last&&last.stopP?last.stopP:"", tpP:last&&last.tpP?last.tpP:"",
-    dayType:d.dayType||"", cycleDay:d.cycleDay||0, imgs:[]};
+    dayType:d.dayType||"", cycleDay:d.cycleDay||0, imgs:[],
+    qty:last&&+last.qty?+last.qty:""};
+  applyScale(S.gateForm);
   S.gateChecks={};
 }
 
@@ -827,7 +1864,7 @@ function viewGate(){
     <div style="font-size:18px;color:var(--clay);margin-bottom:12px">המכסה להיום נגמרה</div>
     <div style="font-size:13.5px;color:var(--muted);line-height:1.95">
       נכנסת ${used} פעמים. זה הגבול שקבעת כשהיית רגוע, וזה הקול שמנצח עכשיו.<br>
-      סגור את הפלטפורמה. אם עולה דחף — סמן אותו במסך הראשי.</div>
+      סגור את הפלטפורמה.</div>
       ${gd!==today()?`<button class="btn" style="margin-top:16px" data-act="gf-date" data-arg="${today()}">חזור להיום</button>`:""}
       </div></div>`;
 
@@ -873,8 +1910,11 @@ function viewGate(){
        ${(f.date||today())!==today()?`<div style="font-size:11.5px;color:var(--brass);margin-top:9px">
          רישום אחורה · ${heDay(f.date)} ${heDate(f.date)}</div>`:""}
 
-       <div class="lbl" style="margin-top:20px">מחיר כניסה</div>
-       <input inputmode="decimal" value="${esc(f.entry||"")}" placeholder="—" data-model="gentry">
+       <div class="grid2" style="margin-top:20px">
+         <div><div class="lbl">כמה חוזים</div>${qtyStepper(f.qty,"gqty","gqty")}</div>
+         <div><div class="lbl">מחיר כניסה</div>
+           <input inputmode="decimal" value="${esc(f.entry||"")}" placeholder="—" data-model="gentry"></div>
+       </div>
        <div class="grid2" style="margin-top:14px">
          <div><div class="lbl">סטופ (פיפס)</div>
            <input inputmode="decimal" value="${esc(f.stopP||"")}" placeholder="—" data-model="gstop"></div>
@@ -883,6 +1923,9 @@ function viewGate(){
        </div>
        <div id="rrLine" class="rr ${rrOf(f)?(rrOf(f)>=2?"good":rrOf(f)>=1.5?"mid":"bad"):""}">
          ${rrOf(f)?"יחס סיכוי־סיכון 1 : "+rrOf(f).toFixed(2).replace(/\.00$/,""):"הזן סטופ וטייק כדי לראות את היחס"}</div>
+       ${(f.tps||[]).length>1?`<div class="scaleline"><div><b>מימוש חלקי</b> · יעדים ${f.tps.join(" / ")} · ${f.per} ${f.per==1?"חוזה":"חוזים"} לכל יעד · סטופ ${esc(f.stopP)}</div>
+         <button data-act="gScale" data-arg="off">יעד אחד</button></div>`
+         :planCfg(f.instrument).tps.length>1?`<button class="scaleline off" data-act="gScale" data-arg="on">+ מימוש חלקי לפי היעדים (${planCfg(f.instrument).tps.join(" / ")})</button>`:""}
        <div class="lbl" style="margin-top:20px">צילום מסך של הגרף (לא חובה)</div>
        ${shotStrip(f.imgs,"gate")}
      </div></div>
@@ -941,8 +1984,12 @@ function viewJournal(){
             <div style="font-size:12px;color:var(--muted);margin-top:5px">${esc(su?su.he:t.setup)}${t.session?" · "+esc(t.session):""}</div>
             ${(t.dayType||t.cycleDay)?`<div style="font-size:11.5px;color:var(--faint);margin-top:3px">
               ${esc([dtName(t.dayType),t.cycleDay?"יום "+t.cycleDay+" במחזור":""].filter(Boolean).join(" · "))}</div>`:""}
-            ${(t.entry||t.rr)?`<div style="font-size:11.5px;color:var(--faint);margin-top:3px">
-              ${t.entry?"כניסה "+esc(t.entry):""}${t.entry&&t.rr?" · ":""}${t.rr?"יחס 1:"+(+t.rr).toFixed(2).replace(/\.00$/,""):""}</div>`:""}
+            ${(t.entry||t.rr||+t.qty)?`<div style="font-size:11.5px;color:var(--faint);margin-top:3px">
+              ${esc([+t.qty?t.qty+(+t.qty===1?" חוזה":" חוזים"):"",t.entry?"כניסה "+t.entry:"",t.rr?"יחס 1:"+(+t.rr).toFixed(2).replace(/\.00$/,""):""].filter(Boolean).join(" · "))}</div>`:""}
+            ${t.tps&&t.tps.length>1?`<div style="font-size:11.5px;color:var(--brass);margin-top:3px">
+              מימוש חלקי ${t.tps.join("/")} ${(t.legs||[]).map(l=>!l?"·":l.r==="tp"?"✓":l.r==="sl"?"✗":l.r==="be"?"○":"~").join(" ")}</div>`:""}
+            ${(t.partials||[]).length&&!(t.tps&&t.tps.length>1)?`<div style="font-size:11.5px;color:var(--brass);margin-top:3px">
+              ${t.partials.length} רווחים חלקיים · <span style="direction:ltr;unicode-bidi:isolate">${signed(partSum(t))}</span></div>`:""}
             <div style="font-size:11.5px;color:var(--faint);margin-top:3px">${heDate(t.date)} · ${esc(t.time)}${(t.imgs||[]).length?` · <span style="color:var(--brass)">${t.imgs.length} צילומים</span>`:""}
               ${t.unchecked?' <span style="color:var(--clay)">· בלי בדיקה מלאה</span>':""}</div></div>
           <div style="text-align:left;flex-shrink:0">
@@ -951,7 +1998,9 @@ function viewJournal(){
             ${tag&&!isOpen?`<div style="font-size:11.5px;margin-top:5px;color:var(--${tag[2]})">${tag[1]}</div>`:""}
           </div></div></button>
       ${isOpen?`<div style="margin-top:14px"><div class="hair"></div><div style="padding-top:14px">
-        <div class="lbl">סגירת העסקה — כמה יצא?</div>
+        ${partialsBlock(t)}
+        <div class="lbl" style="margin-top:20px">סגירת העסקה — כמה יצא בסך הכל?</div>
+        ${(t.partials||[]).length?`<div style="font-size:11.5px;color:var(--faint);margin:-4px 0 9px">כולל <span style="direction:ltr;unicode-bidi:isolate">$${Math.abs(partSum(t))}</span> שכבר מימשת</div>`:""}
         <input id="pnl-${t.id}" inputmode="decimal" placeholder="סכום ב-$">
         <div style="display:flex;gap:8px;margin-top:10px">
           <button class="btn" style="color:var(--sage);border-color:var(--sage)" data-act="setPnl" data-arg="${t.id}|1">רווח</button>
@@ -964,6 +2013,7 @@ function viewJournal(){
           <button class="btn" style="color:var(--sage);border-color:var(--sage)" data-act="setPnl" data-arg="${t.id}|1">רווח</button>
           <button class="btn" style="color:var(--clay);border-color:var(--clay)" data-act="setPnl" data-arg="${t.id}|-1">הפסד</button>
         </div>`:""}
+        ${!isOpen?`<div style="margin-bottom:22px">${partialsBlock(t)}</div>`:""}
         ${editBlock(t)}
         <div class="lbl">איך זה נראה בדיעבד</div>
         <div class="chips" style="margin-bottom:22px">${TAGS.map(x=>chip(x[1],t.tag===x[0],"setTag",t.id+"|"+x[0],"sm "+x[2])).join("")}</div>
@@ -974,6 +2024,50 @@ function viewJournal(){
         <button class="btn danger" style="margin-top:16px${S.confirmDel==="t"+t.id?";border-color:var(--clay)":""}" data-act="delTrade" data-arg="${t.id}">
           ${S.confirmDel==="t"+t.id?"בטוח? לחץ שוב כדי למחוק":"מחק"}</button>
       </div></div>`:""}</div>`}).join("")}</div>`;
+}
+
+const PTV={MNQ:2,NQ:20,MGC:10,GC:100,MYM:0.5,YM:5,MES:5,M2K:5,RTY:50};
+const ptVal=ins=>PTV[ins]||0;
+/* $ per 1.0 price unit — for the session plan, where every number is a price */
+const PTV_PX=Object.assign({MCL:100,WTI:1000,HG:25000,"6E":125000,"6B":62500,"6A":100000},PTV);
+const pxVal=ins=>PTV_PX[ins]||0;
+const partSum=t=>(t.partials||[]).reduce((a,x)=>a+(+x.usd||0),0);
+const partQty=t=>(t.partials||[]).reduce((a,x)=>a+(+x.q||0),0);
+function legPts(t,i){const l=(t.legs||[])[i];if(!l)return null;
+  return l.r==="tp"?+t.tps[i]:l.r==="be"?0:l.r==="sl"?-(parseFloat(t.stopP)||0):(l.p===""||isNaN(parseFloat(l.p))?null:parseFloat(l.p))}
+function legsPnl(t){const pv=ptVal(t.instrument);if(!pv||!t.tps)return null;let s2=0;
+  for(let i=0;i<t.tps.length;i++){const x=legPts(t,i);if(x===null)return null;s2+=x*pv*(+t.per||1)}return s2}
+function legsBlock(t){
+  const pv=ptVal(t.instrument),per=+t.per||1,L=t.legs||[],v=legsPnl(t),closed=isClosed(t);
+  return `<div class="lbl">מימוש חלקי — מה קרה לכל חוזה?</div>
+   <div class="legs">${t.tps.map((tp,i)=>{const l=L[i],x=legPts(t,i);
+     return `<div class="leg" data-k="lg${t.id}-${i}"><div class="lh"><b>${per>1?per+" חוזים":"חוזה "+(i+1)} · יעד ${tp}</b>
+       <i style="color:${x===null?"var(--faint)":x>=0?"var(--sage)":"var(--clay)"}">${x===null?"—":pv?usd(x*pv*per):x}</i></div>
+       <div class="chips">${chip("✓ יעד",l&&l.r==="tp","leg",t.id+"|"+i+"|tp","sm sage")}${chip("בכניסה",l&&l.r==="be","leg",t.id+"|"+i+"|be","sm")}${chip("סטופ",l&&l.r==="sl","leg",t.id+"|"+i+"|sl","sm clay")}${chip("ידני",l&&l.r==="man","leg",t.id+"|"+i+"|man","sm")}</div>
+       ${l&&l.r==="man"?`<input inputmode="decimal" style="margin-top:8px" placeholder="כמה נקודות? (מינוס להפסד)" value="${esc(l.p||"")}" data-model="legp" data-arg="${t.id}|${i}">`:""}</div>`}).join("")}</div>
+   ${v!==null?`<button class="btn ${closed&&Math.abs(pnlOf(t)-v)<0.01?"":"brass"}" style="margin-top:10px" data-act="legClose" data-arg="${t.id}">${closed?(Math.abs(pnlOf(t)-v)<0.01?"התוצאה תואמת ✓":"עדכן תוצאה ל-"+usd(v)):"סגור את העסקה · "+usd(v)}</button>
+     <div class="pnote" style="font-size:11px">לפני עמלות. אפשר לתקן את הסכום ידנית.</div>`:""}`;
+}
+function partialsBlock(t){
+  if(t.tps&&t.tps.length>1&&ptVal(t.instrument))return legsBlock(t);
+  const P=t.partials||[],q=+t.qty||0,left=q?Math.max(0,q-partQty(t)):0,pv=ptVal(t.instrument);
+  return `<div class="lbl">רווחים חלקיים</div>
+   ${P.length?`<div class="parts">${P.map((x,i)=>`<div class="prow" data-k="p${t.id}-${i}">
+     <span class="pq">${x.q} ${+x.q===1?"חוזה":"חוזים"}</span>
+     <span class="pp">${x.pts!==""&&x.pts!=null?(+x.pts>0?"+":"")+x.pts+" נק׳":""}</span>
+     <span class="pu" style="color:var(--${+x.usd>=0?"sage":"clay"})">${signed(+x.usd||0)}</span>
+     <button class="shot-x ${S.confirmDel==="p"+t.id+"-"+i?"warn":""}" style="position:static" data-act="delPart" data-arg="${t.id}|${i}">${S.confirmDel==="p"+t.id+"-"+i?"למחוק?":"✕"}</button></div>`).join("")}
+     <div class="psum">מומש עד עכשיו: <b>${signed(partSum(t))}</b>${q?` · נשארו <b>${left}</b> מתוך ${q} חוזים`:""}</div></div>`:""}
+   ${(!q||left>0)?`<div class="grid3">
+     <div><div class="lbl sm">חוזים</div><input id="pq-${t.id}" inputmode="numeric" value="1"></div>
+     <div><div class="lbl sm">נקודות</div><input id="pp-${t.id}" inputmode="decimal" placeholder="25" data-model="pp" data-arg="${t.id}"></div>
+     <div><div class="lbl sm">$</div><input id="pu-${t.id}" inputmode="decimal" placeholder="${pv?"אוטומטי":"סכום"}"></div></div>
+   <button class="btn outline" style="margin-top:10px;font-size:12.5px" data-act="addPart" data-arg="${t.id}">+ רשום רווח חלקי</button>`:""}`;
+}
+function qtyStepper(v,act,model,arg){
+  return `<div class="qty"><button class="qbtn" data-act="${act}" data-arg="${arg?arg+"|":""}-1">−</button>
+    <input inputmode="numeric" value="${esc(v||"")}" placeholder="—" data-model="${model}"${arg?` data-arg="${arg}"`:""}>
+    <button class="qbtn" data-act="${act}" data-arg="${arg?arg+"|":""}1">+</button></div>`;
 }
 
 function editBlock(t){
@@ -997,8 +2091,10 @@ function editBlock(t){
     <div class="grid2">
       <div><div class="lbl">תאריך</div><input type="date" value="${esc(t.date)}" data-model="te" data-arg="${a}date"></div>
       <div><div class="lbl">שעה</div><input type="time" value="${esc(t.time||"")}" data-model="te" data-arg="${a}time"></div></div>
-    <div class="lbl" style="margin-top:14px">מחיר כניסה</div>
-    <input inputmode="decimal" value="${esc(t.entry||"")}" placeholder="—" data-model="te" data-arg="${a}entry">
+    <div class="grid2" style="margin-top:14px">
+      <div><div class="lbl">חוזים</div>${qtyStepper(t.qty,"teq","teq",t.id)}</div>
+      <div><div class="lbl">מחיר כניסה</div>
+        <input inputmode="decimal" value="${esc(t.entry||"")}" placeholder="—" data-model="te" data-arg="${a}entry"></div></div>
     <div class="grid2" style="margin-top:14px">
       <div><div class="lbl">סטופ (פיפס)</div><input inputmode="decimal" value="${esc(t.stopP||"")}" placeholder="—" data-model="te" data-arg="${a}stopP"></div>
       <div><div class="lbl">טייק פרופיט (פיפס)</div><input inputmode="decimal" value="${esc(t.tpP||"")}" placeholder="—" data-model="te" data-arg="${a}tpP"></div></div>
@@ -1032,6 +2128,7 @@ function imgAll(){return idb().then(function(db){return new Promise(function(res
   const rq=st.openCursor();rq.onsuccess=function(){const c=rq.result;if(c){out[c.key]=c.value;c.continue()}};
   tx.oncomplete=function(){res(out)};tx.onerror=function(){rej(tx.error)}})})}
 let _rt=null;
+function schedPlan(){clearTimeout(S._plT);S._plT=setTimeout(function(){render()},250)}
 function schedRender(){clearTimeout(_rt);_rt=setTimeout(function(){render()},40)}
 function imgSrc(id){
   if(IMG.cache[id])return IMG.cache[id];
@@ -1136,6 +2233,71 @@ function ghost(rows){
     <polygon points="0,${H} ${pts.join(" ")} ${W},${H}" fill="${T.acc}"/></svg>`;
 }
 
+function scaleExp(){
+  const all=S.trades.filter(t=>t.tps&&t.tps.length>1).sort((a,b)=>(a.date+(a.time||""))>(b.date+(b.time||""))?1:-1);
+  if(!all.length)return "";
+  const goal=30,tr=all.slice(0,goal),done=tr.filter(isClosed),full=tr.filter(t=>legsPnl(t)!==null);
+  const n=Math.max.apply(null,full.map(t=>t.tps.length).concat([0]));
+  const hit=i=>{const a=full.filter(t=>t.tps.length>i);return a.length?Math.round(a.filter(t=>(t.legs[i]||{}).r==="tp").length/a.length*100):0};
+  const real=full.reduce((a,t)=>a+legsPnl(t),0);
+  const alt=i=>full.reduce((a,t)=>{const k=Math.min(i,t.tps.length-1),x=legPts(t,k);return a+(x||0)*ptVal(t.instrument)*(+t.per||1)*t.tps.length},0);
+  const tpsLbl=(full[0]||tr[0]).tps;
+  const opts=[["מימוש חלקי (בפועל)",real]].concat(tpsLbl.map((tp,i)=>["הכל ביעד "+tp,alt(i)]));
+  const best=opts.reduce((a,b)=>b[1]>a[1]?b:a,opts[0]);
+  return `<div class="panel p5">
+    <div class="row"><span style="font-size:15px;color:var(--bright)">ניסוי: מימוש חלקי</span><span class="pill">${tr.length} / ${goal}</span></div>
+    <div class="bar" style="margin:12px 0 16px"><i style="width:${Math.min(100,tr.length/goal*100)}%"></i></div>
+    ${full.length?`<div class="strip" style="margin:0 0 14px">${tpsLbl.map((tp,i)=>`<div><b style="color:var(--sage)">${hit(i)}%</b><span>הגיעו ל-${tp}</span></div>`).join("")}</div>
+    <div class="lbl">מה היה יוצא על ${full.length} העסקאות</div>
+    ${opts.map(o=>`<div class="row" style="padding:7px 0"><span style="font-size:13px;color:${o===best?"var(--bright)":"var(--muted)"}">${o[0]}${o===best?" ◆":""}</span>
+      <b style="font-family:var(--disp);direction:ltr;color:${o[1]>=0?"var(--sage)":"var(--clay)"}">${usd(o[1])}</b></div>`).join("")}
+    <div class="pnote" style="font-size:11px">לפני עמלות. "הכל ביעד X" = מה שקרה לחוזה של היעד הזה, כפול כל החוזים.${done.length>full.length?` ${done.length-full.length} עסקאות נסגרו בלי לסמן מה קרה לכל חוזה — הן לא בהשוואה.`:""}</div>`
+    :`<div class="pnote">כשתסגור עסקאות ותסמן מה קרה לכל חוזה — כאן תראה כמה מגיעות לכל יעד ומה עדיף.</div>`}
+  </div>`;
+}
+/* ══ monthly P&L calendar (Tradezella-style) ══ */
+const HE_MONTHS_FULL=["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
+function calShort(n){const a=Math.abs(n),s=n>0?"+":n<0?"−":"";
+  return s+(a>=10000?(a/1000).toFixed(0)+"K":a>=1000?(a/1000).toFixed(1).replace(/\.0$/,"")+"K":Math.round(a))}
+function calendarPanel(closed){
+  const mk=S.calM||today().slice(0,7),y=+mk.slice(0,4),mo=+mk.slice(5,7)-1;
+  const by={};closed.forEach(t=>{if(!t.date||!t.date.startsWith(mk))return;const k=t.date;by[k]=by[k]||{p:0,n:0,w:0};by[k].p+=pnlOf(t);by[k].n++;if(pnlOf(t)>0)by[k].w++});
+  const vals=Object.keys(by).map(k=>Math.abs(by[k].p)),mx=Math.max(1,...vals);
+  const first=new Date(y,mo,1),dim=new Date(y,mo+1,0).getDate(),td=today();
+  /* rows Sun..Fri (+ Saturday folded only if traded), plus week total column */
+  const cells=[];let wk=[],wsum=0,wn=0;const weeks=[];
+  for(let i=0;i<first.getDay();i++)wk.push(null);
+  for(let dd=1;dd<=dim;dd++){const dt=new Date(y,mo,dd),k=iso(dt);wk.push(k);
+    if(dt.getDay()===6||dd===dim){while(wk.length<7)wk.push(null);weeks.push(wk);wk=[]}}
+  const tot=Object.keys(by).reduce((a,k)=>a+by[k].p,0),nT=Object.keys(by).reduce((a,k)=>a+by[k].n,0);
+  const dW=Object.keys(by).filter(k=>by[k].p>0).length,dL=Object.keys(by).filter(k=>by[k].p<0).length;
+  const showSat=Object.keys(by).some(k=>new Date(k+"T12:00").getDay()===6);
+  const cols=showSat?7:6;
+  const cell=k=>{if(!k)return `<div class="cc empty"></div>`;
+    const r=by[k],dd=+k.slice(8),dtp=S.days[k]&&S.days[k].dayType,sh=dtp?(DAY_TYPES.find(x=>x[0]===dtp)||[])[2]:"";
+    if(!r)return `<div class="cc${k===td?" tdy":""}"><i>${dd}</i>${sh?`<u>${esc(sh)}</u>`:""}</div>`;
+    const a=0.16+0.5*Math.abs(r.p)/mx,c=r.p>0?"143,191,165":r.p<0?"217,139,132":"200,190,170";
+    return `<button class="cc has${r.p>0?" w":r.p<0?" l":""}${k===td?" tdy":""}" style="background:rgba(${c},${a.toFixed(2)})" data-act="calDay" data-arg="${k}">
+      <i>${dd}</i><b>${calShort(r.p)}</b><s>${r.n} ט׳</s>${sh?`<u>${esc(sh)}</u>`:""}</button>`};
+  const rows=weeks.map(w=>{const ws=w.filter(Boolean).reduce((a,k)=>a+(by[k]?by[k].p:0),0),wn=w.filter(Boolean).reduce((a,k)=>a+(by[k]?by[k].n:0),0);
+    const ds=showSat?w:w.slice(0,6);
+    return `<div class="crow" style="grid-template-columns:repeat(${cols},1fr) 1.15fr">${ds.map(cell).join("")}
+      <div class="cwk ${ws>0?"w":ws<0?"l":""}"><span>שבוע</span><b>${wn?calShort(ws):"—"}</b>${wn?`<s>${wn} ט׳</s>`:""}</div></div>`}).join("");
+  const hd=["א׳","ב׳","ג׳","ד׳","ה׳","ו׳","ש׳"].slice(0,cols);
+  return `<div>${head("לוח חודשי")}
+    <div class="panel cal">
+      <div class="calnav"><button data-act="calM" data-arg="-1" aria-label="חודש קודם">→</button><b>${HE_MONTHS_FULL[mo]} ${y}</b><button data-act="calM" data-arg="1" aria-label="חודש הבא">←</button></div>
+      <div class="calsum">
+        <div><b class="${tot>0?"w":tot<0?"l":""}">${nT?signed(tot):"—"}</b><span>החודש</span></div>
+        <div><b>${nT}</b><span>טריידים</span></div>
+        <div><b style="direction:rtl"><em class="w">${dW}</em> / <em class="l">${dL}</em></b><span>ימים ירוקים / אדומים</span></div>
+      </div>
+      <div class="crow chd" style="grid-template-columns:repeat(${cols},1fr) 1.15fr">${hd.map(h=>`<div>${h}</div>`).join("")}<div>סה״כ</div></div>
+      ${rows}
+      <div class="calfoot">ט׳ = טריידים · לחיצה על יום פותחת אותו ביומן</div>
+    </div></div>`;
+}
+
 function viewNumbers(){
   const closed=S.trades.filter(isClosed);
   const m=today().slice(0,7),mt=closed.filter(t=>t.date.startsWith(m));
@@ -1156,6 +2318,7 @@ function viewNumbers(){
   const bySetup=Object.keys(bs).map(k=>[k,bs[k]]).sort((x,y)=>y[1].p-x[1].p);
 
   return `<div class="stack">
+   ${scaleExp()}
    <div class="panel plate" style="overflow:hidden">
      ${rows.length>1?`<div style="position:absolute;inset:auto 0 0 0;opacity:.16;pointer-events:none">${ghost(rows)}</div>`:""}
      <div class="lbl">החודש</div>
@@ -1164,6 +2327,8 @@ function viewNumbers(){
        <span style="font-size:13px;color:var(--muted)">יעד ${money(target)}</span></div>
      <div class="bar"><i style="width:${Math.max(0,Math.min(100,pace))}%"></i></div>
      <div class="note">${pace>=100?"עברת את היעד החודשי. אין לאן למהר.":`אתה ב-${pace}% מהיעד. זה המספר, לא התחושה באמצע היום.`}</div></div>
+
+   ${calendarPanel(closed)}
 
    ${(function(){
      const wk=weekKey(),days=weekDays(wk);
@@ -1178,13 +2343,13 @@ function viewNumbers(){
      const bs2={};tw.forEach(function(t){bs2[t.setup]=(bs2[t.setup]||0)+pnlOf(t)});
      const best=Object.keys(bs2).sort(function(a,b){return bs2[b]-bs2[a]})[0];
      const bestS=best?SETUPS.find(function(x){return x.id===best}):null;
-     const urgesW=days.reduce(function(a,k){return a+((S.days[k]||{}).urges||[]).filter(function(u){return u.resisted}).length},0);
+     const qW=tw.filter(function(t){return +t.qty>0});const avgQ=qW.length?Math.round(qW.reduce(function(a,t){return a+(+t.qty)},0)/qW.length*10)/10:0;
      return `<div>${head("סקירה שבועית",heDate(days[0])+" – "+heDate(days[4]))}
        <div class="panel p5">
          <div class="strip" style="margin:0 0 16px">
            <div><b style="color:${sw(tw)>=0?"var(--sage)":"var(--clay)"}">${tw.length?signed(sw(tw)):"—"}</b><span>השבוע</span></div>
            <div><b>${kept}<span style="font-size:12px;color:var(--faint)">/${activeD||0}</span></b><span>ימים בכללים</span></div>
-           <div><b style="color:var(--brass)">${urgesW}</b><span>דחפים</span></div>
+           <div><b style="color:var(--brass)">${avgQ||"—"}</b><span>חוזים בממוצע</span></div>
          </div>
          <div class="hair"></div>
          <div class="row" style="padding:13px 0"><span style="font-size:13px;color:var(--muted)">סטאפים מהפלייבוק</span>
@@ -1641,7 +2806,7 @@ function backupAge(){
 
 function viewPlaybook(){
   return `<div class="stack">
-   ${["יסודות","הסטאפים","ביצוע"].map(function(grp){
+   ${["יסודות","הסטאפים","מהדוגמאות","ביצוע"].map(function(grp){
      return `<div>${head(grp==="יסודות"?"הפלייבוק · יסודות":grp,grp==="יסודות"?"Stacey Burke":"")}
      <div style="display:flex;flex-direction:column;gap:8px">${CARDS.map((c,i)=>c.g!==grp?"":`<div class="panel px5">
        <button style="width:100%;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:12px"
@@ -2071,12 +3236,41 @@ document.addEventListener("click",function(e){
   const b=e.target.closest("[data-act]");if(!b)return;
   buzz(b.classList.contains("brass")?14:8);
   const act=b.dataset.act,arg=b.dataset.arg,d=day();
-  if(S.confirmDel&&act!=="delTrade"&&act!=="delMove"&&act!=="delShot")S.confirmDel=null;
+  if(S.confirmDel&&act!=="delTrade"&&act!=="delPart"&&act!=="delMove"&&act!=="delShot")S.confirmDel=null;
+  if(act==="gqty"||act==="teq"){const ae=document.activeElement; if(ae&&(ae.dataset.model==="gqty"||ae.dataset.model==="teq"))ae.blur()}
   switch(act){
+    case "calM":{const a=(S.calM||today().slice(0,7)).split("-").map(Number);const dt=new Date(a[0],a[1]-1+(+arg),1);S.calM=iso(dt).slice(0,7);render();return}
+    case "calDay": S.jq=arg; S.tab="journal"; S.openTrade=null; render(); scrollTo(0,0); return;
     case "tab": S.tab=arg; S.picker=null; S.editMove=null; S.mv=null; S.editTrade=null; S.openTrade=null;
       if(arg==="gate"){S.gateStep=1;gateDefaults()} render(); return;
     case "prep": d.prep[arg]=!d.prep[arg]; persist.d(); render(); return;
-    case "dayType": d.dayType=d.dayType===arg?"":arg; persist.d(); render(); return;
+    case "dayType": if(S.tab==="today")S.planIn=true; d.dayType=d.dayType===arg?"":arg; d.planDir=""; d.planOpt=0;
+      d.cycleDay=({frd:3,fgd:3,id:3,dbl:3,d2:2,d3:3,d1:1})[d.dayType]||0;
+      {const P=planOf(d); if(P.dir)d.bias=P.dir;} persist.d(); render(); return;
+    case "planDir": S.planIn=true; d.planDir=arg; d.planOpt=0; {const P=planOf(d); if(P.dir)d.bias=P.dir;} persist.d(); render(); return;
+    case "planEdit": S.planEdit=!S.planEdit; render(); return;
+    case "planNums": S.planNums=!S.planNums; render(); return;
+    case "planIn": S.planIn=!S.planIn; render(); return;
+    case "planS2": S.planS2=!S.planS2; render(); if(!S.planS2)setTimeout(function(){const e=document.querySelector(".pst.final");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},60); return;
+    case "planWhy": S.planWhy=!S.planWhy; render(); return;
+    case "planMon": S.planMon=!S.planMon; render(); return;
+    case "planLon": d.planLon=d.planLon===arg?"":arg; persist.d(); render(); return;
+    case "planLoc": S.planS2=true; d.planLoc=d.planLoc===arg?"":arg; d.planOpt=0; persist.d(); render(); return;
+    case "planOpt": d.planOpt=+arg; d.bias=(planOf(d).dir)||d.bias; persist.d(); render(); return;
+    case "pchk": {const a2=arg.split("|"),k=d.dayType+"|"+a2[0]; d.pc=d.pc||{}; d.pc[k]=d.pc[k]||[]; d.pc[k][+a2[1]]=!d.pc[k][+a2[1]]; persist.d(); render(); return}
+    case "gScale": if(arg==="on")applyScale(S.gateForm,true); else {S.gateForm.tps=[];S.gateForm.tpP=String(planCfg(S.gateForm.instrument).tps[0]||"")} render(); return;
+    case "leg": {const a2=arg.split("|"),t=S.trades.find(x=>x.id===+a2[0]); if(!t)return;
+      t.legs=t.legs||t.tps.map(()=>null); const i=+a2[1],r=a2[2],cur=t.legs[i];
+      t.legs[i]=(cur&&cur.r===r)?null:{r:r,p:r==="man"?(cur&&cur.p)||"":""}; persist.t(); render(); return}
+    case "legClose": {const t=S.trades.find(x=>x.id===+arg); if(!t)return; const v=legsPnl(t); if(v===null)return;
+      const wasOpen=!isClosed(t); t.pnl=Math.round(v*100)/100; delete t.r; persist.t(); S.openTrade=null; render();
+      if(wasOpen&&S.settings.coolOn!==false) openCool(t.pnl<0); return}
+    case "planGo": {d.planOpt=+arg||0; const P=planOf(d); if(!P.opts||!P.opts.length)return; const zz=P.opts[P.oi];
+      const MAP={frd:"frd",fgd:"fgd",id:"id",dbl:"id",d3:"d3",d2:"d3",bo:"lhf",pump:"lhf",dump:"lhf",news:"second",range:"para"};
+      d.bias=zz.side; persist.d(); gateDefaults();
+      Object.assign(S.gateForm,{instrument:P.ins,dir:zz.side,setup:zz.setup!==undefined&&zz.setup!==""?zz.setup:(MAP[d.dayType]||""),dayType:d.dayType,entry:pq(P.ins,zz.e)});
+      applyScale(S.gateForm,true);
+      S.gateStep=2; S.tab="gate"; S._lastTab=null; render(); window.scrollTo(0,0); return}
     case "cycle": d.cycleDay=d.cycleDay===+arg?0:+arg; persist.d(); render(); return;
     case "bias": d.bias=d.bias===arg?"":arg; persist.d(); render(); return;
     case "closeDay": d.closed=!d.closed; persist.d(); render(); return;
@@ -2095,7 +3289,8 @@ document.addEventListener("click",function(e){
         instrument:f.instrument,dir:f.dir,setup:f.setup,session:f.session,
         entry:f.entry||"",stopP:f.stopP||"",tpP:f.tpP||"",rr:rrOf(f),
         cycleDay:+f.cycleDay||0,dayType:f.dayType||"",tag:"a",r:null,note:"",
-        unchecked:CHECKS.some(c=>!S.gateChecks[c[0]]),imgs:(f.imgs||[]).slice()});
+        unchecked:CHECKS.some(c=>!S.gateChecks[c[0]]),imgs:(f.imgs||[]).slice(),
+        qty:+f.qty||0,partials:[],tps:(f.tps||[]).length>1?f.tps.slice():undefined,per:(f.tps||[]).length>1?+f.per||1:undefined});
       persist.t(); gateDefaults(); S.gateStep=1; S.tab="journal"; render(); return}
     case "backfill": {gateDefaults();
       const y2=new Date();y2.setDate(y2.getDate()-1);
@@ -2194,6 +3389,22 @@ document.addEventListener("click",function(e){
     case "mfClear": S.mf={type:"all",month:"all",cat:"all",q:""}; S.mLimit=30;
       {const mq=document.getElementById("mq"); if(mq){mq.value="";mq.blur()}} S.editMove=null; S.mv=null; render(); return;
     case "editTrade": S.editTrade=S.editTrade===+arg?null:+arg; render(); return;
+    case "gqty": S.gateForm.qty=Math.max(1,Math.min(99,(+S.gateForm.qty||0)+(+arg))); render(); return;
+    case "teq": {const a2=arg.split("|"),t=S.trades.find(x=>x.id===+a2[0]); if(!t)return;
+      t.qty=Math.max(1,Math.min(99,(+t.qty||0)+(+a2[1]))); persist.t(); render(); return}
+    case "addPart": {const t=S.trades.find(x=>x.id===+arg); if(!t)return;
+      const qe=document.getElementById("pq-"+arg),pe=document.getElementById("pp-"+arg),ue=document.getElementById("pu-"+arg);
+      const q=Math.max(1,parseInt(qe&&qe.value)||1),pts=pe&&pe.value!==""?parseFloat(pe.value):"";
+      let usd=ue&&ue.value!==""?parseFloat(ue.value):NaN;
+      if(isNaN(usd)&&pts!==""&&!isNaN(pts)&&ptVal(t.instrument)) usd=pts*ptVal(t.instrument)*q;
+      if(isNaN(usd)){(pe&&pe.value===""?pe:ue).focus();return}
+      if(+t.qty&&q>+t.qty-partQty(t)){alert("נשארו רק "+(+t.qty-partQty(t))+" חוזים בעסקה");return}
+      t.partials=(t.partials||[]).concat([{q:q,pts:isNaN(pts)?"":pts,usd:Math.round(usd*100)/100}]);
+      persist.t(); [qe,pe,ue].forEach(function(e){if(e){e.value=e===qe?"1":"";e.blur()}}); render(); return}
+    case "delPart": {const a2=arg.split("|"),t=S.trades.find(x=>x.id===+a2[0]); if(!t)return;
+      const key="p"+a2[0]+"-"+a2[1];
+      if(S.confirmDel!==key){S.confirmDel=key;render();return}
+      S.confirmDel=null; t.partials=(t.partials||[]).filter(function(_,i){return i!==+a2[1]}); persist.t(); render(); return}
     case "editDone": S.editTrade=null; render(); return;
     case "te": {const a2=arg.split("|"),t=S.trades.find(x=>x.id===+a2[0]); if(!t)return;
       const fld=a2[1],v=a2.slice(2).join("|");
@@ -2215,12 +3426,12 @@ document.addEventListener("click",function(e){
         S.settings.lastExport=Date.now();persist.s();render()};
       imgAll().then(go).catch(function(){go({})});return}
     case "csv": {
-      const head2=["תאריך","שעה","מכשיר","כיוון","סטאפ","סשן","יום במחזור","יום אות","כניסה","סטופ פיפס","טייק פיפס","יחס","תיוג","בדיקה מלאה","רווח","הערה"];
+      const head2=["תאריך","שעה","מכשיר","כיוון","סטאפ","סשן","יום במחזור","יום אות","חוזים","רווחים חלקיים","כניסה","סטופ פיפס","טייק פיפס","יחס","תיוג","בדיקה מלאה","רווח","הערה"];
       const rows2=S.trades.slice().sort(function(a,b){return a.id-b.id}).map(function(t){
         const su3=SETUPS.find(function(x){return x.id===t.setup});
         const tg3=TAGS.find(function(x){return x[0]===t.tag});
         return [t.date,t.time,t.instrument,t.dir==="long"?"לונג":"שורט",su3?su3.he:t.setup,
-          t.session||"",t.cycleDay||"",dtName(t.dayType),t.entry||"",t.stopP||"",t.tpP||"",t.rr?(+t.rr).toFixed(2):"",
+          t.session||"",t.cycleDay||"",dtName(t.dayType),t.qty||"",(t.partials||[]).map(function(x){return x.q+"x"+(x.pts!==""?x.pts+"pt":"")+"="+x.usd}).join(" | "),t.entry||"",t.stopP||"",t.tpP||"",t.rr?(+t.rr).toFixed(2):"",
           tg3?tg3[1]:"",t.unchecked?"לא":"כן",
           isClosed(t)?pnlOf(t):"",(t.note||"").replace(/[\r\n]+/g," ")];
       });
@@ -2254,14 +3465,28 @@ document.addEventListener("click",function(e){
   if(act.indexOf("gf-")===0){const k=act.slice(3);
     if((k==="dayType"||k==="cycleDay")&&String(S.gateForm[k])===String(arg))S.gateForm[k]=k==="cycleDay"?0:"";
     else S.gateForm[k]=arg;
+    if(k==="instrument")applyScale(S.gateForm);
     if(k==="dir"){const su=SETUPS.find(x=>x.id===S.gateForm.setup);
       if(su&&su.dir!=="both"&&su.dir!==arg)S.gateForm.setup=""}
     render()}
 });
 
+document.addEventListener("change",function(e){const el=e.target;
+  if(el.dataset&&el.dataset.model==="planIns"&&day().planIns!==el.value){day().planIns=el.value;persist.d();render()}
+  if(el.closest&&el.closest(".zex2")){el.blur();render()}});
 document.addEventListener("input",function(e){
   const el=e.target,m=el.dataset.model;if(!m)return;
   if(m==="level"){day().levels[el.dataset.arg]=el.value;persist.d()}
+  else if(m==="plv"){const d=day();d.levels[el.dataset.arg]=el.value;S.planIn=true;
+    {const P=planOf(d); if(P.dir)d.bias=P.dir;} persist.d(); if(!el.closest(".zex2"))schedPlan()}
+  else if(m==="planIns"){day().planIns=el.value;persist.d();el.blur();render()}
+  else if(m==="planQty"){day().planQty=Math.max(1,parseInt(el.value)||1);persist.d();schedPlan()}
+  else if(m==="pset"){S.planIn=true;const a=el.dataset.arg.split("|"),v=parseFloat(el.value);S.settings.plan=S.settings.plan||{};
+    const o=S.settings.plan[a[0]]=S.settings.plan[a[0]]||{};
+    if(/^t[123]$/.test(a[1])){if(!("t1" in o||"t2" in o||"t3" in o)){const c0=planCfg(a[0]).tps;o.t1=c0[0]||0;o.t2=c0[1]||0;o.t3=c0[2]||0}
+      o[a[1]]=v>0?v:0}
+    else if(v>0)o[a[1]]=v; else delete o[a[1]];
+    persist.s();schedPlan()}
   else if(m==="note"){const t=S.trades.find(x=>x.id===+el.dataset.arg);if(t){t.note=el.value;persist.t()}}
   else if(m==="target"){S.settings.monthlyTarget=+el.value||0;persist.s()}
   else if(m==="split"){S.settings.splitPct=+el.value||0;persist.s();previewNet()}
@@ -2278,6 +3503,13 @@ document.addEventListener("input",function(e){
       if(g>0){S.mv.net=Math.round(netOf(g)*100)/100;const n=document.getElementById("mvNet");if(n)n.value=S.mv.net}}}}
   else if(m==="gdate"){S.gateForm.date=el.value;render()}
   else if(m==="gtime"){S.gateForm.time=el.value}
+  else if(m==="gqty"){S.gateForm.qty=Math.max(0,parseInt(el.value)||0)||""}
+  else if(m==="teq"){const t=S.trades.find(x=>x.id===+el.dataset.arg);if(t){t.qty=Math.max(0,parseInt(el.value)||0);persist.t()}}
+  else if(m==="legp"){const a=el.dataset.arg.split("|"),t=S.trades.find(x=>x.id===+a[0]);
+    if(t&&t.legs&&t.legs[+a[1]]){t.legs[+a[1]].p=el.value;persist.t();schedPlan()}}
+  else if(m==="pp"){const t=S.trades.find(x=>x.id===+el.dataset.arg),pv=t?ptVal(t.instrument):0,
+      ue=document.getElementById("pu-"+el.dataset.arg),qe=document.getElementById("pq-"+el.dataset.arg);
+    if(ue&&pv){const v=parseFloat(el.value);ue.placeholder=isNaN(v)?"אוטומטי":"$"+Math.round(v*pv*(parseInt(qe&&qe.value)||1)*100)/100}}
   else if(m==="gentry"){S.gateForm.entry=el.value}
   else if(m==="gstop"||m==="gtp"){
     S.gateForm[m==="gstop"?"stopP":"tpP"]=el.value;
