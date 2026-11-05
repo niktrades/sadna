@@ -558,6 +558,7 @@ select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px soli
 .cwk{min-height:66px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.1)}
 .cwk span{font-size:9.5px;color:var(--faint)}.cwk b{white-space:nowrap;font-size:12px;font-weight:700;color:var(--muted);direction:ltr}.cwk.w b{color:#8fbfa5}.cwk.l b{color:#d98b84}
 .cwk s{text-decoration:none;font-size:9.5px;color:var(--faint)}
+.cc b.sm,.cwk b.sm{font-size:11px;letter-spacing:-.5px}.cc b.xs,.cwk b.xs{font-size:9.5px;letter-spacing:-.6px}
 .calfoot{font-size:11px;color:var(--faint);text-align:center;margin-top:10px}
 #plan{--b0:var(--panelB);--b1:var(--panelB);--b2:var(--panelA);--ln:var(--line);--tx:var(--bright);--mu:var(--muted);--ice:var(--brass);--sh:var(--clay);--lo:var(--sage);--mono:var(--disp)}
 #plan [class^="br"] b,#plan .brf input{font-variant-numeric:tabular-nums}
@@ -636,6 +637,12 @@ select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px soli
 .bralt.short b{color:#e3957d}.bralt.long b{color:#b5cf96}.bralt span{font-size:11.5px;color:var(--mu)}
 .brkill{margin-top:12px;font-size:12px;color:var(--ink);line-height:1.6}.brkill b{color:var(--sh)}
 .brnote{margin-top:10px;font-size:10.5px;color:var(--mu);line-height:1.6}
+.brshot{display:flex;flex-direction:column;align-items:center;gap:3px;padding:13px;margin-bottom:16px;border-radius:14px;border:1px dashed var(--brassDeep);background:rgba(217,166,72,.05);cursor:pointer}
+.brshot span{font-size:14.5px;font-weight:700;color:var(--brassHi)}.brshot small{font-size:11px;color:var(--muted)}
+.brshotst{margin:-6px 0 16px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:12.5px;color:var(--ink);line-height:1.7}
+.brshotst b{font-variant-numeric:tabular-nums;color:var(--bright)}.brshotst .m{font-size:11.5px;color:var(--muted)}.brshotst .w{font-size:11.5px;color:var(--brassHi)}
+.brshotst.err{color:var(--clay);margin-top:0}
+.brday{margin-top:12px;padding:9px 12px;border-radius:12px;background:rgba(217,166,72,.06);border:1px solid rgba(217,166,72,.2);font-size:12px;line-height:1.65;color:var(--ink)}.brday b{color:var(--brassHi)}
 .brnone{font-size:13px;color:var(--mu);text-align:center;padding:10px}
 </style>
 </head>
@@ -700,7 +707,7 @@ const INSTR=["MNQ","NQ","MGC","GC","XAUUSD","MYM","YM","MES","M2K","RTY","MCL","
 
 const DAY_TYPES=[["mon","יום שני — טווח הפתיחה","שני"],["pump","יום פאמפ","פאמפ"],["dump","יום דאמפ","דאמפ"],
  ["frd","יום אדום ראשון","אדום"],["fgd","יום ירוק ראשון","ירוק"],
- ["id","יום פנימי","פנימי"],["dbl","יום פנימי כפול","פנ׳×2"],
+ ["id","יום פנימי","פנימי"],["dbl","יום פנימי כפול","פנ׳×2"],["out","יום עוטף (Outside)","עוטף"],
  ["d1","פריצת יום 1","D1"],["d2","פריצת יום 2","D2"],["d3","פריצת יום 3","D3"],
  ["fb","פריצה כוזבת","כוזבת"],["bo","פריצה","פריצה"],
  ["news","יום חדשות (FOMC וכו')","חדשות"],["range","יום דשדוש / מלבן","דשדוש"],
@@ -1325,6 +1332,7 @@ const SCN={frd:["עולה קודם — ונכשל","יורד ישר — ותיק
 function planLv(){return (day().levels)||{}}
 /* ══ SESSION PLAN v5 — by where price is before New York ══ */
 const LOCS=[["above","מעל גבוה אתמול"],["inside","בתוך הטווח של אתמול"],["below","מתחת לנמוך אתמול"]];
+function syncBias(d){try{const B=brief(d);if(!B.need&&B.zones.length)d.bias=B.zones[0].side}catch(e){}}
 function planOf(d){
   const ins=planIns(d),L0=d.levels||{},H=parseFloat(L0.pdh),L=parseFloat(L0.pdl),C=parseFloat(L0.pdc);
   const how=parseFloat(L0.how),low=parseFloat(L0.low),hod=parseFloat(L0.hod),lod=parseFloat(L0.lod);
@@ -1562,14 +1570,14 @@ function brLv(ins,px){const u=brLvUser(ins);if(u)return u;if(/^M?NQ$/.test(ins)&
 function brQ(dt){return DIR_Q[dt]||BR_DIR[dt]}
 function brief(d){
   const ins=planIns(d),L0=d.levels||{},n=k=>{const v=parseFloat(L0[k]);return isNaN(v)?NaN:v};
-  const H=n("pdh"),L=n("pdl"),C=n("pdc"),hod0=n("hod"),lod0=n("lod"),X=n("now"),HW=n("how"),LW=n("low");
+  const H=n("pdh"),L=n("pdl"),C=n("pdc"),hod0=n("hod"),lod0=n("lod"),X=n("now"),HW=n("how"),LW=n("low"),HM=n("hom"),LM=n("lom");
   const cf=planCfg(ins),lv=brLv(ins,isNaN(X)?C:X),zb=Math.max(TICK[ins]||.01,Math.round(lv*0.6/(lv>=10?5:1))*(lv>=10?5:1)),dt=d.dayType||"",up=(d.planDir||"up")==="up";
   const miss=[[H,"גבוה אתמול"],[L,"נמוך אתמול"],[C,"סגירה"],[hod0,"גבוה היום"],[lod0,"נמוך היום"],[X,"מחיר עכשיו"]].filter(x=>isNaN(x[0])).map(x=>x[1]);
   if(!dt)miss.push("סוג היום");
   if(miss.length||!(H>L))return {need:true,miss:miss};
   const hi=Math.max(hod0,lod0,X),lo=Math.min(hod0,lod0,X),mv=(hi-lo)/lv;
   const where=X>H?"מעל גבוה אתמול":X<L?"מתחת לנמוך אתמול":X>=C?"בין הסגירה לגבוה":"בין הנמוך לסגירה";
-  const known=[[H,"גבוה אתמול"],[C,"סגירה"],[L,"נמוך אתמול"],[HW,"גבוה שבוע"],[LW,"נמוך שבוע"]].filter(k=>!isNaN(k[0]));
+  const known=[[H,"גבוה אתמול"],[C,"סגירה"],[L,"נמוך אתמול"],[HW,"גבוה שבוע"],[LW,"נמוך שבוע"],[HM,"גבוה חודש"],[LM,"נמוך חודש"]].filter(k=>!isNaN(k[0]));
   const Z=[];
   const z=(side,a,b,o)=>{const q=Object.assign({side:side,hi:Math.max(a,b),lo:Math.min(a,b)},o);
     q.on=known.filter(k=>k[0]>=q.lo-lv/2&&k[0]<=q.hi+lv/2).map(k=>k[1]);
@@ -1577,6 +1585,14 @@ function brief(d){
     Z.push(q);return q};
   const sh=(a,b,o)=>z("short",a,b,o),lg=(a,b,o)=>z("long",a,b,o);
   let set="",bias="";
+  const lodLocked=()=>{if(!(lo<L&&X>L))return false;bias="long";
+    const z0=X>=C?[C-zb/2,C+zb/2]:[L,L+zb];
+    lg(z0[0],z0[1],{t:"נמוך היום ננעל (LOD locked in)",why:"היום שבר מתחת לנמוך של אתמול וחזר מעליו — המוכרים מתחת לכודים. קונים את הבדיקה של "+(X>=C?"הסגירה":"הנמוך של אתמול")+" כשהיא מחזיקה.",
+      ev:"HOD/LOD — 101 עמודים",ex:"XAUUSD Sep-22 — לונדון ירדה מתחת לנמוך של אסיה/אתמול וחזרה, NY החזיקה מעל ← פאמפ ‎+$10–40",tg:[[hi,"גבוה היום"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות שוב מתחת לנמוך אתמול"});return true};
+  const hodLocked=()=>{if(!(hi>H&&X<H))return false;bias="short";
+    const z0=X<=C?[C-zb/2,C+zb/2]:[H-zb,H];
+    sh(z0[0],z0[1],{t:"גבוה היום ננעל (HOD locked in)",why:"היום פרץ מעל הגבוה של אתמול וחזר מתחתיו — הקונים למעלה לכודים. מוכרים את הבדיקה של "+(X<=C?"הסגירה":"הגבוה של אתמול")+" כשהיא נכשלת.",
+      ev:"HOD/LOD — 101 עמודים",ex:"GBPUSD/EURUSD 29-Nov-22 — לונדון מעל הגבוה, NY גבוה נמוך יותר מתחת ל-EMA ← ‎−80",tg:[[lo,"נמוך היום"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות שוב מעל גבוה אתמול"});return true};
   if(dt==="frd"){set="יום אדום ראשון";bias="short";
     if(X<L){
       if(L-X<=2*lv)sh(L-lv/2,L+lv/2,{t:"חזרה לנמוך של אתמול מלמטה",why:"הנמוך שנשבר הופך להתנגדות. מוכרים כשהמחיר חוזר אליו ונכשל.",
@@ -1622,13 +1638,15 @@ function brief(d){
         ev:"7 מתוך 9 בכיוון המגמה",ex:"GBPUSD 15-Apr-24 — הדפוס ההפוך: בדיקה של הצד השני ואז תנועה בכיוון המגמה",tg:[[H,"גבוה אתמול"],[H+R,"100% מהטווח"]],kill:"15 דק׳ נסגרות מתחת לנמוך אתמול"})}}
   if(dt==="d3"){set="פריצת יום 3";bias=up?"short":"long";
     if(up){
-      if(hi>H)sh(Math.max(H,hi-zb),hi,{t:"קופסה בקצה הפריצה השלישית",why:"הפורצים של יום 3 קנו למעלה. ניו יורק בדרך כלל הופכת את הפריצה.",
+      if(hodLocked()){}
+      else if(hi>H)sh(Math.max(H,hi-zb),hi,{t:"קופסה בקצה הפריצה השלישית",why:"הפורצים של יום 3 קנו למעלה. ניו יורק בדרך כלל הופכת את הפריצה.",
         ev:"10 מתוך 10 התהפכו",ex:"USDJPY 7-Dec-22 — לונדון ~30 מעל הגבוה, קופסה 5 שעות, NY 15:30 שברה את תחתית הקופסה ← ‎−130",tg:[[H,"גבוה אתמול"],[C,"סגירה"]],kill:"15 דק׳ נסגרות חזק מעל גבוה היום — זה המשך ולא היפוך",
         warn:hi-H>2.5*lv?"הפריצה כבר "+fd(ins,hi-H)+" מעל — רחוק. אם היא מחזיקה עם נרות חזקים, זה הופך לפרבולי.":""});
       else sh(H+lv,H+2*lv,{t:"1–2 רמות מעל גבוה אתמול",why:"הפריצה השלישית עוד לא קרתה. בדוגמאות היא מגיעה 1–2 רמות מעל הגבוה ונעצרת.",
         ev:"10 מתוך 10 התהפכו",ex:"EURJPY 7-Dec-22 — לונדון +90 מעל הגבוה, NY 15:00 התהפכה ← חזרה לגבוה",tg:[[H,"גבוה אתמול"],[C,"סגירה"]],kill:"15 דק׳ נסגרות חזק מעל האזור"})}
     else{
-      if(lo<L)lg(lo,Math.min(L,lo+zb),{t:"קופסה בקצה השבירה השלישית",why:"המוכרים של יום 3 מכרו למטה. ניו יורק בדרך כלל הופכת את השבירה.",
+      if(lodLocked()){}
+      else if(lo<L)lg(lo,Math.min(L,lo+zb),{t:"קופסה בקצה השבירה השלישית",why:"המוכרים של יום 3 מכרו למטה. ניו יורק בדרך כלל הופכת את השבירה.",
         ev:"10 מתוך 10 התהפכו",ex:"WTI 7-Dec-22 — לונדון שברה את הנמוך, NY חזרה מעל ה-EMA ← סקוויז לגבוה",tg:[[L,"נמוך אתמול"],[C,"סגירה"]],kill:"15 דק׳ נסגרות חזק מתחת לנמוך היום",
         warn:L-lo>2.5*lv?"השבירה כבר "+fd(ins,L-lo)+" מתחת — רחוק. אם היא מחזיקה, זה המשך.":""});
       else lg(L-2*lv,L-lv,{t:"1–2 רמות מתחת לנמוך אתמול",why:"השבירה השלישית עוד לא קרתה. בדוגמאות היא מגיעה 1–2 רמות מתחת לנמוך ונעצרת.",
@@ -1651,12 +1669,23 @@ function brief(d){
     if(hi>H&&!(lo<L)){s1();l1()}else if(lo<L&&!(hi>H)){l1();s1()}else if(H-X<=X-L){s1();l1()}else{l1();s1()}
     bias=Z[0].side}
   else if(dt==="pump"||dt==="dump"){const P=dt==="pump";set=P?"יום פאמפ":"יום דאמפ";
-    if(P){if(hi>=H&&X>=hi-lv){bias="short";sh(hi-zb,hi,{t:"קופסה בראש הפאמפ",why:"הפאמפ נמשך ונתקע בקופסה בגבוה. שבירת הקופסה מחזירה למקור התנועה.",
+    if(P&&hodLocked()){}
+    else if(P){if(hi>=H&&X>=hi-lv){bias="short";sh(hi-zb,hi,{t:"קופסה בראש הפאמפ",why:"הפאמפ נמשך ונתקע בקופסה בגבוה. שבירת הקופסה מחזירה למקור התנועה.",
         ev:"13 מתוך 18 חזרו למקור",ex:"NAS100 18-Nov-22 — לונדון +150 מהנמוך, NY טופ משולש בגבוה ← ‎−200",tg:[[H,"גבוה אתמול"],[lo,"מקור (נמוך היום)"]],kill:"15 דק׳ נסגרות מעל גבוה היום"})}
       else{bias="long";lg(hi-2*lv,hi-lv,{t:"תיקון במגמה (LHF)",why:"אחרי פאמפ — קונים תיקון של 1–2 רמות מגבוה היום.",ev:"המשך מגמה (LHF)",ex:"GBPUSD Sep-22 — יום 2, תיקון של 50% ← יעד 200%",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לנמוך היום"})}}
+    else if(lodLocked()){}
     else{if(lo<=L&&X<=lo+lv){bias="long";lg(lo,lo+zb,{t:"קופסה בתחתית הדאמפ",why:"הדאמפ נמשך ונתקע בקופסה בנמוך. שבירת הקופסה למעלה מחזירה למקור.",
         ev:"13 מתוך 18 חזרו למקור",ex:"NAS100 Oct-22 — כל אסיה/לונדון בקופסה בנמוך, NY 16:30 סקוויז ← ‎+400",tg:[[L,"נמוך אתמול"],[hi,"מקור (גבוה היום)"]],kill:"15 דק׳ נסגרות מתחת לנמוך היום"})}
       else{bias="short";sh(lo+lv,lo+2*lv,{t:"תיקון במגמה (LHF)",why:"אחרי דאמפ — מוכרים תיקון של 1–2 רמות מנמוך היום.",ev:"המשך מגמה (LHF)",ex:"DJ30 Dec-22 — NY חזרה לנמוך של אתמול ונכשלה ← ‎−250",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל גבוה היום"})}}}
+  else if(dt==="out"){set="יום עוטף";const M=(H+L)/2,R=H-L;
+    const ev="הערכה שלי — לא מהדוגמאות של ברק",ex="NQ רביעי 4-Nov-26 — עוטף 27,760–28,990, נסגר באמצע; חמישי בנה קופסה בתחתית (נמוך החודש) מתחת לאמצע";
+    if(lodLocked()){}else if(hodLocked()){}
+    else if(X<M){bias="long";
+      lg(Math.max(L,lo),Math.max(L,lo)+zb,{t:"תחתית היום בתוך הנר העוטף",why:"אחרי יום עוטף השוק לרוב מדשדש בתוך הטווח שלו. המחיר מתחת לאמצע — קונים את התחתית של היום כשהיא מחזיקה.",ev:ev,ex:ex,tg:[[M,"אמצע העוטף"],[C,"סגירה"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות מתחת לנמוך היום"});
+      sh(M,M+zb,{t:"אמצע הנר העוטף",why:"האמצע של יום עוטף הוא ציר. עלייה אליו שנכשלת — מכירה חזרה לתחתית.",ev:ev,ex:ex,tg:[[lo,"נמוך היום"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות מעל האזור"})}
+    else{bias="short";
+      sh(Math.min(H,hi)-zb,Math.min(H,hi),{t:"ראש היום בתוך הנר העוטף",why:"אחרי יום עוטף השוק לרוב מדשדש בתוך הטווח שלו. המחיר מעל האמצע — מוכרים את הראש של היום כשהוא נכשל.",ev:ev,ex:ex,tg:[[M,"אמצע העוטף"],[C,"סגירה"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות מעל גבוה היום"});
+      lg(M-zb,M,{t:"אמצע הנר העוטף",why:"האמצע של יום עוטף הוא ציר. ירידה אליו שמחזיקה — קנייה חזרה לראש.",ev:ev,ex:ex,tg:[[hi,"גבוה היום"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות מתחת לאזור"})}}
   else if(dt==="news"){set="יום חדשות";bias=up?"long":"short";
     if(up)lg(C-lv,C,{t:"תיקון ראשון לסגירה",why:"אחרי יום חדשות שנסגר בקיצון — קונים את התיקון הראשון שמחזיק.",ev:"כניסה בקפיצה הראשונה",ex:"XAUUSD 9-May-24 — אחרי הספייק, חזרה ← ‎+40$",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לאזור"});
     else sh(C,C+lv,{t:"תיקון ראשון לסגירה",why:"אחרי יום חדשות שנסגר בקיצון — מוכרים את התיקון הראשון שנכשל.",ev:"כניסה בקפיצה הראשונה",ex:"DJ30 30-Apr-24 — אחרי החדשות, NY עלתה ל-EMA ונכשלה ← ‎−600",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל האזור"})}
@@ -1665,15 +1694,157 @@ function brief(d){
     if(inZ){q.st="in";q.stT="המחיר בתוך האזור"}
     else if(q.side==="short"){if(X<q.lo){q.st=q.lo-X>2*lv?"far":"wait";q.stT=fd(ins,q.lo-X)+" מתחת לאזור"+(q.st==="far"?" · רחוק, אולי לא יגיע":"")}else{q.st="broke";q.stT="המחיר מעל האזור — לצייר מחדש מהגבוה החדש"}}
     else{if(X>q.hi){q.st=X-q.hi>2*lv?"far":"wait";q.stT=fd(ins,X-q.hi)+" מעל לאזור"+(q.st==="far"?" · רחוק, אולי לא יגיע":"")}else{q.st="broke";q.stT="המחיר מתחת לאזור — לצייר מחדש מהנמוך החדש"}}});
-  return {ins:ins,cf:cf,lv:lv,zb:zb,H:H,L:L,C:C,hod:hi,lod:lo,X:X,HW:HW,LW:LW,mv:mv,where:where,zones:Z,set:set,bias:bias,dt:dt};
+  return {ins:ins,cf:cf,lv:lv,zb:zb,H:H,L:L,C:C,hod:hi,lod:lo,X:X,HW:HW,LW:LW,HM:HM,LM:LM,mv:mv,where:where,zones:Z,set:set,bias:bias,dt:dt};
 }
 /* time of day — NY window */
-function brClock(){const t=new Date(),m=t.getHours()*60+t.getMinutes(),o=15*60+30,c=17*60+30,h2=16*60+30;
-  const hm=x=>Math.floor(x/60)+":"+String(x%60).padStart(2,"0");
-  let s,st;if(m<o){s="ניו יורק נפתחת בעוד "+hm(o-m);st="pre"}else if(m<h2){s="חלון ניו יורק פתוח";st="open"}else if(m<c){s="השעה השנייה — שעת הציד";st="open"}else{s="חלון ניו יורק נסגר להיום";st="post"}
-  const p=x=>Math.max(0,Math.min(100,(x-8*60)/(10*60)*100));
-  return {s:s,st:st,now:p(m),bar:`<div class="brtl"><i class="lon" style="right:${p(9*60)}%;width:${p(11*60)-p(9*60)}%"></i><i class="ny" style="right:${p(o)}%;width:${p(c)-p(o)}%"></i><i class="h2" style="right:${p(h2)}%;width:${p(c)-p(h2)}%"></i><b style="right:${p(m)}%"></b></div>
-    <div class="brtll"><span style="right:${p(9*60)}%">לונדון</span><span style="right:${p(o)}%">15:30</span><span style="right:${p(c)}%">17:30</span></div>`}}
+/* ══ FILL THE BRIEF FROM A TRADINGVIEW SCREENSHOT ══
+   yellow lines = yesterday high/low, green line = yesterday close,
+   price axis numbers (OCR) give the pixel→price scale (linear or log),
+   the header gives the current price. Runs on the phone; OCR engine loads once from the CDN. */
+const OCR_T={"0":[0.0,0.0,0.25,0.99,0.99,0.75,0.25,0.0,0.0,0.25,0.99,0.66,0.5,0.99,0.99,0.17,0.0,1.0,0.75,0.0,0.0,0.0,0.99,0.5,0.5,1.0,0.17,0.0,0.0,0.0,0.5,0.89,0.75,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.83,1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.5,1.0,0.25,0.0,0.0,0.0,0.5,1.0,0.25,1.0,0.75,0.0,0.0,0.0,0.75,0.67,0.0,0.75,1.0,0.34,0.25,0.75,1.0,0.33,0.0,0.0,0.5,0.78,1.0,0.67,0.33,0.0],"1":[0.0,0.0,0.0,0.25,0.5,1.0,1.0,1.0,0.0,0.5,0.5,1.0,1.0,0.5,1.0,1.0,1.0,1.0,1.0,0.75,0.0,0.0,1.0,1.0,1.0,0.5,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0],"2":[0.0,0.01,0.76,1.0,1.0,1.0,0.27,0.0,0.01,0.76,1.0,0.51,0.51,0.76,1.0,0.18,0.51,1.0,0.25,0.0,0.0,0.01,1.0,0.67,1.0,1.0,0.0,0.0,0.0,0.0,0.52,0.68,0.0,0.0,0.0,0.0,0.0,0.0,0.76,0.67,0.0,0.0,0.0,0.0,0.0,0.51,1.0,0.23,0.0,0.0,0.0,0.0,0.27,1.0,0.75,0.0,0.0,0.0,0.0,0.27,1.0,0.76,0.0,0.0,0.0,0.0,0.26,1.0,0.76,0.01,0.0,0.0,0.0,0.25,1.0,0.76,0.01,0.0,0.0,0.0,0.01,1.0,0.76,0.01,0.0,0.0,0.0,0.0,0.84,1.0,1.0,1.0,1.0,1.0,1.0,1.0],"3":[0.0,0.0,0.5,1.0,1.0,0.75,0.25,0.0,0.25,0.75,1.0,0.5,0.5,0.75,1.0,0.17,0.75,1.0,0.25,0.0,0.0,0.0,0.75,0.67,0.33,0.33,0.0,0.0,0.0,0.0,0.5,0.67,0.0,0.0,0.0,0.0,0.0,0.25,1.0,0.5,0.0,0.0,0.25,1.0,1.0,1.0,0.5,0.0,0.0,0.0,0.25,0.5,0.75,1.0,1.0,0.17,0.0,0.0,0.0,0.0,0.0,0.0,0.67,0.89,0.5,0.25,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.75,0.0,0.0,0.0,0.0,0.5,1.0,0.5,1.0,0.75,0.5,0.25,0.5,1.0,0.67,0.0,0.33,0.67,0.67,0.83,0.67,0.5,0.11],"4":[0.03,0.03,0.0,0.0,0.73,0.97,0.5,0.0,0.03,0.02,0.0,0.26,1.0,0.82,0.5,0.0,0.02,0.02,0.0,0.97,0.73,0.67,0.53,0.03,0.02,0.02,0.48,0.97,0.26,0.68,0.51,0.0,0.02,0.03,0.81,0.5,0.0,0.68,0.51,0.0,0.02,0.28,0.81,0.01,0.0,0.68,0.5,0.0,0.01,1.0,0.5,0.0,0.01,0.68,0.5,0.0,0.49,1.0,0.18,0.0,0.02,0.67,0.5,0.0,0.97,0.99,0.53,0.51,0.53,0.83,0.73,0.5,0.97,0.98,1.0,1.0,1.0,0.98,0.97,0.97,0.0,0.0,0.03,0.03,0.02,0.65,0.5,0.0,0.0,0.0,0.0,0.03,0.0,0.65,0.5,0.0],"5":[0.28,1.0,1.0,1.0,1.0,1.0,1.0,0.63,0.5,1.0,0.55,0.55,0.55,0.55,0.55,0.18,0.5,1.0,0.03,0.0,0.0,0.0,0.0,0.0,0.5,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.55,1.0,0.25,0.55,1.0,0.75,0.25,0.0,0.7,1.0,0.85,0.55,0.55,0.7,1.0,0.51,0.55,0.55,0.05,0.0,0.0,0.08,0.55,0.96,0.04,0.04,0.0,0.0,0.0,0.0,0.11,0.98,0.5,0.28,0.0,0.0,0.0,0.0,0.11,0.98,1.0,1.0,0.03,0.0,0.0,0.03,0.55,0.96,0.3,1.0,0.78,0.5,0.28,0.55,1.0,0.5,0.0,0.2,0.69,1.0,1.0,0.69,0.5,0.0],"6":[0.0,0.0,0.33,1.0,1.0,0.83,0.25,0.0,0.0,0.25,1.0,0.75,0.5,0.83,1.0,0.17,0.0,1.0,0.5,0.0,0.0,0.0,1.0,0.5,0.5,1.0,0.11,0.0,0.0,0.0,0.17,0.22,1.0,1.0,0.17,0.5,1.0,0.67,0.25,0.0,1.0,0.75,0.83,1.0,0.5,1.0,1.0,0.17,1.0,1.0,0.5,0.0,0.0,0.17,1.0,0.5,1.0,1.0,0.11,0.0,0.0,0.0,0.5,0.78,0.5,1.0,0.17,0.0,0.0,0.0,0.5,0.83,0.25,1.0,0.33,0.0,0.0,0.0,1.0,0.67,0.0,0.75,0.83,0.5,0.25,0.67,1.0,0.33,0.0,0.0,0.56,0.67,1.0,0.78,0.33,0.0],"7":[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.28,0.52,0.52,0.52,0.52,0.52,0.76,0.84,0.0,0.0,0.0,0.0,0.0,0.0,0.99,0.51,0.0,0.0,0.0,0.0,0.0,0.5,1.0,0.18,0.0,0.0,0.0,0.0,0.0,1.0,0.76,0.01,0.0,0.0,0.0,0.0,0.51,1.0,0.27,0.0,0.0,0.0,0.0,0.01,1.0,0.76,0.0,0.0,0.0,0.0,0.0,0.34,1.0,0.26,0.0,0.0,0.0,0.0,0.0,0.67,0.76,0.0,0.0,0.0,0.0,0.0,0.01,1.0,0.26,0.0,0.0,0.0,0.0,0.0,0.75,0.83,0.0,0.0,0.0,0.0,0.0,0.35,1.0,0.34,0.0,0.0,0.0,0.0],"8":[0.0,0.0,0.68,1.0,1.0,0.68,0.02,0.0,0.0,0.75,1.0,0.53,0.52,1.0,0.77,0.17,0.27,1.0,0.5,0.0,0.0,0.19,1.0,0.36,0.5,1.0,0.33,0.0,0.0,0.01,1.0,0.56,0.02,1.0,0.52,0.0,0.0,0.51,1.0,0.18,0.0,0.25,0.84,1.0,1.0,1.0,0.27,0.0,0.0,0.75,1.0,0.77,0.77,1.0,0.77,0.01,0.68,1.0,0.23,0.0,0.0,0.12,0.84,0.57,1.0,1.0,0.0,0.0,0.0,0.0,0.5,0.84,0.77,1.0,0.17,0.0,0.0,0.01,0.77,0.69,0.27,1.0,0.83,0.5,0.5,0.68,1.0,0.5,0.0,0.18,0.67,0.69,0.84,0.68,0.34,0.01],"9":[0.0,0.01,0.67,1.0,1.0,0.67,0.01,0.0,0.01,0.76,1.0,0.51,0.51,1.0,0.76,0.0,0.51,1.0,0.34,0.0,0.0,0.17,1.0,0.34,1.0,1.0,0.0,0.0,0.0,0.0,1.0,0.67,1.0,1.0,0.0,0.0,0.0,0.0,1.0,0.67,0.51,1.0,0.17,0.0,0.0,0.17,1.0,1.0,0.25,1.0,0.84,0.5,0.5,0.84,0.76,0.84,0.0,0.17,0.56,0.67,0.67,0.45,0.5,0.67,0.0,0.0,0.0,0.0,0.0,0.0,0.76,0.67,0.51,1.0,0.17,0.0,0.0,0.17,1.0,0.34,0.25,1.0,0.83,0.26,0.26,0.84,1.0,0.0,0.0,0.17,0.67,0.84,0.84,0.56,0.17,0.0]};
+/* own digit reader — no downloads. Templates learned from Nick's TradingView screenshots (8×12 ink grids per digit). */
+function ocrRead(px,W,x0,x1,y0,y1,inkf){const out=[];x0=Math.max(0,Math.round(x0));x1=Math.min(W,Math.round(x1));y0=Math.round(y0);y1=Math.round(y1);
+  const ink=(x,y)=>{const i=(y*W+x)*4;return inkf(px[i],px[i+1],px[i+2])};
+  const B=[];let cur=null;const lim=(x1-x0)*0.6;
+  for(let y=y0;y<y1;y++){let n=0;for(let x=x0;x<x1;x++)if(ink(x,y))n++;
+    if(n>0&&n<lim){if(!cur)cur=[y,y];else cur[1]=y}else if(cur){B.push(cur);cur=null}}
+  if(cur)B.push(cur);
+  for(const [a,b] of B){if(b-a<12)continue;
+    const G=[];let c=null;
+    for(let x=x0;x<x1;x++){let on=false;for(let y=a;y<=b;y++)if(ink(x,y)){on=true;break}
+      if(on){if(!c)c=[x,x];else c[1]=x}else if(c){G.push(c);c=null}}
+    if(c)G.push(c);if(!G.length)continue;
+    const g4=G.map(g=>{let t=1e9,u=-1;for(let y=a;y<=b;y++)for(let x=g[0];x<=g[1];x++)if(ink(x,y)){if(y<t)t=y;if(y>u)u=y;break}
+      for(let y=b;y>=a;y--){let hit=false;for(let x=g[0];x<=g[1];x++)if(ink(x,y)){hit=true;break}if(hit){u=Math.max(u,y);break}}
+      return {x0:g[0],x1:g[1],y0:t,y1:u}});
+    const Hd=Math.max(...g4.map(g=>g.y1-g.y0+1));let s="",prev=null;
+    for(const g of g4){const h=g.y1-g.y0+1,w=g.x1-g.x0+1;
+      if(prev!=null&&g.x0-prev>0.45*Hd)s+=" ";prev=g.x1;
+      if(h>=0.6*Hd){const v=[];
+        for(let j=0;j<12;j++)for(let i=0;i<8;i++){const xa=g.x0+i*w/8,xb=g.x0+(i+1)*w/8,ya=g.y0+j*h/12,yb=g.y0+(j+1)*h/12;let n=0,t=0;
+          for(let yy=Math.floor(ya);yy<Math.max(Math.floor(ya)+1,Math.floor(yb));yy++)for(let xx=Math.floor(xa);xx<Math.max(Math.floor(xa)+1,Math.floor(xb));xx++){t++;if(ink(xx,yy))n++}
+          v.push(t?n/t:0)}
+        let bd=null,bk="";for(const k in OCR_T){const T=OCR_T[k];let d=0;for(let q=0;q<96;q++){const e=v[q]-T[q];d+=e*e}if(bd==null||d<bd){bd=d;bk=k}}
+        s+=bk}
+      else s+=h>=0.28*Hd?",":"."}
+    out.push({text:s,y:(a+b)/2})}
+  return out}
+const inkLum=(r,g,b)=>0.299*r+0.587*g+0.114*b>110, inkMax=(r,g,b)=>Math.max(r,g,b)>130;
+const SHOT_NUM=/^\d{1,3}(,\d{3})+(\.\d{1,2})?$|^\d{4,6}\.\d{1,2}$/;
+/* pixel colour classes of Nick's chart lines */
+/* pixel colour classes of Nick's lines: 1 yellow=yesterday H/L, 2 green=close, 3 white=today H/L, 4 magenta=week H/L, 5 cyan=month H/L */
+function shotCls(r,g,b){
+  if(r>235&&g>235&&b>235)return 3;
+  if(r>200&&g>180&&b<150&&r-b>90)return 1;
+  if(g>200&&r<170&&b<170&&g-r>60&&g-b>60)return 2;
+  if(r>200&&b>200&&g<90)return 4;
+  if(r<80&&g>200&&b>200)return 5;
+  return 0}
+/* a line = a long horizontal run of one colour (small gaps allowed, must be dense — dotted lines and text are ignored) */
+function shotLines(px,W,H,x1,yA,yB){const rows=[],step=2,need=x1*0.18,K=[1,2,3,4,5];
+  for(let y=Math.floor(yA);y<yB;y++){const st={},hit={};
+    const close=c=>{const q=st[c];if(!q)return;const span=q.l-q.s+step;if(span>=need&&q.m*step/span>=0.6)hit[c]=1;st[c]=null};
+    for(let x=0;x<x1;x+=step){const i=(y*W+x)*4,k=shotCls(px[i],px[i+1],px[i+2]);
+      for(const c of K){if(k===c){if(!st[c])st[c]={s:x,l:x,m:0};st[c].l=x;st[c].m++}else if(st[c]&&x-st[c].l>12*step)close(c)}}
+    for(const c of K)close(c);
+    for(const c of K)if(hit[c])rows.push([y,c])}
+  const g=[];rows.forEach(([y,c])=>{const L=g.find(q=>q.c===c&&y-q.b<=3);if(L)L.b=y;else g.push({a:y,b:y,c:c})});
+  return g.filter(q=>q.b-q.a<=14).map(q=>({y:(q.a+q.b)/2,c:q.c}))}
+/* robust pixel→price fit on the axis ticks; tries linear and log scales */
+function shotFit(P){let best=null;
+  for(const log of [false,true]){const T=log?Math.log:(v=>v),I=log?Math.exp:(v=>v);
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const p=P[i],q=P[j];if(Math.abs(q.y-p.y)<20)continue;
+      const b=(T(q.v)-T(p.v))/(q.y-p.y),a=T(p.v)-b*p.y;if(!(b<0))continue;
+      const inl=P.filter(r=>Math.abs(I(a+b*r.y)-r.v)<r.v*0.002);if(inl.length<3)continue;
+      const n=inl.length,my=inl.reduce((s,r)=>s+r.y,0)/n,mv=inl.reduce((s,r)=>s+T(r.v),0)/n;
+      const bb=inl.reduce((s,r)=>s+(r.y-my)*(T(r.v)-mv),0)/inl.reduce((s,r)=>s+(r.y-my)*(r.y-my),0),aa=mv-bb*my;
+      const res=inl.reduce((s,r)=>s+Math.abs(I(aa+bb*r.y)-r.v),0)/n;
+      if(!best||n>best.n||(n===best.n&&res<best.res))best={n:n,res:res,f:(y=>I(aa+bb*y)),log:log}}}
+  return best}
+let _shotStage="";
+/* open the picked photo: ImageBitmap first (no URLs needed), then a data: URL, then a blob: URL */
+async function shotImg(file){
+  if(window.createImageBitmap){try{return await createImageBitmap(file)}catch(e){}}
+  const viaUrl=u=>new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>no(new Error("img"));i.src=u});
+  try{const du=await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=()=>no(new Error("read"));r.readAsDataURL(file)});return await viaUrl(du)}
+  catch(e){return await viaUrl(URL.createObjectURL(file))}}
+async function shotRead(file){_shotStage="פתיחת התמונה";
+  const img=await shotImg(file);
+  const W=img.naturalWidth||img.width,H=img.naturalHeight||img.height,port=H>=W;
+  const c=document.createElement("canvas");c.width=W;c.height=H;const g=c.getContext("2d");g.drawImage(img,0,0);
+  _shotStage="חיפוש קווים";const px=g.getImageData(0,0,W,H).data;
+  const ax0=Math.round(W*(port?0.78:0.64));
+
+  _shotStage="קריאת ציר המחירים";
+  const readTicks=xa=>{const t0=[];ocrRead(px,W,xa,W,H*0.05,H*0.95,inkLum).forEach(o=>{const t=o.text.split(" ").find(q=>SHOT_NUM.test(q));
+    if(t)t0.push({y:o.y,v:parseFloat(t.replace(/,/g,""))})});return t0};
+  let F=shotFit(readTicks(ax0)),axX=ax0;
+  if(!F||F.n<4){for(let f=0.6;f<=0.92;f+=0.02){const xa=Math.round(W*f),F2=shotFit(readTicks(xa));if(F2&&(!F||F2.n>F.n||(F2.n===F.n&&F2.res<F.res))){F=F2;axX=xa}}}
+  if(!F)return {err:"לא הצלחתי לקרוא את המספרים בציר המחירים"};
+  _shotStage="חיפוש קווים";const L=shotLines(px,W,H,Math.min(ax0,axX)-10,H*(port?0.13:0.12),H*0.9);
+  const val=y=>Math.round(F.f(y)*4)/4;
+  const lines=L.map(l=>({v:val(l.y),c:l.c}));
+  const Y=lines.filter(l=>l.c===1).map(l=>l.v),G=lines.filter(l=>l.c===2).map(l=>l.v);
+  let C=null,PH=null,PL=null,warn="";
+  if(G.length){C=G.find(v=>Y.some(y=>y>v)&&Y.some(y=>y<v));if(C==null)C=G[0]}
+  if(C!=null){const up=Y.filter(v=>v>C),dn=Y.filter(v=>v<C);if(up.length&&dn.length){PH=Math.min(...up);PL=Math.max(...dn)}}
+  if(PH==null&&Y.length)PH=Math.max(...Y);if(PL==null&&Y.length>1)PL=Math.min(...Y);
+  if(PH!=null&&PL!=null&&PH===PL)PL=null;
+  if(C!=null&&PH!=null&&PL!=null&&!(C<=PH&&C>=PL))warn="הקו הירוק לא בין שני הצהובים — בדוק שהצבעים נכונים";
+  const pair=(c,ref)=>{const v=lines.filter(l=>l.c===c).map(l=>l.v);if(!v.length)return [null,null];
+    if(v.length===1)return ref!=null&&v[0]<ref?[null,v[0]]:[v[0],null];return [Math.max(...v),Math.min(...v)]};
+  /* current price from the header line under the symbol name */
+  _shotStage="קריאת המחיר הנוכחי";
+  let now=null;try{const lo=F.f(H*0.95)*0.97,hi=F.f(H*0.05)*1.03;
+    for(const o of ocrRead(px,W,0,W*0.7,H*0.05,H*(port?0.14:0.16),inkMax)){const m=/(\d{1,3}),(\d{3})\.(\d{2})/.exec(o.text);
+      if(m){const v=parseFloat(m[1]+m[2]+"."+m[3]);if(v>lo&&v<hi){now=v;break}}}}catch(e){}
+  const ref=C!=null?C:now,TD=pair(3,now!=null?now:C),WK=pair(4,ref),MO=pair(5,ref);
+  return {pdh:PH,pdl:PL,pdc:C,now:now,hod:TD[0],lod:TD[1],how:WK[0],low:WK[1],hom:MO[0],lom:MO[1],lines:lines,ticks:F.n,log:F.log,warn:warn}}
+async function shotFill(file){
+  const d=day();S.shotSt={busy:1,msg:"קורא את הצילום…"};render();await new Promise(r=>setTimeout(r,30));
+  try{const r=await shotRead(file);
+    if(r.err){S.shotSt={err:r.err};render();return}
+    const got=[],miss=[],put=(k,v,n)=>{if(v!=null&&isFinite(v)){d.levels[k]=String(v);got.push([n,v])}else miss.push(n)};
+    put("pdh",r.pdh,"גבוה אתמול");put("pdl",r.pdl,"נמוך אתמול");put("pdc",r.pdc,"סגירה");put("now",r.now,"מחיר עכשיו");
+    if(r.hod!=null||!d.levels.hod)put("hod",r.hod,"גבוה היום");if(r.lod!=null||!d.levels.lod)put("lod",r.lod,"נמוך היום");
+    const opt=(k,v,n)=>{if(v!=null&&isFinite(v)){d.levels[k]=String(v);got.push([n,v])}};
+    opt("how",r.how,"גבוה שבוע");opt("low",r.low,"נמוך שבוע");opt("hom",r.hom,"גבוה חודש");opt("lom",r.lom,"נמוך חודש");
+    syncBias(d);persist.d();S.planIn=true;S.shotSt={got:got,miss:miss,warn:r.warn};render()}
+  catch(e){let m;try{m=e==null?"ריק":typeof e==="string"?e:e.message?e.message:(JSON.stringify(e)||String(e))}catch(_){m=String(e)}if(!m||m==="{}")m=(e&&e.type)||Object.prototype.toString.call(e);
+    S.shotSt={err:"משהו השתבש ב"+_shotStage+". פרטים: "+String(m).slice(0,160)};render()}}
+function shotPanel(ins){const s=S.shotSt;
+  const btn=`<label class="brshot"><input type="file" accept="image/*" id="szShotIn" hidden><span>📷 מילוי מצילום מסך</span><small>צהוב אתמול · ירוק סגירה · לבן היום · ורוד שבוע · תכלת חודש</small></label>`;
+  if(!s)return btn;
+  if(s.busy)return `<div class="brshotst">${esc(s.msg)}</div>`;
+  if(s.err)return btn+`<div class="brshotst err">${esc(s.err)}</div>`;
+  return btn+`<div class="brshotst">${s.got.length?"נקרא מהצילום: "+s.got.map(g=>esc(g[0])+" <b>"+fp(ins,g[1])+"</b>").join(" · "):"לא מצאתי קווים בצבעים שסיכמנו"}
+    ${s.miss.length?`<div class="m">להשלים ידנית: ${s.miss.map(esc).join(" · ")}</div>`:""}${s.warn?`<div class="w">${esc(s.warn)}</div>`:""}
+    <div class="m">בדוק שהמספרים נכונים לפני שאתה ממשיך.</div></div>`}
+
+/* real exchange times — follows US/UK daylight-saving automatically */
+function tzMin(tz){try{const s=new Date().toLocaleString("en-GB",{timeZone:tz,hour12:false,hour:"2-digit",minute:"2-digit"});const a=s.split(":").map(Number);return (a[0]%24)*60+a[1]}catch(e){return null}}
+function brDayNote(){const t=new Date(),w=t.getDay(),dm=t.getDate();
+  const N={1:"<b>שני</b> — יום הטווח של השבוע. לא נכנסים נגד פריצה שעדיין בתוך הטווח של השבוע שעבר.",
+    2:"<b>שלישי</b> — אם המחיר פורץ את הגבוה/נמוך של שני ונכשל, מחר לרוב יום אדום/ירוק ראשון.",
+    3:"<b>רביעי</b> — אמצע השבוע: כאן בדרך כלל נבנים ימי האות (פנימי, אדום/ירוק ראשון).",
+    4:"<b>חמישי</b> — הכנה לשישי: שים לב לאיזה צד של השבוע המחיר קרוב.",
+    5:"<b>שישי</b> — לפי ברק לרוב חזרה לצד השני של השבוע. הגבוה/נמוך של השבוע הם היעדים."+(dm<=7?" <b>שישי ראשון בחודש — דוח תעסוקה (NFP) ב-15:30:</b> לא נכנסים לפני הנתון.":"")};
+  return N[w]?`<div class="brday">${N[w]}</div>`:""}
+function brClock(){const t=new Date(),m=t.getHours()*60+t.getMinutes();
+  const et=tzMin("America/New_York"),uk=tzMin("Europe/London");
+  const offNY=et==null?420:((m-et+1440)%1440),offUK=uk==null?120:((m-uk+1440)%1440);
+  const L=x=>((x+offNY)%1440),LU=x=>((x+offUK)%1440);
+  const data=L(8*60+30),o=L(9*60+30),h1=L(10*60+30),c=L(11*60),lo=LU(8*60),lc=LU(10*60);
+  const hm=x=>Math.floor(x/60)+":"+String(x%60).padStart(2,"0"),left=x=>{const d=x-m;return Math.floor(d/60)?Math.floor(d/60)+" ש׳ "+(d%60)+" ד׳":(d%60)+" ד׳"};
+  let s,st;
+  if(m<data){s="נתונים ב-"+hm(data)+" · פתיחה ב-"+hm(o)+" (בעוד "+left(o)+")";st="pre"}
+  else if(m<o){s="פתיחה ב-"+hm(o)+" · בעוד "+left(o);st="pre"}
+  else if(m<h1){s="ניו יורק פתוחה — השעה הראשונה";st="open"}
+  else if(m<c){s="סוף חלון הכניסה ("+hm(c)+")";st="open"}
+  else{s="חלון ניו יורק נסגר להיום";st="post"}
+  const A=7*60,B=19*60,p=x=>Math.max(0,Math.min(100,(x-A)/(B-A)*100));
+  return {s:s,st:st,now:p(m),bar:`<div class="brtl"><i class="lon" style="right:${p(lo)}%;width:${p(lc)-p(lo)}%"></i><i class="ny" style="right:${p(data)}%;width:${p(c)-p(data)}%"></i><i class="h2" style="right:${p(o)}%;width:${p(h1)-p(o)}%"></i><b style="right:${p(m)}%"></b></div>
+    <div class="brtll"><span style="right:${p(lo)}%">לונדון</span><span style="right:${p(o)}%">${hm(o)}</span><span style="right:${p(c)}%">${hm(c)}</span></div>`}}
 function brLadder(P,q){
   const ins=P.ins,rows=[],R=40;
   const add=(v,n,k)=>{if(isNaN(v))return;const m=rows.find(r=>Math.abs(r.v-v)<1e-9);
@@ -1681,7 +1852,7 @@ function brLadder(P,q){
   add(P.X,"עכשיו","brnow");
   if(q){add(q.hi,"","z");add(q.lo,"","z");q.tg.forEach(t=>add(t[0],"יעד · "+t[1],"tg"))}
   add(P.H,"גבוה אתמול","lvl");add(P.C,"סגירה","lvl");add(P.L,"נמוך אתמול","lvl");
-  add(P.hod,"גבוה היום","td");add(P.lod,"נמוך היום","td");add(P.HW,"גבוה שבוע","lvl");add(P.LW,"נמוך שבוע","lvl");
+  add(P.hod,"גבוה היום","td");add(P.lod,"נמוך היום","td");add(P.HW,"גבוה שבוע","lvl");add(P.LW,"נמוך שבוע","lvl");add(P.HM,"גבוה חודש","lvl");add(P.LM,"נמוך חודש","lvl");
   rows.sort((a,b)=>b.v-a.v);
   const ix=v=>rows.findIndex(r=>Math.abs(r.v-v)<1e-9);
   const band=q?(()=>{const a=ix(q.hi),b=ix(q.lo);return `<div class="brband ${q.side}" style="top:${a*R+4}px;height:${(b-a+1)*R-8}px"><em>${q.side==="short"?"אזור מכירה":"אזור קנייה"}</em></div>`})():"";
@@ -1696,6 +1867,7 @@ function planPanel(d){
   const open=P.need||S.planIn;
   const f=(k,l,opt)=>`<label class="brf${opt?" opt":""}"><span>${l}</span><input inputmode="decimal" value="${esc(L0[k]||"")}" placeholder="${opt?"לא חובה":"—"}" data-model="plv" data-arg="${k}"></label>`;
   const form=`<div class="brform">
+    ${shotPanel(ins)}
     <div class="brsec"><b>01</b>מכשיר</div>
     <div class="brg2"><label class="brf"><span>מכשיר</span><select data-model="planIns">${INSTR.map(x=>`<option ${x===ins?"selected":""}>${x}</option>`).join("")}</select></label>
       <label class="brf"><span>גודל רמה${brLvUser(ins)?"":" · אוטומטי"}</span><input inputmode="decimal" value="${brLvUser(ins)||""}" placeholder="${(()=>{const px=parseFloat(L0.now)||parseFloat(L0.pdc);return /^M?NQ$/.test(ins)&&px>0?"≈"+brLv(ins,px):String(cf.lv)})()}" data-model="pset" data-arg="${ins}|lv"></label></div>
@@ -1703,8 +1875,9 @@ function planPanel(d){
     <div class="brg3">${f("pdh","גבוה")}${f("pdl","נמוך")}${f("pdc","סגירה")}</div>
     <div class="brsec"><b>03</b>היום עד עכשיו · אסיה + לונדון</div>
     <div class="brg3">${f("hod","גבוה היום")}${f("lod","נמוך היום")}${f("now","מחיר עכשיו")}</div>
-    <div class="brsec"><b>04</b>שבוע <small>לא חובה · מחזק את האזור</small></div>
+    <div class="brsec"><b>04</b>שבוע וחודש <small>לא חובה · מחזק את האזור</small></div>
     <div class="brg2">${f("how","גבוה שבוע",1)}${f("low","נמוך שבוע",1)}</div>
+    <div class="brg2" style="margin-top:7px">${f("hom","גבוה חודש",1)}${f("lom","נמוך חודש",1)}</div>
     <div class="brsec"><b>05</b>איזה יום היה אתמול?</div>
     <div class="chips">${DAY_TYPES.filter(x=>x[0]!=="none").map(([v,l])=>chip(l,d.dayType===v,"dayType",v,"sm")).join("")}</div>
     ${dq?`<div class="brsec"><b>06</b>${dq[0]}</div><div class="chips">${chip(dq[1],(d.planDir||"up")==="up","planDir","up","sm")}${chip(dq[2],d.planDir==="down","planDir","down","sm")}</div>`:""}
@@ -1723,6 +1896,7 @@ function planPanel(d){
     <div class="brtop"><div><small>${esc(P.set)}${dq?" · "+esc((d.planDir||"up")==="up"?dq[1]:dq[2]):""}</small><b class="${q.side}">${q.side==="short"?"מכירה":"קנייה"}</b></div>
       <div class="brclock ${ck.st}"><span>${esc(ck.s)}</span></div></div>
     ${ck.bar}
+    ${brDayNote()}
     <div class="brzone ${q.side}">
       <div class="brzl">אזור כניסה · ${esc(q.t)}</div>
       <div class="brzn"><b>${fp(ins,q.lo)}</b><i>—</i><b>${fp(ins,q.hi)}</b></div>
@@ -1838,8 +2012,9 @@ function applyScale(f,force){const cf=planCfg(f.instrument);
 function gateDefaults(){
   const n=mins(),sess=SESSIONS.find(s=>n>=s.start&&n<=s.end);
   const last=S.trades[S.trades.length-1],d=day();
-  S.gateForm={instrument:last?last.instrument:"MGC",
-    dir:(d.bias==="long"||d.bias==="short")?d.bias:(last?last.dir:"long"),
+  let bz="";try{const B=brief(d);if(!B.need&&B.zones.length)bz=B.zones[0].side}catch(e){}
+  S.gateForm={instrument:d.planIns||(last?last.instrument:"MNQ"),
+    dir:bz||((d.bias==="long"||d.bias==="short")?d.bias:(last?last.dir:"long")),
     setup:"", session:sess?sess.label:(last?last.session:""),
     date:today(), time:new Date().toTimeString().slice(0,5),
     entry:"", stopP:last&&last.stopP?last.stopP:"", tpP:last&&last.tpP?last.tpP:"",
@@ -1966,7 +2141,7 @@ function viewJournal(){
   });
 
   return `<div class="stack" style="gap:11px">
-   <input id="jq" placeholder="חיפוש — מכשיר, סטאפ, הערה" value="${esc(S.jq||"")}" data-model="jq">
+   <div style="position:relative"><input id="jq" placeholder="חיפוש — מכשיר, סטאפ, הערה, תאריך" value="${esc(S.jq||"")}" data-model="jq">${S.jq?`<button data-act="jqClear" aria-label="נקה חיפוש" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:99px;color:var(--brass);border:1px solid var(--line)">✕</button>`:""}</div>
    <button class="btn outline" data-act="backfill">+ רשום עסקה מתאריך קודם</button>
    ${openN&&!q?`<div class="pill" style="border-color:var(--brassDeep);color:var(--brass);align-self:flex-start">
      ${openN} עסקאות עוד לא נסגרו</div>`:""}
@@ -2258,7 +2433,9 @@ function scaleExp(){
 /* ══ monthly P&L calendar (Tradezella-style) ══ */
 const HE_MONTHS_FULL=["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
 function calShort(n){const a=Math.abs(n),s=n>0?"+":n<0?"−":"";
-  return s+(a>=10000?(a/1000).toFixed(0)+"K":a>=1000?(a/1000).toFixed(1).replace(/\.0$/,"")+"K":Math.round(a))}
+  if(a<1000)return s+Math.round(a);
+  const k=a/1000,d=k<10?2:k<100?1:0,f=Math.pow(10,d);
+  return s+(Math.floor(k*f+1e-9)/f).toFixed(d).replace(/\.?0+$/,"")+"K"}
 function calendarPanel(closed){
   const mk=S.calM||today().slice(0,7),y=+mk.slice(0,4),mo=+mk.slice(5,7)-1;
   const by={};closed.forEach(t=>{if(!t.date||!t.date.startsWith(mk))return;const k=t.date;by[k]=by[k]||{p:0,n:0,w:0};by[k].p+=pnlOf(t);by[k].n++;if(pnlOf(t)>0)by[k].w++});
@@ -2278,11 +2455,11 @@ function calendarPanel(closed){
     if(!r)return `<div class="cc${k===td?" tdy":""}"><i>${dd}</i>${sh?`<u>${esc(sh)}</u>`:""}</div>`;
     const a=0.16+0.5*Math.abs(r.p)/mx,c=r.p>0?"143,191,165":r.p<0?"217,139,132":"200,190,170";
     return `<button class="cc has${r.p>0?" w":r.p<0?" l":""}${k===td?" tdy":""}" style="background:rgba(${c},${a.toFixed(2)})" data-act="calDay" data-arg="${k}">
-      <i>${dd}</i><b>${calShort(r.p)}</b><s>${r.n} ט׳</s>${sh?`<u>${esc(sh)}</u>`:""}</button>`};
+      <i>${dd}</i><b class="${calShort(r.p).length>6?"xs":calShort(r.p).length>5?"sm":""}">${calShort(r.p)}</b><s>${r.n} ט׳</s>${sh?`<u>${esc(sh)}</u>`:""}</button>`};
   const rows=weeks.map(w=>{const ws=w.filter(Boolean).reduce((a,k)=>a+(by[k]?by[k].p:0),0),wn=w.filter(Boolean).reduce((a,k)=>a+(by[k]?by[k].n:0),0);
     const ds=showSat?w:w.slice(0,6);
     return `<div class="crow" style="grid-template-columns:repeat(${cols},1fr) 1.15fr">${ds.map(cell).join("")}
-      <div class="cwk ${ws>0?"w":ws<0?"l":""}"><span>שבוע</span><b>${wn?calShort(ws):"—"}</b>${wn?`<s>${wn} ט׳</s>`:""}</div></div>`}).join("");
+      <div class="cwk ${ws>0?"w":ws<0?"l":""}"><span>שבוע</span><b class="${wn&&calShort(ws).length>6?"xs":wn&&calShort(ws).length>5?"sm":""}">${wn?calShort(ws):"—"}</b>${wn?`<s>${wn} ט׳</s>`:""}</div></div>`}).join("");
   const hd=["א׳","ב׳","ג׳","ד׳","ה׳","ו׳","ש׳"].slice(0,cols);
   return `<div>${head("לוח חודשי")}
     <div class="panel cal">
@@ -3240,14 +3417,15 @@ document.addEventListener("click",function(e){
   if(act==="gqty"||act==="teq"){const ae=document.activeElement; if(ae&&(ae.dataset.model==="gqty"||ae.dataset.model==="teq"))ae.blur()}
   switch(act){
     case "calM":{const a=(S.calM||today().slice(0,7)).split("-").map(Number);const dt=new Date(a[0],a[1]-1+(+arg),1);S.calM=iso(dt).slice(0,7);render();return}
+    case "jqClear": S.jq=""; render(); return;
     case "calDay": S.jq=arg; S.tab="journal"; S.openTrade=null; render(); scrollTo(0,0); return;
-    case "tab": S.tab=arg; S.picker=null; S.editMove=null; S.mv=null; S.editTrade=null; S.openTrade=null;
+    case "tab": if(/^\d{4}-\d{2}-\d{2}$/.test(S.jq||""))S.jq=""; S.tab=arg; S.picker=null; S.editMove=null; S.mv=null; S.editTrade=null; S.openTrade=null;
       if(arg==="gate"){S.gateStep=1;gateDefaults()} render(); return;
     case "prep": d.prep[arg]=!d.prep[arg]; persist.d(); render(); return;
     case "dayType": if(S.tab==="today")S.planIn=true; d.dayType=d.dayType===arg?"":arg; d.planDir=""; d.planOpt=0;
       d.cycleDay=({frd:3,fgd:3,id:3,dbl:3,d2:2,d3:3,d1:1})[d.dayType]||0;
-      {const P=planOf(d); if(P.dir)d.bias=P.dir;} persist.d(); render(); return;
-    case "planDir": S.planIn=true; d.planDir=arg; d.planOpt=0; {const P=planOf(d); if(P.dir)d.bias=P.dir;} persist.d(); render(); return;
+      syncBias(d); persist.d(); render(); return;
+    case "planDir": S.planIn=true; d.planDir=arg; d.planOpt=0; syncBias(d); persist.d(); render(); return;
     case "planEdit": S.planEdit=!S.planEdit; render(); return;
     case "planNums": S.planNums=!S.planNums; render(); return;
     case "planIn": S.planIn=!S.planIn; render(); return;
@@ -3471,14 +3649,15 @@ document.addEventListener("click",function(e){
     render()}
 });
 
-document.addEventListener("change",function(e){const el=e.target;
+document.addEventListener("change",function(e){
+  if(e.target&&e.target.id==="szShotIn"){const f=e.target.files&&e.target.files[0];if(f)shotFill(f);return}const el=e.target;
   if(el.dataset&&el.dataset.model==="planIns"&&day().planIns!==el.value){day().planIns=el.value;persist.d();render()}
   if(el.closest&&el.closest(".zex2")){el.blur();render()}});
 document.addEventListener("input",function(e){
   const el=e.target,m=el.dataset.model;if(!m)return;
   if(m==="level"){day().levels[el.dataset.arg]=el.value;persist.d()}
   else if(m==="plv"){const d=day();d.levels[el.dataset.arg]=el.value;S.planIn=true;
-    {const P=planOf(d); if(P.dir)d.bias=P.dir;} persist.d(); if(!el.closest(".zex2"))schedPlan()}
+    syncBias(d); persist.d(); if(!el.closest(".zex2"))schedPlan()}
   else if(m==="planIns"){day().planIns=el.value;persist.d();el.blur();render()}
   else if(m==="planQty"){day().planQty=Math.max(1,parseInt(el.value)||1);persist.d();schedPlan()}
   else if(m==="pset"){S.planIn=true;const a=el.dataset.arg.split("|"),v=parseFloat(el.value);S.settings.plan=S.settings.plan||{};

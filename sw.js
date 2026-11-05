@@ -1,4 +1,4 @@
-const CACHE = "sadna-v32";
+const CACHE = "sadna-v43";
 const ASSETS = [
   "./", "./index.html", "./manifest.webmanifest",
   "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"
@@ -18,6 +18,8 @@ self.addEventListener("activate", e => {
 
 self.addEventListener("fetch", e => {
   if (e.request.method !== "GET") return;
+  // only our own files; let the browser load outside resources (OCR engine etc.) directly
+  if (new URL(e.request.url).origin !== self.location.origin) return;
   e.respondWith(
     fetch(e.request)
       .then(res => {
