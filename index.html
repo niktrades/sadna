@@ -559,6 +559,12 @@ select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px soli
 .cwk span{font-size:9.5px;color:var(--faint)}.cwk b{white-space:nowrap;font-size:12px;font-weight:700;color:var(--muted);direction:ltr}.cwk.w b{color:#8fbfa5}.cwk.l b{color:#d98b84}
 .cwk s{text-decoration:none;font-size:9.5px;color:var(--faint)}
 .cc b.sm,.cwk b.sm{font-size:11px;letter-spacing:-.5px}.cc b.xs,.cwk b.xs{font-size:9.5px;letter-spacing:-.6px}
+.calview{display:flex;gap:6px;margin:0 0 10px}.calview button{flex:1;padding:8px;border-radius:10px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.08)}
+.calview button.on{color:#1a130c;background:var(--brass);border-color:var(--brass);font-weight:700}
+.calleak{display:flex;align-items:center;gap:6px;margin:0 0 12px;font-size:11.5px;color:var(--muted)}.calleak b{direction:ltr}
+.offd{display:inline-block;width:6px;height:6px;border-radius:99px;background:var(--clay)}
+.cc em.offd{position:absolute;top:5px;left:5px}
+.wk .offd{display:block;margin:3px auto 0}
 .calfoot{font-size:11px;color:var(--faint);text-align:center;margin-top:10px}
 #plan{--b0:var(--panelB);--b1:var(--panelB);--b2:var(--panelA);--ln:var(--line);--tx:var(--bright);--mu:var(--muted);--ice:var(--brass);--sh:var(--clay);--lo:var(--sage);--mono:var(--disp)}
 #plan [class^="br"] b,#plan .brf input{font-variant-numeric:tabular-nums}
@@ -644,6 +650,11 @@ select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px soli
 .brshotst.err{color:var(--clay);margin-top:0}
 .brday{margin-top:12px;padding:9px 12px;border-radius:12px;background:rgba(217,166,72,.06);border:1px solid rgba(217,166,72,.2);font-size:12px;line-height:1.65;color:var(--ink)}.brday b{color:var(--brassHi)}
 .brver{margin-top:8px;text-align:center;font-size:10.5px;color:var(--faint)}
+.brflip{margin-top:12px;padding:11px 13px;border-radius:14px;background:rgba(204,102,71,.1);border:1px solid rgba(204,102,71,.45);font-size:12.5px;line-height:1.65;color:var(--ink)}
+.brflip b{display:block;color:var(--clay);font-size:13.5px;margin-bottom:2px}.brflip.lk{background:rgba(217,166,72,.07);border-color:rgba(217,166,72,.35)}.brflip.lk b{color:var(--brassHi)}
+.bralt.dead{opacity:.6}.bralt.dead b{text-decoration:line-through}
+.brunlock{display:block;margin-top:8px;font-size:11px;color:var(--faint);text-decoration:underline}
+.gatelock{margin:10px 0;padding:11px 13px;border-radius:14px;background:rgba(204,102,71,.1);border:1px solid rgba(204,102,71,.45);font-size:12.5px;line-height:1.6;color:var(--ink)}.gatelock b{color:var(--clay)}
 .brnone{font-size:13px;color:var(--mu);text-align:center;padding:10px}
 </style>
 </head>
@@ -706,7 +717,7 @@ const SETUPS=[
 
 const INSTR=["MNQ","NQ","MGC","GC","XAUUSD","MYM","YM","MES","M2K","RTY","MCL","WTI","HG","6E","6B","6A"];
 
-var APP_VER="v44";
+var APP_VER="v46";
 const DAY_TYPES=[["mon","יום שני — טווח הפתיחה","שני"],["pump","יום פאמפ","פאמפ"],["dump","יום דאמפ","דאמפ"],
  ["frd","יום אדום ראשון","אדום"],["fgd","יום ירוק ראשון","ירוק"],
  ["id","יום פנימי","פנימי"],["dbl","יום פנימי כפול","פנ׳×2"],["out","יום עוטף (Outside)","עוטף"],
@@ -719,6 +730,9 @@ const dtName=k=>{const x=DAY_TYPES.find(d=>d[0]===k);return x?x[1]:""};
 const TAGS=[["a","סטאפ מהפלייבוק","sage"],["b","סטאפ חלקי","brass"],
  ["bore","שעמום","clay"],["revenge","החזרת הפסד","clay"],["fomo","פחד לפספס","clay"]];
 const clean=t=>t==="a"||t==="b";
+/* calendar + weekly tracking show only planned trades unless the user flips it; off-plan trades are still logged and counted separately */
+const planOnly=()=>!S.settings||S.settings.planOnly!==false;
+const inView=t=>!planOnly()||clean(t.tag);
 
 const EXP_CATS=[["eval","מנוי Eval"],["act","הפעלת אקספרס"],["reset","ריסט"],["data","דמי נתונים"],["other","אחר"]];
 
@@ -1334,7 +1348,10 @@ const SCN={frd:["עולה קודם — ונכשל","יורד ישר — ותיק
 function planLv(){return (day().levels)||{}}
 /* ══ SESSION PLAN v5 — by where price is before New York ══ */
 const LOCS=[["above","מעל גבוה אתמול"],["inside","בתוך הטווח של אתמול"],["below","מתחת לנמוך אתמול"]];
-function syncBias(d){try{const B=brief(d);if(!B.need&&B.zones.length)d.bias=B.zones[0].side}catch(e){}}
+function brKey(d){const L=d.levels||{};return [L.pdh,L.pdl,L.pdc,d.dayType,d.planDir||"up",d.planIns||""].join("|")}
+function brSnap(d){try{const k=brKey(d);if(d.plan0&&d.plan0.key===k)return;const B=brief(d);
+  if(!B.need&&B.zones.length&&!B.flip){const q=B.zones[0];d.plan0={key:k,side:q.side,lo:q.lo,hi:q.hi,t:q.t}}}catch(e){}}
+function syncBias(d){try{const B=brief(d);if(!B.need&&B.zones.length)d.bias=B.zones[0].side;if(B.flip&&!d.lockSide){d.lockSide=B.flip.side;d.lockAt=B.flip.at}}catch(e){}}
 function planOf(d){
   const ins=planIns(d),L0=d.levels||{},H=parseFloat(L0.pdh),L=parseFloat(L0.pdl),C=parseFloat(L0.pdc);
   const how=parseFloat(L0.how),low=parseFloat(L0.low),hod=parseFloat(L0.hod),lod=parseFloat(L0.lod);
@@ -1691,12 +1708,29 @@ function brief(d){
   else if(dt==="news"){set="יום חדשות";bias=up?"long":"short";
     if(up)lg(C-lv,C,{t:"תיקון ראשון לסגירה",why:"אחרי יום חדשות שנסגר בקיצון — קונים את התיקון הראשון שמחזיק.",ev:"כניסה בקפיצה הראשונה",ex:"XAUUSD 9-May-24 — אחרי הספייק, חזרה ← ‎+40$",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לאזור"});
     else sh(C,C+lv,{t:"תיקון ראשון לסגירה",why:"אחרי יום חדשות שנסגר בקיצון — מוכרים את התיקון הראשון שנכשל.",ev:"כניסה בקפיצה הראשונה",ex:"DJ30 30-Apr-24 — אחרי החדשות, NY עלתה ל-EMA ונכשלה ← ‎−600",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל האזור"})}
+  /* cancel line: price already beyond the main zone by half a level → that side is dead, flip to the other side */
+  let flip=null;const buf=lv/2,dead=q=>q.side==="long"?X<q.lo-buf:X>q.hi+buf;
+  /* the plan is judged against the zone as it was when the brief was shown (zones that follow today's low/high would just chase price) */
+  const P0=d.plan0&&d.plan0.key===brKey(d)?d.plan0:null;
+  let ref=Z[0];
+  if(P0&&dead(P0)){for(let i=Z.length-1;i>=0;i--)if(Z[i].side===P0.side)Z.splice(i,1);
+    ref={side:P0.side,lo:P0.lo,hi:P0.hi,t:P0.t,why:"",ev:"",ex:"",kill:"",on:[],tg:[]};Z.unshift(ref)}
+  if(ref&&dead(ref)){const c0=ref;c0.cancel=true;
+    const near=q=>q.side==="short"?q.lo-X<=2*lv:X-q.hi<=2*lv;
+    let f=Z.find(q=>q!==c0&&q.side!==c0.side&&!dead(q)&&near(q));
+    if(!f){const n0=Z.length;
+      if(c0.side==="long"){if(c0.lo-X<=2*lv)sh(c0.lo-zb,c0.lo,{t:"בדיקה של הרמה שנשברה — מלמטה",why:"הקנייה בוטלה: המחיר נסגר מתחת לאזור. התמיכה שנשברה הופכת להתנגדות — מוכרים את החזרה אליה כשהיא נכשלת.",ev:"הקו נשבר = הצד התהפך",ex:"NQ חמישי 5-Nov-26 — נמוך החודש (~28,230) נשבר בבדיקה השלישית, בלי חזרה ← ‎−1,300",tg:[[lo,"נמוך היום"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות שוב מעל "+fp(ins,c0.lo)});
+        else sh(lo+lv/2,lo+1.5*lv,{t:"תיקון ראשון במגמה (LHF)",why:"הקנייה בוטלה והמחיר כבר רחוק למטה. לא רודפים — מוכרים את התיקון הראשון של בערך רמה שנכשל מתחת לממוצע 20.",ev:"הקו נשבר = הצד התהפך",ex:"NQ חמישי 5-Nov-26 — אחרי השבירה, התיקון של 18:00 נכשל מתחת ל-EMA 20 ← עוד ירידה",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל "+fp(ins,lo+1.5*lv)})}
+      else{if(X-c0.hi<=2*lv)lg(c0.hi,c0.hi+zb,{t:"בדיקה של הרמה שנפרצה — מלמעלה",why:"המכירה בוטלה: המחיר נסגר מעל האזור. ההתנגדות שנפרצה הופכת לתמיכה — קונים את החזרה אליה כשהיא מחזיקה.",ev:"הקו נשבר = הצד התהפך",ex:"הדפוס ההפוך של חמישי 5-Nov-26",tg:[[hi,"גבוה היום"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות שוב מתחת ל-"+fp(ins,c0.hi)});
+        else lg(hi-1.5*lv,hi-lv/2,{t:"תיקון ראשון במגמה (LHF)",why:"המכירה בוטלה והמחיר כבר רחוק למעלה. לא רודפים — קונים את התיקון הראשון של בערך רמה שמחזיק מעל הממוצע 20.",ev:"הקו נשבר = הצד התהפך",ex:"הדפוס ההפוך של חמישי 5-Nov-26",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת ל-"+fp(ins,hi-1.5*lv)})}
+      f=Z[n0]}
+    flip={side:c0.side,at:c0.side==="long"?c0.lo:c0.hi};Z.length=0;Z.push(f,c0);bias=f.side}
   /* status of each zone vs the current price */
-  Z.forEach(q=>{const inZ=X>=q.lo&&X<=q.hi;
+  Z.forEach(q=>{if(q.cancel){q.st="cancel";q.stT="בוטל — המחיר נסגר מעבר לאזור";return}const inZ=X>=q.lo&&X<=q.hi;
     if(inZ){q.st="in";q.stT="המחיר בתוך האזור"}
     else if(q.side==="short"){if(X<q.lo){q.st=q.lo-X>2*lv?"far":"wait";q.stT=fd(ins,q.lo-X)+" מתחת לאזור"+(q.st==="far"?" · רחוק, אולי לא יגיע":"")}else{q.st="broke";q.stT="המחיר מעל האזור — לצייר מחדש מהגבוה החדש"}}
     else{if(X>q.hi){q.st=X-q.hi>2*lv?"far":"wait";q.stT=fd(ins,X-q.hi)+" מעל לאזור"+(q.st==="far"?" · רחוק, אולי לא יגיע":"")}else{q.st="broke";q.stT="המחיר מתחת לאזור — לצייר מחדש מהנמוך החדש"}}});
-  return {ins:ins,cf:cf,lv:lv,zb:zb,H:H,L:L,C:C,hod:hi,lod:lo,X:X,HW:HW,LW:LW,HM:HM,LM:LM,mv:mv,where:where,zones:Z,set:set,bias:bias,dt:dt};
+  return {flip:flip,ins:ins,cf:cf,lv:lv,zb:zb,H:H,L:L,C:C,hod:hi,lod:lo,X:X,HW:HW,LW:LW,HM:HM,LM:LM,mv:mv,where:where,zones:Z,set:set,bias:bias,dt:dt};
 }
 /* time of day — NY window */
 /* ══ FILL THE BRIEF FROM A TRADINGVIEW SCREENSHOT ══
@@ -1899,6 +1933,8 @@ function planPanel(d){
       <div class="brclock ${ck.st}"><span>${esc(ck.s)}</span></div></div>
     ${ck.bar}
     ${brDayNote()}
+    ${P.flip?`<div class="brflip"><b>🔄 התוכנית התהפכה</b>ה${P.flip.side==="long"?"קנייה":"מכירה"} בוטלה — המחיר עבר את ${fp(ins,P.flip.at)}. עכשיו מחפשים ${q.side==="short"?"מכירה":"קנייה"}. לא ${P.flip.side==="long"?"קונים \"בזול\"":"מוכרים \"ביוקר\""} ולא מוסיפים לפוזיציה.</div>`:""}
+    ${!P.flip&&d.lockSide?`<div class="brflip lk"><b>🔒 ה${d.lockSide==="long"?"קנייה":"מכירה"} נעולה להיום</b>הקו נשבר מוקדם יותר היום (${fp(ins,d.lockAt)}).</div>`:""}
     <div class="brzone ${q.side}">
       <div class="brzl">אזור כניסה · ${esc(q.t)}</div>
       <div class="brzn"><b>${fp(ins,q.lo)}</b><i>—</i><b>${fp(ins,q.hi)}</b></div>
@@ -1912,8 +1948,8 @@ function planPanel(d){
     <div class="brchk">${chk.map(c=>`<div class="${c[0]===true?"ok":c[0]===false?"no":"man"}"><i>${c[0]===true?"✓":c[0]===false?"✕":"○"}</i><b>${esc(c[1])}</b><span>${esc(c[2])}</span></div>`).join("")}</div>
     <div class="brsect">מפת מחירים</div>
     ${brLadder(P,q)}
-    ${alt?`<div class="bralt ${alt.side}"><small>תוכנית ב׳ · ${alt.side==="short"?"מכירה":"קנייה"}</small><b>${fp(ins,alt.lo)} — ${fp(ins,alt.hi)}</b><span>${esc(alt.t)} · ${esc(alt.stT)}</span></div>`:""}
-    <div class="brkill"><b>מבטל:</b> ${esc(q.kill)}</div>
+    ${alt?`<div class="bralt ${alt.side}${alt.cancel?" dead":""}"><small>${alt.cancel?"❌ בוטל · ":"תוכנית ב׳ · "}${alt.side==="short"?"מכירה":"קנייה"}</small><b>${fp(ins,alt.lo)} — ${fp(ins,alt.hi)}</b><span>${esc(alt.t)} · ${esc(alt.stT)}</span></div>`:""}
+    <div class="brkill"><b>מבטל:</b> ${esc(q.kill)}</div>${d.lockSide?`<button class="brunlock" data-act="unlockSide">שחרר נעילה ותכנן מחדש (רק אם הזנתי מחיר בטעות)</button>`:""}
     <div class="brnote">רמה = ${fd(ins,P.lv)}${/^M?NQ$/.test(ins)&&!brLvUser(ins)?" (≈0.4% מהמחיר, לפי הגרפים שלך)":""} · קופסה ≈ ${fd(ins,P.zb)}. ברק מראה כמעט רק דוגמאות מנצחות — אלה דפוסים, לא אחוזי הצלחה.</div>
   </div>`;
   return `<div id="plan">${head("תדריך לפני פתיחה")}
@@ -1967,13 +2003,14 @@ function viewToday(){
     <div class="panel p5">
       <div class="wk">${weekDays(weekKey()).map(function(k){
         const dt=DAY_TYPES.find(function(x){return x[0]===(S.days[k]||{}).dayType});
-        const p=dayPnl(k),has=S.trades.some(function(t){return t.date===k&&isClosed(t)});
+        const dtr=S.trades.filter(function(t){return t.date===k&&isClosed(t)}),vis=dtr.filter(inView);
+        const p=vis.reduce(function(a,t){return a+pnlOf(t)},0),has=vis.length>0,off=planOnly()&&dtr.some(function(t){return !clean(t.tag)});
         const isT=k===today();
         return `<div class="${isT?"on":""}">
           <b>${["א","ב","ג","ד","ה","ו","ש"][new Date(k).getDay()]}</b>
           <span>${new Date(k).getDate()}</span>
           <em>${dt?(dt[2]||dt[1].replace("יום ","").slice(0,5)):"—"}</em>
-          <u style="color:${!has?"var(--faint)":p>=0?"var(--sage)":"var(--clay)"}">${has?signed(p):"·"}</u>
+          <u style="color:${!has?"var(--faint)":p>=0?"var(--sage)":"var(--clay)"}">${has?signed(p):"·"}</u>${off?`<i class="offd" title="היה טרייד מחוץ לתוכנית"></i>`:""}
         </div>`}).join("")}</div>
       <div style="margin:16px 0 14px"><div class="hair"></div></div>
     <div class="row"><span style="font-size:14px;color:var(--muted)">ימים ברצף לפי הכללים</span>
@@ -2122,8 +2159,9 @@ function viewGate(){
        <button style="width:100%;padding:13px 0;font-size:12.5px;color:var(--brass);text-align:center"
          data-act="markAll">${full?"נקה הכל":"עברתי על הכל — סמן"}</button></div></div>
 
-   <button class="btn ${full?"brass":""}" ${f.setup?"":"disabled"} data-act="logTrade">
-     ${f.setup?(full?"רשום את הכניסה":"רשום בלי בדיקה מלאה"):"בחר סטאפ"}</button>
+   ${day().lockSide&&f.dir===day().lockSide?`<div class="gatelock"><b>🔒 ה${f.dir==="long"?"קנייה":"מכירה"} נעולה להיום.</b> קו הביטול נשבר (${fp(f.instrument||"MNQ",day().lockAt)}). הכיוון הזה מת להיום — רק הצד השני, או בלי טרייד.</div>`:""}
+   <button class="btn ${full?"brass":""}" ${f.setup&&!(day().lockSide&&f.dir===day().lockSide)?"":"disabled"} data-act="logTrade">
+     ${day().lockSide&&f.dir===day().lockSide?"נעול להיום":f.setup?(full?"רשום את הכניסה":"רשום בלי בדיקה מלאה"):"בחר סטאפ"}</button>
    <button class="btn" data-act="gateStep" data-arg="1">חזור</button></div>`;
 }
 
@@ -2438,7 +2476,8 @@ function calShort(n){const a=Math.abs(n),s=n>0?"+":n<0?"−":"";
   if(a<1000)return s+Math.round(a);
   const k=a/1000,d=k<10?2:k<100?1:0,f=Math.pow(10,d);
   return s+(Math.floor(k*f+1e-9)/f).toFixed(d).replace(/\.?0+$/,"")+"K"}
-function calendarPanel(closed){
+function calendarPanel(closedAll){
+  const closed=closedAll.filter(inView);
   const mk=S.calM||today().slice(0,7),y=+mk.slice(0,4),mo=+mk.slice(5,7)-1;
   const by={};closed.forEach(t=>{if(!t.date||!t.date.startsWith(mk))return;const k=t.date;by[k]=by[k]||{p:0,n:0,w:0};by[k].p+=pnlOf(t);by[k].n++;if(pnlOf(t)>0)by[k].w++});
   const vals=Object.keys(by).map(k=>Math.abs(by[k].p)),mx=Math.max(1,...vals);
@@ -2453,11 +2492,12 @@ function calendarPanel(closed){
   const showSat=Object.keys(by).some(k=>new Date(k+"T12:00").getDay()===6);
   const cols=showSat?7:6;
   const cell=k=>{if(!k)return `<div class="cc empty"></div>`;
+    const offK=planOnly()&&closedAll.some(t=>t.date===k&&!clean(t.tag));
     const r=by[k],dd=+k.slice(8),dtp=S.days[k]&&S.days[k].dayType,sh=dtp?(DAY_TYPES.find(x=>x[0]===dtp)||[])[2]:"";
-    if(!r)return `<div class="cc${k===td?" tdy":""}"><i>${dd}</i>${sh?`<u>${esc(sh)}</u>`:""}</div>`;
+    if(!r)return `<div class="cc${k===td?" tdy":""}"><i>${dd}</i>${sh?`<u>${esc(sh)}</u>`:""}${offK?`<em class="offd"></em>`:""}</div>`;
     const a=0.16+0.5*Math.abs(r.p)/mx,c=r.p>0?"143,191,165":r.p<0?"217,139,132":"200,190,170";
     return `<button class="cc has${r.p>0?" w":r.p<0?" l":""}${k===td?" tdy":""}" style="background:rgba(${c},${a.toFixed(2)})" data-act="calDay" data-arg="${k}">
-      <i>${dd}</i><b class="${calShort(r.p).length>6?"xs":calShort(r.p).length>5?"sm":""}">${calShort(r.p)}</b><s>${r.n} ט׳</s>${sh?`<u>${esc(sh)}</u>`:""}</button>`};
+      <i>${dd}</i><b class="${calShort(r.p).length>6?"xs":calShort(r.p).length>5?"sm":""}">${calShort(r.p)}</b><s>${r.n} ט׳</s>${sh?`<u>${esc(sh)}</u>`:""}${offK?`<em class="offd"></em>`:""}</button>`};
   const rows=weeks.map(w=>{const ws=w.filter(Boolean).reduce((a,k)=>a+(by[k]?by[k].p:0),0),wn=w.filter(Boolean).reduce((a,k)=>a+(by[k]?by[k].n:0),0);
     const ds=showSat?w:w.slice(0,6);
     return `<div class="crow" style="grid-template-columns:repeat(${cols},1fr) 1.15fr">${ds.map(cell).join("")}
@@ -2471,6 +2511,9 @@ function calendarPanel(closed){
         <div><b>${nT}</b><span>טריידים</span></div>
         <div><b style="direction:rtl"><em class="w">${dW}</em> / <em class="l">${dL}</em></b><span>ימים ירוקים / אדומים</span></div>
       </div>
+      ${(function(){const off=closedAll.filter(t=>t.date&&t.date.startsWith(mk)&&!clean(t.tag)),op=off.reduce((a,t)=>a+pnlOf(t),0);
+        return `<div class="calview"><button class="${planOnly()?"on":""}" data-act="calView" data-arg="plan">רק מהתוכנית</button><button class="${planOnly()?"":"on"}" data-act="calView" data-arg="all">הכל</button></div>
+        ${off.length?`<div class="calleak"><i class="offd"></i>מחוץ לתוכנית החודש: <b class="${op>=0?"w":"l"}">${signed(op)}</b> · ${off.length} ט׳ ${planOnly()?"— לא בלוח":"— כלול בלוח"}</div>`:""}`})()}
       <div class="crow chd" style="grid-template-columns:repeat(${cols},1fr) 1.15fr">${hd.map(h=>`<div>${h}</div>`).join("")}<div>סה״כ</div></div>
       ${rows}
       <div class="calfoot">ט׳ = טריידים · לחיצה על יום פותחת אותו ביומן</div>
@@ -2526,7 +2569,7 @@ function viewNumbers(){
      return `<div>${head("סקירה שבועית",heDate(days[0])+" – "+heDate(days[4]))}
        <div class="panel p5">
          <div class="strip" style="margin:0 0 16px">
-           <div><b style="color:${sw(tw)>=0?"var(--sage)":"var(--clay)"}">${tw.length?signed(sw(tw)):"—"}</b><span>השבוע</span></div>
+           ${(function(){const tv=planOnly()?cleanW:tw;return `<div><b style="color:${sw(tv)>=0?"var(--sage)":"var(--clay)"}">${tv.length?signed(sw(tv)):"—"}</b><span>${planOnly()?"השבוע · מהתוכנית":"השבוע"}</span></div>`})()}
            <div><b>${kept}<span style="font-size:12px;color:var(--faint)">/${activeD||0}</span></b><span>ימים בכללים</span></div>
            <div><b style="color:var(--brass)">${avgQ||"—"}</b><span>חוזים בממוצע</span></div>
          </div>
@@ -3420,6 +3463,8 @@ document.addEventListener("click",function(e){
   switch(act){
     case "calM":{const a=(S.calM||today().slice(0,7)).split("-").map(Number);const dt=new Date(a[0],a[1]-1+(+arg),1);S.calM=iso(dt).slice(0,7);render();return}
     case "jqClear": S.jq=""; render(); return;
+    case "unlockSide":{const d0=day();delete d0.lockSide;delete d0.lockAt;delete d0.plan0;brSnap(d0);syncBias(d0);persist.d();render();return}
+    case "calView": S.settings.planOnly=arg==="plan"; persist.s(); render(); return;
     case "calDay": S.jq=arg; S.tab="journal"; S.openTrade=null; render(); scrollTo(0,0); return;
     case "tab": if(/^\d{4}-\d{2}-\d{2}$/.test(S.jq||""))S.jq=""; S.tab=arg; S.picker=null; S.editMove=null; S.mv=null; S.editTrade=null; S.openTrade=null;
       if(arg==="gate"){S.gateStep=1;gateDefaults()} render(); return;
@@ -3430,7 +3475,7 @@ document.addEventListener("click",function(e){
     case "planDir": S.planIn=true; d.planDir=arg; d.planOpt=0; syncBias(d); persist.d(); render(); return;
     case "planEdit": S.planEdit=!S.planEdit; render(); return;
     case "planNums": S.planNums=!S.planNums; render(); return;
-    case "planIn": S.planIn=!S.planIn; render(); return;
+    case "planIn": S.planIn=!S.planIn; if(!S.planIn){const d0=day();brSnap(d0);syncBias(d0);persist.d()} render(); return;
     case "planS2": S.planS2=!S.planS2; render(); if(!S.planS2)setTimeout(function(){const e=document.querySelector(".pst.final");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},60); return;
     case "planWhy": S.planWhy=!S.planWhy; render(); return;
     case "planMon": S.planMon=!S.planMon; render(); return;
