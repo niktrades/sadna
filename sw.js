@@ -1,11 +1,11 @@
-const CACHE = "sadna-v43";
+const CACHE = "sadna-v44";
 const ASSETS = [
   "./", "./index.html", "./manifest.webmanifest",
   "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"
 ];
 
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS.map(u => new Request(u, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", e => {
@@ -21,8 +21,10 @@ self.addEventListener("fetch", e => {
   // only our own files; let the browser load outside resources (OCR engine etc.) directly
   if (new URL(e.request.url).origin !== self.location.origin) return;
   e.respondWith(
-    fetch(e.request)
+    // always ask the server (skip the browser's 10-minute cache), fall back to our copy offline
+    fetch(e.request.url, { cache: "no-cache", credentials: "same-origin" })
       .then(res => {
+        if (!res || !res.ok) throw new Error("bad");
         const copy = res.clone();
         caches.open(CACHE).then(c => c.put(e.request, copy)).catch(() => {});
         return res;

@@ -643,6 +643,7 @@ select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px soli
 .brshotst b{font-variant-numeric:tabular-nums;color:var(--bright)}.brshotst .m{font-size:11.5px;color:var(--muted)}.brshotst .w{font-size:11.5px;color:var(--brassHi)}
 .brshotst.err{color:var(--clay);margin-top:0}
 .brday{margin-top:12px;padding:9px 12px;border-radius:12px;background:rgba(217,166,72,.06);border:1px solid rgba(217,166,72,.2);font-size:12px;line-height:1.65;color:var(--ink)}.brday b{color:var(--brassHi)}
+.brver{margin-top:8px;text-align:center;font-size:10.5px;color:var(--faint)}
 .brnone{font-size:13px;color:var(--mu);text-align:center;padding:10px}
 </style>
 </head>
@@ -705,6 +706,7 @@ const SETUPS=[
 
 const INSTR=["MNQ","NQ","MGC","GC","XAUUSD","MYM","YM","MES","M2K","RTY","MCL","WTI","HG","6E","6B","6A"];
 
+var APP_VER="v44";
 const DAY_TYPES=[["mon","יום שני — טווח הפתיחה","שני"],["pump","יום פאמפ","פאמפ"],["dump","יום דאמפ","דאמפ"],
  ["frd","יום אדום ראשון","אדום"],["fgd","יום ירוק ראשון","ירוק"],
  ["id","יום פנימי","פנימי"],["dbl","יום פנימי כפול","פנ׳×2"],["out","יום עוטף (Outside)","עוטף"],
@@ -1883,7 +1885,7 @@ function planPanel(d){
     ${dq?`<div class="brsec"><b>06</b>${dq[0]}</div><div class="chips">${chip(dq[1],(d.planDir||"up")==="up","planDir","up","sm")}${chip(dq[2],d.planDir==="down","planDir","down","sm")}</div>`:""}
     ${P.need?`<div class="brmiss">חסר: ${P.miss.map(esc).join(" · ")}</div>`:`<button class="brgo" data-act="planIn">הצג תדריך</button>`}
   </div>`;
-  if(open)return `<div id="plan">${head("תדריך לפני פתיחה")}${form}</div>`;
+  if(open)return `<div id="plan">${head("תדריך לפני פתיחה")}${form}<div class="brver">גרסה ${APP_VER}</div></div>`;
   const ck=brClock(),q=P.zones[0],alt=P.zones[1];
   const qty=d.planQty||cf.tps.length||1,pv=pxVal(ins);
   const money=pts=>pv?usd(pts*pv):"";
@@ -1916,7 +1918,7 @@ function planPanel(d){
   </div>`;
   return `<div id="plan">${head("תדריך לפני פתיחה")}
     ${ev.length?`<div class="pnews">חדשות אדומות היום: ${ev.map(e=>esc(e.name)+" "+evTime(e)).join(" · ")} — לא נכנסים 15 דק׳ לפני</div>`:""}
-    ${sumBar}${card}</div>`;
+    ${sumBar}${card}<div class="brver">גרסה ${APP_VER}</div></div>`;
 }
 
 /* TODAY */
@@ -3750,7 +3752,14 @@ setInterval(checkReminder,60000);
 setInterval(function(){
   if(S.tab==="today"&&!S.wave&&!S.picker&&!(document.activeElement&&document.activeElement.dataset&&document.activeElement.dataset.model))render();
 },60000);
-if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(function(){});
+if("serviceWorker" in navigator){
+  let _swReload=false;
+  navigator.serviceWorker.addEventListener("controllerchange",function(){if(_swReload)return;_swReload=true;location.reload()});
+  navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(reg){
+    reg.update().catch(function(){});
+    document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")reg.update().catch(function(){})});
+  }).catch(function(){});
+}
 </script>
 </body>
 </html>
