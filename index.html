@@ -565,6 +565,15 @@ select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px soli
 .offd{display:inline-block;width:6px;height:6px;border-radius:99px;background:var(--clay)}
 .cc em.offd{position:absolute;top:5px;left:5px}
 .wk .offd{display:block;margin:3px auto 0}
+.pl-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pl-col{padding:12px 10px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.pl-col.ok{border-color:rgba(140,173,104,.35)}.pl-col.leak{border-color:rgba(204,102,71,.35)}
+.pl-col small{display:block;font-size:11.5px;color:var(--muted);margin-bottom:2px}
+.pl-col>b{display:block;font-family:var(--disp);font-size:24px;font-weight:700;direction:ltr;text-align:right;margin-bottom:8px}
+.pl-r{display:flex;justify-content:space-between;align-items:baseline;gap:6px;padding:5px 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+.pl-r i{font-style:normal;font-family:var(--disp);font-size:12.5px;color:var(--bright);direction:ltr;white-space:nowrap}
+.pl-r2{flex-direction:column;align-items:flex-start;gap:3px}
+.pl-v{margin-top:12px;font-size:12.5px;line-height:1.75;color:var(--ink)}.pl-v b{font-family:var(--disp);direction:ltr;unicode-bidi:isolate}
 .calfoot{font-size:11px;color:var(--faint);text-align:center;margin-top:10px}
 #plan{--b0:var(--panelB);--b1:var(--panelB);--b2:var(--panelA);--ln:var(--line);--tx:var(--bright);--mu:var(--muted);--ice:var(--brass);--sh:var(--clay);--lo:var(--sage);--mono:var(--disp)}
 #plan [class^="br"] b,#plan .brf input{font-variant-numeric:tabular-nums}
@@ -655,6 +664,12 @@ select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px soli
 .bralt.dead{opacity:.6}.bralt.dead b{text-decoration:line-through}
 .brunlock{display:block;margin-top:8px;font-size:11px;color:var(--faint);text-decoration:underline}
 .gatelock{margin:10px 0;padding:11px 13px;border-radius:14px;background:rgba(204,102,71,.1);border:1px solid rgba(204,102,71,.45);font-size:12.5px;line-height:1.6;color:var(--ink)}.gatelock b{color:var(--clay)}
+.brnow{display:flex;align-items:center;gap:8px;margin-top:12px;padding:8px 10px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.brnow span{font-size:12px;color:var(--muted);white-space:nowrap}
+.brnow input{flex:1;min-width:0;background:none!important;border:none!important;box-shadow:none!important;padding:4px 0!important;font-family:var(--disp);font-size:17px;color:var(--bright)!important;direction:ltr;text-align:right}
+.brnow button{padding:8px 14px;border-radius:10px;font-size:13px;font-weight:700;color:#1a130c;background:var(--brass)}
+.brnow em{font-style:normal;font-size:10.5px;color:var(--faint);white-space:nowrap}
+.brnowmsg{margin-top:6px;font-size:11.5px;color:var(--clay)}
 .brnone{font-size:13px;color:var(--mu);text-align:center;padding:10px}
 </style>
 </head>
@@ -717,7 +732,7 @@ const SETUPS=[
 
 const INSTR=["MNQ","NQ","MGC","GC","XAUUSD","MYM","YM","MES","M2K","RTY","MCL","WTI","HG","6E","6B","6A"];
 
-var APP_VER="v46";
+var APP_VER="v48";
 const DAY_TYPES=[["mon","יום שני — טווח הפתיחה","שני"],["pump","יום פאמפ","פאמפ"],["dump","יום דאמפ","דאמפ"],
  ["frd","יום אדום ראשון","אדום"],["fgd","יום ירוק ראשון","ירוק"],
  ["id","יום פנימי","פנימי"],["dbl","יום פנימי כפול","פנ׳×2"],["out","יום עוטף (Outside)","עוטף"],
@@ -1095,15 +1110,20 @@ function streak(){
 
 /* SESSION PLAN */
 /* level = one "level of rise/fall". Book: 2–3 levels from today's low/high = currencies 50–75 pips, gold/oil/indexes 100–150 */
-const PLAN_DEF={MNQ:[50,50,[50,75,150]],NQ:[50,50,[50,75,150]],MES:[10,10,[15]],MYM:[75,65,[100]],YM:[75,65,[100]],
-  M2K:[5,5,[8]],RTY:[5,5,[8]],MGC:[5,2.5,[5]],GC:[5,2.5,[5]],XAUUSD:[5,2.5,[5]],MCL:[0.5,0.25,[0.5]],WTI:[0.5,0.25,[0.5]],
+const PLAN_DEF={MNQ:[50,50,[75,150],[1,1]],NQ:[50,50,[75,150],[1,1]],MES:[10,10,[15]],MYM:[120,80,[150,200],[2,3]],YM:[120,80,[150,200],[1,1]],
+  M2K:[5,5,[8]],RTY:[5,5,[8]],MGC:[10,10,[15,25],[1,1]],GC:[10,10,[15,25],[1,1]],XAUUSD:[10,10,[15,25],[1,1]],MCL:[0.5,0.25,[0.5]],WTI:[0.5,0.25,[0.5]],
   HG:[0.02,0.012,[0.02]],"6E":[0.0025,0.0015,[0.005]],"6B":[0.0025,0.0015,[0.005]],"6A":[0.0025,0.0015,[0.005]]};
 const TICK={MNQ:.25,NQ:.25,MES:.25,MYM:1,YM:1,M2K:.1,RTY:.1,MGC:.1,GC:.1,XAUUSD:.01,MCL:.01,WTI:.01,HG:.0005,"6E":.00005,"6B":.0001,"6A":.00005};
 function planIns(d){return d.planIns||((S.trades[S.trades.length-1]||{}).instrument)||"MNQ"}
-function planCfg(ins){const df=PLAN_DEF[ins]||[0,0,[0]],o=((S.settings.plan||{})[ins])||{};
+function planCfg(ins){
+  if(S.settings&&!S.settings._tgtMig){const P0=S.settings.plan||{};["MNQ","NQ","MGC","GC","XAUUSD","MYM","YM"].forEach(k=>{const o=P0[k];if(o){["t1","t2","t3","tp","per","stop"].forEach(f=>delete o[f]);if(k!=="MNQ"&&k!=="NQ")delete o.lv}});S.settings._tgtMig=1;try{persist.s()}catch(e){}}
+  const df=PLAN_DEF[ins]||[0,0,[0]],o=((S.settings.plan||{})[ins])||{};
   let tps=("t1" in o||"t2" in o||"t3" in o)?[o.t1,o.t2,o.t3].map(Number).filter(x=>x>0):(+o.tp?[+o.tp]:df[2].slice());
   if(!tps.length)tps=df[2].slice();
-  return {lv:+o.lv||df[0],stop:+o.stop||df[1],tps:tps,per:Math.max(1,+o.per||1),tp:tps[0]}}
+  const dp=df[3]||[],pers=tps.map((_,i)=>+o.per>0?+o.per:(+dp[i]||1));
+  return {lv:+o.lv||df[0],stop:+o.stop||df[1],tps:tps,pers:pers,per:pers[0],tp:tps[0]}}
+/* contracts on leg i of a trade (old trades: one number for all legs) */
+function perOf(t,i){return t.pers&&+t.pers[i]>0?+t.pers[i]:(+t.per||1)}
 function pq(ins,x){const t=TICK[ins]||.01,dec=(String(t).split(".")[1]||"").length;
   return String(+(Math.round(x/t)*t).toFixed(dec))}
 function fp(ins,x){const v=+pq(ins,x),dec=(String(TICK[ins]||.01).split(".")[1]||"").length;
@@ -1727,6 +1747,7 @@ function brief(d){
     flip={side:c0.side,at:c0.side==="long"?c0.lo:c0.hi};Z.length=0;Z.push(f,c0);bias=f.side}
   /* status of each zone vs the current price */
   Z.forEach(q=>{if(q.cancel){q.st="cancel";q.stT="בוטל — המחיר נסגר מעבר לאזור";return}const inZ=X>=q.lo&&X<=q.hi;
+    if(!inZ&&(q.side==="long"?X<q.lo&&q.lo-X<=buf:X>q.hi&&X-q.hi<=buf)){q.st="in";q.stT="עקיצה קטנה מעבר לאזור — עדיין בתוקף";return}
     if(inZ){q.st="in";q.stT="המחיר בתוך האזור"}
     else if(q.side==="short"){if(X<q.lo){q.st=q.lo-X>2*lv?"far":"wait";q.stT=fd(ins,q.lo-X)+" מתחת לאזור"+(q.st==="far"?" · רחוק, אולי לא יגיע":"")}else{q.st="broke";q.stT="המחיר מעל האזור — לצייר מחדש מהגבוה החדש"}}
     else{if(X>q.hi){q.st=X-q.hi>2*lv?"far":"wait";q.stT=fd(ins,X-q.hi)+" מעל לאזור"+(q.st==="far"?" · רחוק, אולי לא יגיע":"")}else{q.st="broke";q.stT="המחיר מתחת לאזור — לצייר מחדש מהנמוך החדש"}}});
@@ -1932,6 +1953,8 @@ function planPanel(d){
     <div class="brtop"><div><small>${esc(P.set)}${dq?" · "+esc((d.planDir||"up")==="up"?dq[1]:dq[2]):""}</small><b class="${q.side}">${q.side==="short"?"מכירה":"קנייה"}</b></div>
       <div class="brclock ${ck.st}"><span>${esc(ck.s)}</span></div></div>
     ${ck.bar}
+    <div class="brnow"><span>מחיר עכשיו</span><input id="brNowIn" inputmode="decimal" placeholder="${fp(ins,P.X)}"><button data-act="nowSet">עדכן</button><em>${d.nowAt?"עודכן "+esc(d.nowAt):""}</em></div>
+    ${S.nowMsg?`<div class="brnowmsg">${esc(S.nowMsg)}</div>`:""}
     ${brDayNote()}
     ${P.flip?`<div class="brflip"><b>🔄 התוכנית התהפכה</b>ה${P.flip.side==="long"?"קנייה":"מכירה"} בוטלה — המחיר עבר את ${fp(ins,P.flip.at)}. עכשיו מחפשים ${q.side==="short"?"מכירה":"קנייה"}. לא ${P.flip.side==="long"?"קונים \"בזול\"":"מוכרים \"ביוקר\""} ולא מוסיפים לפוזיציה.</div>`:""}
     ${!P.flip&&d.lockSide?`<div class="brflip lk"><b>🔒 ה${d.lockSide==="long"?"קנייה":"מכירה"} נעולה להיום</b>הקו נשבר מוקדם יותר היום (${fp(ins,d.lockAt)}).</div>`:""}
@@ -2045,8 +2068,8 @@ function autoChecks(f){
 }
 
 function applyScale(f,force){const cf=planCfg(f.instrument);
-  if(cf.tps.length>1||force){f.tps=cf.tps.length>1?cf.tps.slice():[];f.per=cf.per;f.stopP=String(cf.stop);
-    f.tpP=String(+(cf.tps.reduce((a,b)=>a+b,0)/cf.tps.length).toFixed(2));f.qty=cf.per*cf.tps.length}
+  if(cf.tps.length>1||force){f.tps=cf.tps.length>1?cf.tps.slice():[];f.pers=cf.pers.slice(0,f.tps.length);f.per=cf.per;f.stopP=String(cf.stop);
+    const nq=f.pers.reduce((a,b)=>a+b,0)||1;f.tpP=String(+(f.tps.reduce((a,b,i)=>a+b*f.pers[i],0)/nq).toFixed(2));f.qty=nq}
   else f.tps=[]}
 function gateDefaults(){
   const n=mins(),sess=SESSIONS.find(s=>n>=s.start&&n<=s.end);
@@ -2137,7 +2160,7 @@ function viewGate(){
        </div>
        <div id="rrLine" class="rr ${rrOf(f)?(rrOf(f)>=2?"good":rrOf(f)>=1.5?"mid":"bad"):""}">
          ${rrOf(f)?"יחס סיכוי־סיכון 1 : "+rrOf(f).toFixed(2).replace(/\.00$/,""):"הזן סטופ וטייק כדי לראות את היחס"}</div>
-       ${(f.tps||[]).length>1?`<div class="scaleline"><div><b>מימוש חלקי</b> · יעדים ${f.tps.join(" / ")} · ${f.per} ${f.per==1?"חוזה":"חוזים"} לכל יעד · סטופ ${esc(f.stopP)}</div>
+       ${(f.tps||[]).length>1?`<div class="scaleline"><div><b>מימוש חלקי</b> · יעדים ${f.tps.join(" / ")} · ${(f.pers||f.tps.map(()=>f.per||1)).join("+")} חוזים · סטופ ${esc(f.stopP)}</div>
          <button data-act="gScale" data-arg="off">יעד אחד</button></div>`
          :planCfg(f.instrument).tps.length>1?`<button class="scaleline off" data-act="gScale" data-arg="on">+ מימוש חלקי לפי היעדים (${planCfg(f.instrument).tps.join(" / ")})</button>`:""}
        <div class="lbl" style="margin-top:20px">צילום מסך של הגרף (לא חובה)</div>
@@ -2251,11 +2274,11 @@ const partQty=t=>(t.partials||[]).reduce((a,x)=>a+(+x.q||0),0);
 function legPts(t,i){const l=(t.legs||[])[i];if(!l)return null;
   return l.r==="tp"?+t.tps[i]:l.r==="be"?0:l.r==="sl"?-(parseFloat(t.stopP)||0):(l.p===""||isNaN(parseFloat(l.p))?null:parseFloat(l.p))}
 function legsPnl(t){const pv=ptVal(t.instrument);if(!pv||!t.tps)return null;let s2=0;
-  for(let i=0;i<t.tps.length;i++){const x=legPts(t,i);if(x===null)return null;s2+=x*pv*(+t.per||1)}return s2}
+  for(let i=0;i<t.tps.length;i++){const x=legPts(t,i);if(x===null)return null;s2+=x*pv*perOf(t,i)}return s2}
 function legsBlock(t){
-  const pv=ptVal(t.instrument),per=+t.per||1,L=t.legs||[],v=legsPnl(t),closed=isClosed(t);
+  const pv=ptVal(t.instrument),L=t.legs||[],v=legsPnl(t),closed=isClosed(t);
   return `<div class="lbl">מימוש חלקי — מה קרה לכל חוזה?</div>
-   <div class="legs">${t.tps.map((tp,i)=>{const l=L[i],x=legPts(t,i);
+   <div class="legs">${t.tps.map((tp,i)=>{const l=L[i],x=legPts(t,i),per=perOf(t,i);
      return `<div class="leg" data-k="lg${t.id}-${i}"><div class="lh"><b>${per>1?per+" חוזים":"חוזה "+(i+1)} · יעד ${tp}</b>
        <i style="color:${x===null?"var(--faint)":x>=0?"var(--sage)":"var(--clay)"}">${x===null?"—":pv?usd(x*pv*per):x}</i></div>
        <div class="chips">${chip("✓ יעד",l&&l.r==="tp","leg",t.id+"|"+i+"|tp","sm sage")}${chip("בכניסה",l&&l.r==="be","leg",t.id+"|"+i+"|be","sm")}${chip("סטופ",l&&l.r==="sl","leg",t.id+"|"+i+"|sl","sm clay")}${chip("ידני",l&&l.r==="man","leg",t.id+"|"+i+"|man","sm")}</div>
@@ -2455,7 +2478,7 @@ function scaleExp(){
   const n=Math.max.apply(null,full.map(t=>t.tps.length).concat([0]));
   const hit=i=>{const a=full.filter(t=>t.tps.length>i);return a.length?Math.round(a.filter(t=>(t.legs[i]||{}).r==="tp").length/a.length*100):0};
   const real=full.reduce((a,t)=>a+legsPnl(t),0);
-  const alt=i=>full.reduce((a,t)=>{const k=Math.min(i,t.tps.length-1),x=legPts(t,k);return a+(x||0)*ptVal(t.instrument)*(+t.per||1)*t.tps.length},0);
+  const alt=i=>full.reduce((a,t)=>{const k=Math.min(i,t.tps.length-1),x=legPts(t,k);return a+(x||0)*ptVal(t.instrument)*t.tps.reduce((q,_,j)=>q+perOf(t,j),0)},0);
   const tpsLbl=(full[0]||tr[0]).tps;
   const opts=[["מימוש חלקי (בפועל)",real]].concat(tpsLbl.map((tp,i)=>["הכל ביעד "+tp,alt(i)]));
   const best=opts.reduce((a,b)=>b[1]>a[1]?b:a,opts[0]);
@@ -2520,6 +2543,26 @@ function calendarPanel(closedAll){
     </div></div>`;
 }
 
+/* the proof: planned trades vs everything else, all-time */
+function planLeakCard(closed){
+  if(!closed.length)return "";
+  const st=a=>{const w=a.filter(t=>pnlOf(t)>0),l=a.filter(t=>pnlOf(t)<0),sm=a.reduce((x,t)=>x+pnlOf(t),0);
+    return {n:a.length,sum:sm,wr:a.length?Math.round(w.length/a.length*100):0,aw:w.length?w.reduce((x,t)=>x+pnlOf(t),0)/w.length:0,
+      al:l.length?l.reduce((x,t)=>x+pnlOf(t),0)/l.length:0,exp:a.length?sm/a.length:0}};
+  const P=st(closed.filter(t=>clean(t.tag))),O=st(closed.filter(t=>!clean(t.tag))),A=P.sum+O.sum;
+  const col=v=>v>0?"var(--sage)":v<0?"var(--clay)":"var(--bright)";
+  const sg=v=>(v<0?"−":v>0?"+":"")+"$"+Math.round(Math.abs(v)).toLocaleString("en-US");
+  const side=(t,X,cls)=>`<div class="pl-col ${cls}"><small>${t}</small><b style="color:${col(X.sum)}">${X.n?sg(X.sum):"—"}</b>
+     <div class="pl-r"><span>טריידים</span><i>${X.n}</i></div>
+     <div class="pl-r"><span>אחוז הצלחה</span><i>${X.n?X.wr+"%":"—"}</i></div>
+     <div class="pl-r"><span>ממוצע לטרייד</span><i style="color:${col(X.exp)}">${X.n?sg(X.exp):"—"}</i></div>
+     <div class="pl-r pl-r2"><span>זכייה / הפסד ממוצעים</span><i>${X.n?sg(X.aw)+" / "+sg(X.al):"—"}</i></div></div>`;
+  const verdict=!O.n?"עוד אין טריידים מחוץ לתוכנית ביומן. כשיהיו — תראה כאן כמה הם עולים.":
+    O.sum<0?`בלי הטריידים מחוץ לתוכנית היית ב-<b style="color:${col(P.sum)}">${sg(P.sum)}</b> במקום <b style="color:${col(A)}">${sg(A)}</b>. הדליפה עלתה לך <b style="color:var(--clay)">${sg(-O.sum).replace("+","")}</b>.`:
+    `כרגע גם הטריידים מחוץ לתוכנית ברווח (${sg(O.sum)}). בדוק את זה שוב אחרי עוד 20 טריידים — מדגם קטן מטעה.`;
+  return `<div>${head("התוכנית מול הדליפה","מאז ומתמיד")}
+    <div class="panel p5 pl-card"><div class="pl-grid">${side("מהתוכנית",P,"ok")}${side("מחוץ לתוכנית",O,"leak")}</div>
+    <div class="pl-v">${verdict}</div></div></div>`}
 function viewNumbers(){
   const closed=S.trades.filter(isClosed);
   const m=today().slice(0,7),mt=closed.filter(t=>t.date.startsWith(m));
@@ -2540,6 +2583,7 @@ function viewNumbers(){
   const bySetup=Object.keys(bs).map(k=>[k,bs[k]]).sort((x,y)=>y[1].p-x[1].p);
 
   return `<div class="stack">
+   ${planLeakCard(closed)}
    ${scaleExp()}
    <div class="panel plate" style="overflow:hidden">
      ${rows.length>1?`<div style="position:absolute;inset:auto 0 0 0;opacity:.16;pointer-events:none">${ghost(rows)}</div>`:""}
@@ -3465,6 +3509,14 @@ document.addEventListener("click",function(e){
     case "jqClear": S.jq=""; render(); return;
     case "unlockSide":{const d0=day();delete d0.lockSide;delete d0.lockAt;delete d0.plan0;brSnap(d0);syncBias(d0);persist.d();render();return}
     case "calView": S.settings.planOnly=arg==="plan"; persist.s(); render(); return;
+    case "nowSet":{const d0=day(),el=document.getElementById("brNowIn"),v=parseFloat(String(el&&el.value||"").replace(/,/g,""));
+      const C0=parseFloat((d0.levels||{}).pdc);S.nowMsg="";
+      if(!(v>0)){S.nowMsg="הקלד מחיר";render();return}
+      if(C0>0&&Math.abs(v-C0)/C0>0.12){S.nowMsg="המחיר רחוק מדי מהסגירה — בדוק שהקלדת נכון";render();return}
+      const L0=d0.levels;L0.now=String(v);
+      if(!(parseFloat(L0.hod)>=v))L0.hod=String(v);if(!(parseFloat(L0.lod)<=v))L0.lod=String(v);
+      const t0=new Date();d0.nowAt=String(t0.getHours()).padStart(2,"0")+":"+String(t0.getMinutes()).padStart(2,"0");
+      brSnap(d0);syncBias(d0);persist.d();render();return}
     case "calDay": S.jq=arg; S.tab="journal"; S.openTrade=null; render(); scrollTo(0,0); return;
     case "tab": if(/^\d{4}-\d{2}-\d{2}$/.test(S.jq||""))S.jq=""; S.tab=arg; S.picker=null; S.editMove=null; S.mv=null; S.editTrade=null; S.openTrade=null;
       if(arg==="gate"){S.gateStep=1;gateDefaults()} render(); return;
@@ -3515,7 +3567,7 @@ document.addEventListener("click",function(e){
         entry:f.entry||"",stopP:f.stopP||"",tpP:f.tpP||"",rr:rrOf(f),
         cycleDay:+f.cycleDay||0,dayType:f.dayType||"",tag:"a",r:null,note:"",
         unchecked:CHECKS.some(c=>!S.gateChecks[c[0]]),imgs:(f.imgs||[]).slice(),
-        qty:+f.qty||0,partials:[],tps:(f.tps||[]).length>1?f.tps.slice():undefined,per:(f.tps||[]).length>1?+f.per||1:undefined});
+        qty:+f.qty||0,partials:[],tps:(f.tps||[]).length>1?f.tps.slice():undefined,per:(f.tps||[]).length>1?+f.per||1:undefined,pers:(f.tps||[]).length>1&&f.pers?f.pers.slice():undefined});
       persist.t(); gateDefaults(); S.gateStep=1; S.tab="journal"; render(); return}
     case "backfill": {gateDefaults();
       const y2=new Date();y2.setDate(y2.getDate()-1);
