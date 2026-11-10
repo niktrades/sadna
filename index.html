@@ -44,7 +44,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 #wrap{max-width:470px;margin:0 auto;padding:0 16px calc(116px + env(safe-area-inset-bottom));position:relative;z-index:2}
-header{padding:28px 0 14px}
+header{padding:calc(env(safe-area-inset-top) + 18px) 0 14px}
 .brand{display:flex;align-items:center;gap:14px}
 .brand h1{font-family:'Rubik';font-size:19px;font-weight:500;color:var(--bright);
   letter-spacing:.42em;line-height:1;padding-right:2px}
@@ -265,7 +265,7 @@ nav button.on{color:var(--brass)}
 nav .ind{position:absolute;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--brass),transparent);
   transition:right .32s cubic-bezier(.2,.7,.3,1)}
 
-#wave{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:22px;
+#wave{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 22px) 22px calc(env(safe-area-inset-bottom) + 22px);
   overflow:hidden;touch-action:none;-webkit-text-size-adjust:100%;
   background:radial-gradient(90% 60% at 50% 45%, rgba(28,22,17,.97), rgba(8,6,5,.99))}
 #wave .in{width:100%;max-width:380px}
@@ -657,6 +657,8 @@ select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px soli
 .brshotst{margin:-6px 0 16px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:12.5px;color:var(--ink);line-height:1.7}
 .brshotst b{font-variant-numeric:tabular-nums;color:var(--bright)}.brshotst .m{font-size:11.5px;color:var(--muted)}.brshotst .w{font-size:11.5px;color:var(--brassHi)}
 .brshotst.err{color:var(--clay);margin-top:0}
+.brmy{margin-top:8px;padding-top:8px;border-top:1px dashed rgba(217,166,72,.2);font-size:11.5px;color:var(--faint);line-height:1.6}.brmy b{color:var(--ink)}.brmy b.pos{color:#9ccf86}.brmy b.neg{color:#e8806f}.brnow em.stale{color:#e8a35f}
+.brtrig{display:grid;gap:7px;margin-top:4px}.brtrig>div{display:flex;gap:9px;align-items:flex-start;padding:8px 11px;border-radius:11px;background:rgba(255,255,255,.025);border:1px solid rgba(217,166,72,.14);font-size:12px;line-height:1.6;color:var(--ink)}.brtrig i{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;background:rgba(217,166,72,.14);color:var(--brassHi)}.brtrig b{color:var(--brassHi)}.brtrig .no i{background:rgba(224,98,82,.15);color:#e8806f}.brtrig .ok i{background:rgba(126,176,104,.15);color:#9ccf86}
 .brday{margin-top:12px;padding:9px 12px;border-radius:12px;background:rgba(217,166,72,.06);border:1px solid rgba(217,166,72,.2);font-size:12px;line-height:1.65;color:var(--ink)}.brday b{color:var(--brassHi)}
 .brver{margin-top:8px;text-align:center;font-size:10.5px;color:var(--faint)}
 .brflip{margin-top:12px;padding:11px 13px;border-radius:14px;background:rgba(204,102,71,.1);border:1px solid rgba(204,102,71,.45);font-size:12.5px;line-height:1.65;color:var(--ink)}
@@ -698,6 +700,8 @@ select{width:100%;background:rgba(0,0,0,.25);color:var(--bright);border:1px soli
 
 <script>
 "use strict";
+try{if("scrollRestoration" in history)history.scrollRestoration="manual"}catch(e){}
+window.addEventListener("load",function(){window.scrollTo(0,0)});
 
 const K={s:"sadna:settings",t:"sadna:trades",d:"sadna:days",a:"sadna:acct",e:"sadna:exp",p:"sadna:pay",w:"sadna:weeks"};
 
@@ -732,12 +736,12 @@ const SETUPS=[
 
 const INSTR=["MNQ","NQ","MGC","GC","XAUUSD","MYM","YM","MES","M2K","RTY","MCL","WTI","HG","6E","6B","6A"];
 
-var APP_VER="v48";
+var APP_VER="v54";
 const DAY_TYPES=[["mon","יום שני — טווח הפתיחה","שני"],["pump","יום פאמפ","פאמפ"],["dump","יום דאמפ","דאמפ"],
  ["frd","יום אדום ראשון","אדום"],["fgd","יום ירוק ראשון","ירוק"],
  ["id","יום פנימי","פנימי"],["dbl","יום פנימי כפול","פנ׳×2"],["out","יום עוטף (Outside)","עוטף"],
  ["d1","פריצת יום 1","D1"],["d2","פריצת יום 2","D2"],["d3","פריצת יום 3","D3"],
- ["fb","פריצה כוזבת","כוזבת"],["bo","פריצה","פריצה"],
+ ["fb","פריצה כוזבת","כוזבת"],["bo","פריצה","פריצה"],["cib","נסגר בפריצה (Close in breakout)","בפריצה"],
  ["news","יום חדשות (FOMC וכו')","חדשות"],["range","יום דשדוש / מלבן","דשדוש"],
  ["none","אין אות","—"]];
 const dtName=k=>{const x=DAY_TYPES.find(d=>d[0]===k);return x?x[1]:""};
@@ -1133,7 +1137,7 @@ const fd=(ins,x)=>isFX(ins)?Math.round(Math.abs(x)*10000)+" פיפס":fp(ins,Mat
 const usd=x=>(x<0?"−":"+")+"$"+Math.abs(Math.round(x)).toLocaleString("en-US");
 const DIR_Q={d3:["לאן היו הפריצות?","למעלה","למטה"],d2:["לאן היו הפריצות?","למעלה","למטה"],
   fb:["איפה הייתה הכוזבת?","מעל הגבוה","מתחת לנמוך"],bo:["לאן הפריצה?","למעלה","למטה"],
-  news:["איפה נסגר יום החדשות?","בקיצון למעלה","בקיצון למטה"]};
+  news:["איפה נסגר יום החדשות?","בקיצון למעלה","בקיצון למטה"],cib:["לאן נסגרה הפריצה?","למעלה","למטה"]};
 /* which of today's levels a signal is measured from */
 const NEED_TODAY={frd:"lod",fgd:"hod",pump:"hodlod",dump:"hodlod",bo:"hodlod"};
 /* visual strike-zone chart — zoomed on the trade, all numbers on it */
@@ -1364,7 +1368,7 @@ function lineChart(P,q,idx){
 const SCN={frd:["עולה קודם — ונכשל","יורד ישר — ותיקון"],fgd:["יורד קודם — ונכשל","עולה ישר — ותיקון"],
   id:["פריצה כוזבת","פריצה אמיתית"],dbl:["פריצה כוזבת","פריצה אמיתית"],d3:["הפריצה נכשלת","הפריצה מחזיקה"],d2:["הפריצה נכשלת","הפריצה מחזיקה"],
   fb:["הכוזבת עובדת","הכוזבת נכשלת"],pump:["תיקון — והמשך","מהלך מוגזם — היפוך"],dump:["תיקון — והמשך","מהלך מוגזם — היפוך"],bo:["תיקון — והמשך","מהלך מוגזם — היפוך"],
-  news:["המשך","היפוך"],range:["פריצה למעלה","שבירה למטה"]};
+  news:["המשך","היפוך"],range:["פריצה למעלה","שבירה למטה"],cib:["ניעור — ואז המשך","NY קופץ ונופל — כישלון"]};
 function planLv(){return (day().levels)||{}}
 /* ══ SESSION PLAN v5 — by where price is before New York ══ */
 const LOCS=[["above","מעל גבוה אתמול"],["inside","בתוך הטווח של אתמול"],["below","מתחת לנמוך אתמול"]];
@@ -1605,7 +1609,9 @@ function brTxt(t){let h=esc(t);const k=h.indexOf(" — ");if(k>0&&/^[A-Z0-9&]/.t
 /* level size: user override, else for NQ/MNQ ≈0.4% of price (calibrated on Nick's NQ charts), else table */
 function brLvUser(ins){if(!S.settings._lvMig){const P0=S.settings.plan||{};["MNQ","NQ"].forEach(k=>{if(P0[k]&&+P0[k].lv===50)delete P0[k].lv});S.settings._lvMig=1;try{persist.s()}catch(e){}}
   const o=((S.settings.plan||{})[ins])||{};return +o.lv>0?+o.lv:0}
-function brLv(ins,px){const u=brLvUser(ins);if(u)return u;if(/^M?NQ$/.test(ins)&&px>0)return Math.max(25,Math.round(px*0.004/5)*5);return planCfg(ins).lv}
+function brLv(ins,px){const u=brLvUser(ins);if(u)return u;if(/^M?NQ$/.test(ins)&&px>0)return Math.max(25,Math.round(px*0.004/5)*5);
+  if(/^(M?GC|XAUUSD)$/.test(ins)&&px>0)return Math.max(5,Math.round(px*0.0024));
+  if(/^M?YM$/.test(ins)&&px>0)return Math.max(50,Math.round(px*0.0023/5)*5);return planCfg(ins).lv}
 function brQ(dt){return DIR_Q[dt]||BR_DIR[dt]}
 function brief(d){
   const ins=planIns(d),L0=d.levels||{},n=k=>{const v=parseFloat(L0[k]);return isNaN(v)?NaN:v};
@@ -1615,12 +1621,20 @@ function brief(d){
   if(!dt)miss.push("סוג היום");
   if(miss.length||!(H>L))return {need:true,miss:miss};
   const hi=Math.max(hod0,lod0,X),lo=Math.min(hod0,lod0,X),mv=(hi-lo)/lv;
+  const rs=[5,10,25,50,100,250,500,1000,2500].reduce((a,b)=>Math.abs(b-4*lv)<Math.abs(a-4*lv)?b:a,isFX(ins)?1e9:5);
   const where=X>H?"מעל גבוה אתמול":X<L?"מתחת לנמוך אתמול":X>=C?"בין הסגירה לגבוה":"בין הנמוך לסגירה";
   const known=[[H,"גבוה אתמול"],[C,"סגירה"],[L,"נמוך אתמול"],[HW,"גבוה שבוע"],[LW,"נמוך שבוע"],[HM,"גבוה חודש"],[LM,"נמוך חודש"]].filter(k=>!isNaN(k[0]));
   const Z=[];
   const z=(side,a,b,o)=>{const q=Object.assign({side:side,hi:Math.max(a,b),lo:Math.min(a,b)},o);
     q.on=known.filter(k=>k[0]>=q.lo-lv/2&&k[0]<=q.hi+lv/2).map(k=>k[1]);
+    /* Burke: 00's / 50's — a major round number inside the zone strengthens it */
+    for(let r=Math.ceil((q.lo-lv/4)/rs)*rs;r<=q.hi+lv/4+1e-9;r+=rs)q.on.push("מספר עגול "+fp(ins,r));
     q.tg=(q.tg||[]).filter(t=>!isNaN(t[0])&&(side==="short"?t[0]<q.lo:t[0]>q.hi));
+    /* Burke: 3 levels up → 3 levels down. Measured target when the zone sits at today's extreme */
+    if(side==="short"&&Math.abs(q.hi-hi)<lv/2&&q.hi-3*lv<q.lo)q.tg.push([q.hi-3*lv,"3 רמות מהשיא"]);
+    if(side==="long"&&Math.abs(q.lo-lo)<lv/2&&q.lo+3*lv>q.hi)q.tg.push([q.lo+3*lv,"3 רמות מהשפל"]);
+    q.tg.sort((a,b)=>side==="short"?b[0]-a[0]:a[0]-b[0]);
+    q.tg=q.tg.filter((t,i)=>!i||Math.abs(t[0]-q.tg[i-1][0])>lv/4);
     Z.push(q);return q};
   const sh=(a,b,o)=>z("short",a,b,o),lg=(a,b,o)=>z("long",a,b,o);
   let set="",bias="";
@@ -1725,6 +1739,20 @@ function brief(d){
     else{bias="short";
       sh(Math.min(H,hi)-zb,Math.min(H,hi),{t:"ראש היום בתוך הנר העוטף",why:"אחרי יום עוטף השוק לרוב מדשדש בתוך הטווח שלו. המחיר מעל האמצע — מוכרים את הראש של היום כשהוא נכשל.",ev:ev,ex:ex,tg:[[M,"אמצע העוטף"],[C,"סגירה"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות מעל גבוה היום"});
       lg(M-zb,M,{t:"אמצע הנר העוטף",why:"האמצע של יום עוטף הוא ציר. ירידה אליו שמחזיקה — קנייה חזרה לראש.",ev:ev,ex:ex,tg:[[hi,"גבוה היום"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות מתחת לאזור"})}}
+  else if(dt==="cib"){set="נסגר בפריצה";bias=up?"long":"short";
+    const ev="Close in breakout — 32 עמודים",quiet=" יום שקט היום לא אומר שהפריצה נכשלה — לפעמים ההמשך מגיע רק ביום 3.";
+    const fail=up?"כישלון: NY קופץ למעלה בפתיחה ומיד שובר את הנמוך של לונדון — הפריצה נכשלה (US2000 13-Jun-24). לא קונים.":"כישלון: NY צולל בפתיחה ומיד פורץ את הגבוה של לונדון — השבירה נכשלה. לא מוכרים.";
+    const failEx="US2000 13-Jun-24 — Thursday Day 2: נסגר בפריצה, NY קפץ ונפל דרך הנמוך של לונדון ← מתחת לרמת הפריצה";
+    if(up){
+      if(C-lo>3*lv&&X<C-2*lv){bias="short";sh(lo+lv/2,lo+1.5*lv,{t:"הפריצה נכשלה — תיקון שנכשל",why:"היום ירד יותר מ-3 רמות מתחת לסגירה של אתמול. זה כבר לא ניעור — הקונים של הפריצה לכודים. לא קונים; מוכרים תיקון של בערך רמה שנכשל מתחת לממוצע 20.",ev:ev,ex:failEx,tg:[[lo,"נמוך היום"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות מעל "+fp(ins,lo+1.5*lv)})}
+      else if(X>H&&hi-H>2*lv)lg(hi-1.5*lv,hi-lv/2,{t:"ההמשך כבר התחיל — תיקון קטן (LHF)",why:"אתמול נסגר בפריצה והיום כבר ממשיך רחוק מעל. לא רודפים — קונים תיקון של בערך רמה שמחזיק מעל הממוצע 20.",ev:ev,ex:"GBPAUD 16-Jul-24 — שלישי Day 2: המשך עם תיקונים קטנים לאורך היום",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לגבוה אתמול"});
+      else if(lo<=C-lv/2)lg(lo,lo+zb,{t:"ניעור מתחת לסגירה — קופסה בנמוך",why:"אתמול נסגר בפריצה למעלה. היום ירד מתחת לסגירה ומנער את הקונים החלשים. כשהקופסה בנמוך מחזיקה וסגירת 5 דק׳ חוזרת מעליה — NY בדרך כלל ממשיך את הפריצה."+quiet,ev:ev,ex:"DJ30 16-Jul-24 — שלישי Day 2: אסיה ולונדון ירדו מתחת לסגירה, NY פרצה ← ‎+700",tg:[[C,"סגירה"],[Math.max(hi,H),"גבוה היום / אתמול"]],kill:"15 דק׳ נסגרות מתחת לנמוך היום",warn:fail});
+      else lg(C-1.5*lv,C-lv/2,{t:"ירידה ראשונה מתחת לסגירה",why:"אחרי סגירה בפריצה, היום הבא לרוב יורד קודם נגד הכיוון — בערך רמה מתחת לסגירה — ואז ממשיך. מחכים לירידה ולהחזקה, לא קונים בגבוה."+quiet,ev:ev,ex:"XAUUSD 16-Jul-24 — Day 2: גבוה חדש, ניעור למטה, NY פרץ ← ‎+$30",tg:[[hi,"גבוה היום"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות מתחת לאזור",warn:fail})}
+    else{
+      if(hi-C>3*lv&&X>C+2*lv){bias="long";lg(hi-1.5*lv,hi-lv/2,{t:"השבירה נכשלה — תיקון שמחזיק",why:"היום עלה יותר מ-3 רמות מעל הסגירה של אתמול. זה כבר לא ניעור — המוכרים של השבירה לכודים. לא מוכרים; קונים תיקון של בערך רמה שמחזיק מעל הממוצע 20.",ev:ev,ex:"הדפוס ההפוך של "+failEx,tg:[[hi,"גבוה היום"],[H,"גבוה אתמול"]],kill:"15 דק׳ נסגרות מתחת ל-"+fp(ins,hi-1.5*lv)})}
+      else if(X<L&&L-lo>2*lv)sh(lo+lv/2,lo+1.5*lv,{t:"ההמשך כבר התחיל — תיקון קטן (LHF)",why:"אתמול נסגר בשבירה והיום כבר ממשיך רחוק מתחת. לא רודפים — מוכרים תיקון של בערך רמה שנכשל מתחת לממוצע 20.",ev:ev,ex:"AUDUSD 18-Jul-24 — אחרי שבירה ויום פנימי: תיקון לרמה ונכשל ← המשך",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל נמוך אתמול"});
+      else if(hi>=C+lv/2)sh(hi-zb,hi,{t:"ניעור מעל הסגירה — קופסה בגבוה",why:"אתמול נסגר בשבירה למטה. היום עלה מעל הסגירה ומנער את המוכרים החלשים. כשהקופסה בגבוה נכשלת וסגירת 5 דק׳ חוזרת מתחתיה — NY בדרך כלל ממשיך את השבירה."+quiet,ev:ev,ex:"הדפוס ההפוך של DJ30 16-Jul-24",tg:[[C,"סגירה"],[Math.min(lo,L),"נמוך היום / אתמול"]],kill:"15 דק׳ נסגרות מעל גבוה היום",warn:fail});
+      else sh(C+lv/2,C+1.5*lv,{t:"עלייה ראשונה מעל הסגירה",why:"אחרי סגירה בשבירה, היום הבא לרוב עולה קודם נגד הכיוון — בערך רמה מעל הסגירה — ואז ממשיך. מחכים לעלייה ולכישלון, לא מוכרים בנמוך."+quiet,ev:ev,ex:"הדפוס ההפוך של XAUUSD 16-Jul-24",tg:[[lo,"נמוך היום"],[L,"נמוך אתמול"]],kill:"15 דק׳ נסגרות מעל האזור",warn:fail})}}
   else if(dt==="news"){set="יום חדשות";bias=up?"long":"short";
     if(up)lg(C-lv,C,{t:"תיקון ראשון לסגירה",why:"אחרי יום חדשות שנסגר בקיצון — קונים את התיקון הראשון שמחזיק.",ev:"כניסה בקפיצה הראשונה",ex:"XAUUSD 9-May-24 — אחרי הספייק, חזרה ← ‎+40$",tg:[[hi,"גבוה היום"]],kill:"15 דק׳ נסגרות מתחת לאזור"});
     else sh(C,C+lv,{t:"תיקון ראשון לסגירה",why:"אחרי יום חדשות שנסגר בקיצון — מוכרים את התיקון הראשון שנכשל.",ev:"כניסה בקפיצה הראשונה",ex:"DJ30 30-Apr-24 — אחרי החדשות, NY עלתה ל-EMA ונכשלה ← ‎−600",tg:[[lo,"נמוך היום"]],kill:"15 דק׳ נסגרות מעל האזור"})}
@@ -1866,6 +1894,7 @@ async function shotFill(file){
     if(r.hod!=null||!d.levels.hod)put("hod",r.hod,"גבוה היום");if(r.lod!=null||!d.levels.lod)put("lod",r.lod,"נמוך היום");
     const opt=(k,v,n)=>{if(v!=null&&isFinite(v)){d.levels[k]=String(v);got.push([n,v])}};
     opt("how",r.how,"גבוה שבוע");opt("low",r.low,"נמוך שבוע");opt("hom",r.hom,"גבוה חודש");opt("lom",r.lom,"נמוך חודש");
+    if(r.now!=null){const t0=new Date();d.nowTs=t0.getTime();d.nowAt=String(t0.getHours()).padStart(2,"0")+":"+String(t0.getMinutes()).padStart(2,"0")}
     syncBias(d);persist.d();S.planIn=true;S.shotSt={got:got,miss:miss,warn:r.warn};render()}
   catch(e){let m;try{m=e==null?"ריק":typeof e==="string"?e:e.message?e.message:(JSON.stringify(e)||String(e))}catch(_){m=String(e)}if(!m||m==="{}")m=(e&&e.type)||Object.prototype.toString.call(e);
     S.shotSt={err:"משהו השתבש ב"+_shotStage+". פרטים: "+String(m).slice(0,160)};render()}}
@@ -1902,6 +1931,37 @@ function brClock(){const t=new Date(),m=t.getHours()*60+t.getMinutes();
   const A=7*60,B=19*60,p=x=>Math.max(0,Math.min(100,(x-A)/(B-A)*100));
   return {s:s,st:st,now:p(m),bar:`<div class="brtl"><i class="lon" style="right:${p(lo)}%;width:${p(lc)-p(lo)}%"></i><i class="ny" style="right:${p(data)}%;width:${p(c)-p(data)}%"></i><i class="h2" style="right:${p(o)}%;width:${p(h1)-p(o)}%"></i><b style="right:${p(m)}%"></b></div>
     <div class="brtll"><span style="right:${p(lo)}%">לונדון</span><span style="right:${p(o)}%">${hm(o)}</span><span style="right:${p(c)}%">${hm(c)}</span></div>`}}
+/* Nick's own record for this signal day on this market */
+const insFam=x=>/NQ$/.test(x)?"NQ":/(GC|XAUUSD)$/.test(x)?"GC":/YM$/.test(x)?"YM":/ES$/.test(x)?"ES":x;
+function myStats(ins,dt){if(!dt)return "";const f=insFam(ins);
+  const T=S.trades.filter(t=>t.dayType===dt&&insFam(t.instrument||"")===f&&isClosed(t));
+  if(!T.length)return `<div class="brmy">אצלך: עוד אין טריידים מתועדים מסוג "${esc(dtName(dt).replace(/\s*\(.*\)/,""))}" ב-${esc(f)}. כל טרייד שתתעד ייכנס לכאן.</div>`;
+  const w=T.filter(t=>pnlOf(t)>0).length,sum=T.reduce((a,t)=>a+pnlOf(t),0);
+  return `<div class="brmy">אצלך ב-${esc(f)}: <b>${w} מתוך ${T.length}</b> ניצחו · סה״כ <b class="${sum>=0?"pos":"neg"}">${usd(sum)}</b>${T.length<10?" · עוד מעט נתונים — זה עדיין לא סטטיסטיקה":""}</div>`}
+/* Burke's YouTube trade notes — trigger + timing (peak formation, 3rd 15-min candle, gold gap time) */
+function brTrig(ins,side){const t=new Date(),m=t.getHours()*60+t.getMinutes(),mm=t.getMinutes();
+  const et=tzMin("America/New_York"),offNY=et==null?420:((m-et+1440)%1440),L=x=>((x+offNY)%1440);
+  const hm=x=>{x=(x+1440)%1440;return Math.floor(x/60)+":"+String(x%60).padStart(2,"0")};
+  const h0=m-mm,c3=mm<45?h0+30:h0+90,c3t=mm>=30&&mm<45?"עכשיו — "+hm(c3)+"–"+hm(c3+15):hm(c3)+"–"+hm(c3+15);
+  const S2=side==="short",gold=/^(M?GC|XAUUSD)$/.test(ins);
+  const pf=S2?"תבנית שיא בגבוה — M, טופ משולש או ראש וכתפיים":"תבנית שפל בנמוך — W או תחתית משולשת";
+  return `<div class="brsect">הטריגר לפי ברק</div><div class="brtrig">
+    <div><i>1</i><span><b>${pf}.</b> ה${S2?"גבוה":"נמוך"} "ננעל" — עקיצה אחרונה ${S2?"מעל":"מתחת"} שנכשלת.</span></div>
+    <div><i>2</i><span><b>נר בולע</b> ${S2?"למטה":"למעלה"} אחרי שה${S2?"גבוה":"נמוך"} ננעל. הסטופ ${S2?"מעל ":"מתחת ל"}תבנית ה${S2?"שיא":"שפל"}, לא מעל כל היום.</span></div>
+    <div><i>3</i><span><b>תזמון:</b> נר ה-15 דק׳ השלישי של השעה (הבא: <bdi dir="ltr">${c3t}</bdi>) או תחילת השעה השנייה של הסשן.</span></div>
+    ${gold?`<div><i>⏱</i><span><b>זהב — Gap time:</b> <bdi dir="ltr">${hm(L(30))}</bdi> ו-<bdi dir="ltr">${hm(L(390))}</bdi>. היפוך HOD/LOD אחרי קופסה של שעה+. לא כל יום.</span></div>`:""}
+    <div class="no"><i>✕</i><span><b>לא נגד המגמה.</b> מהלך שכבר יצא מה-HOD/LOD — לא תופסים סכין.</span></div>
+    <div class="ok"><i>✓</i><span><b>נועלים ויוצאים.</b> יעד הושג — סוגרים את המסך.</span></div>
+  </div>`}
+/* gold is traded in London: its entry window is London (≈9:30–12:00 Israel), not New York */
+function brClockFor(ins){const c=brClock();if(!/^(M?GC|XAUUSD)$/.test(ins))return c;
+  const t=new Date(),m=t.getHours()*60+t.getMinutes(),uk=tzMin("Europe/London"),off=uk==null?120:((m-uk+1440)%1440),LU=x=>(x+off)%1440;
+  const a=LU(7*60+30),o=LU(8*60),z=LU(10*60),hm=x=>Math.floor(x/60)+":"+String(x%60).padStart(2,"0");
+  const left=x=>{const d=x-m;return Math.floor(d/60)?Math.floor(d/60)+" ש׳ "+(d%60)+" ד׳":(d%60)+" ד׳"};
+  if(m<a){c.s="זהב — חלון לונדון "+hm(a)+"–"+hm(z)+" (בעוד "+left(a)+")";c.st="pre"}
+  else if(m<z){c.s="זהב — חלון לונדון פתוח עד "+hm(z)+(m<o?" · פתיחת לונדון ב-"+hm(o):"");c.st="open"}
+  else{c.s="חלון לונדון נסגר — אין טרייד זהב היום";c.st="post"}
+  return c}
 function brLadder(P,q){
   const ins=P.ins,rows=[],R=40;
   const add=(v,n,k)=>{if(isNaN(v))return;const m=rows.find(r=>Math.abs(r.v-v)<1e-9);
@@ -1927,7 +1987,7 @@ function planPanel(d){
     ${shotPanel(ins)}
     <div class="brsec"><b>01</b>מכשיר</div>
     <div class="brg2"><label class="brf"><span>מכשיר</span><select data-model="planIns">${INSTR.map(x=>`<option ${x===ins?"selected":""}>${x}</option>`).join("")}</select></label>
-      <label class="brf"><span>גודל רמה${brLvUser(ins)?"":" · אוטומטי"}</span><input inputmode="decimal" value="${brLvUser(ins)||""}" placeholder="${(()=>{const px=parseFloat(L0.now)||parseFloat(L0.pdc);return /^M?NQ$/.test(ins)&&px>0?"≈"+brLv(ins,px):String(cf.lv)})()}" data-model="pset" data-arg="${ins}|lv"></label></div>
+      <label class="brf"><span>גודל רמה${brLvUser(ins)?"":" · אוטומטי"}</span><input inputmode="decimal" value="${brLvUser(ins)||""}" placeholder="${(()=>{const px=parseFloat(L0.now)||parseFloat(L0.pdc);return /^(M?NQ|M?GC|XAUUSD|M?YM)$/.test(ins)&&px>0?"≈"+brLv(ins,px):String(cf.lv)})()}" data-model="pset" data-arg="${ins}|lv"></label></div>
     <div class="brsec"><b>02</b>אתמול</div>
     <div class="brg3">${f("pdh","גבוה")}${f("pdl","נמוך")}${f("pdc","סגירה")}</div>
     <div class="brsec"><b>03</b>היום עד עכשיו · אסיה + לונדון</div>
@@ -1941,19 +2001,23 @@ function planPanel(d){
     ${P.need?`<div class="brmiss">חסר: ${P.miss.map(esc).join(" · ")}</div>`:`<button class="brgo" data-act="planIn">הצג תדריך</button>`}
   </div>`;
   if(open)return `<div id="plan">${head("תדריך לפני פתיחה")}${form}<div class="brver">גרסה ${APP_VER}</div></div>`;
-  const ck=brClock(),q=P.zones[0],alt=P.zones[1];
+  const ck=brClockFor(ins),q=P.zones[0],alt=P.zones[1];
   const qty=d.planQty||cf.tps.length||1,pv=pxVal(ins);
   const money=pts=>pv?usd(pts*pv):"";
   const sumBar=`<button class="brsum" data-act="planIn"><span>${esc(ins)}</span><span>אתמול <b>${fp(ins,P.H)}</b> / <b>${fp(ins,P.L)}</b> / <b>${fp(ins,P.C)}</b></span><span>עכשיו <b>${fp(ins,P.X)}</b></span><span>רמה <b>${fp(ins,P.lv)}</b></span><em>✎</em></button>`;
   if(!q)return `<div id="plan">${head("תדריך לפני פתיחה")}${sumBar}<div class="brcard"><div class="brnone">אין סטרייק זון ליום כזה. מחכים ליום אות.</div></div></div>`;
   const box=q.hi-q.lo,big=box>cf.stop;
+  const ageM=d.nowTs?Math.floor((Date.now()-d.nowTs)/60000):null,stale=ageM!=null&&ageM>=15;
+  const age=ageM==null?"":ageM>=60?Math.floor(ageM/60)+" ש׳ "+(ageM%60)+" ד׳":ageM+" ד׳";
   const chk=[[q.on.length>0,"רמה מוכרת",q.on.length?q.on.join(" · "):"האזור לא על רמה — פחות חזק"],
-    [ck.st==="open","חלון זמן",ck.s],[q.st==="in","המחיר באזור",q.stT]];
+    [P.mv>=2.5,"מהלך של 3 רמות",P.mv.toFixed(1)+" רמות היום"+(P.mv<2.5?" — עוד אין לכודים":"")],
+    [ck.st==="open","חלון זמן",ck.st==="open"?"פתוח":ck.st==="pre"?"עוד לא נפתח":"נסגר להיום"],
+    [stale?null:q.st==="in","המחיר באזור",stale?"עדכן מחיר קודם":q.st==="in"?"כן":q.st==="cancel"?"בוטל":"עוד לא"]];
   const card=`<div class="brcard">
     <div class="brtop"><div><small>${esc(P.set)}${dq?" · "+esc((d.planDir||"up")==="up"?dq[1]:dq[2]):""}</small><b class="${q.side}">${q.side==="short"?"מכירה":"קנייה"}</b></div>
       <div class="brclock ${ck.st}"><span>${esc(ck.s)}</span></div></div>
     ${ck.bar}
-    <div class="brnow"><span>מחיר עכשיו</span><input id="brNowIn" inputmode="decimal" placeholder="${fp(ins,P.X)}"><button data-act="nowSet">עדכן</button><em>${d.nowAt?"עודכן "+esc(d.nowAt):""}</em></div>
+    <div class="brnow"><span>מחיר עכשיו</span><input id="brNowIn" inputmode="decimal" placeholder="${fp(ins,P.X)}"><button data-act="nowSet">עדכן</button><em class="${stale?"stale":""}">${d.nowAt?(stale?"⚠ ":"")+"עודכן "+esc(d.nowAt)+(ageM!=null?" · לפני "+age:""):""}</em></div>
     ${S.nowMsg?`<div class="brnowmsg">${esc(S.nowMsg)}</div>`:""}
     ${brDayNote()}
     ${P.flip?`<div class="brflip"><b>🔄 התוכנית התהפכה</b>ה${P.flip.side==="long"?"קנייה":"מכירה"} בוטלה — המחיר עבר את ${fp(ins,P.flip.at)}. עכשיו מחפשים ${q.side==="short"?"מכירה":"קנייה"}. לא ${P.flip.side==="long"?"קונים \"בזול\"":"מוכרים \"ביוקר\""} ולא מוסיפים לפוזיציה.</div>`:""}
@@ -1964,16 +2028,17 @@ function planPanel(d){
       <div class="brchips"><span>בוקס <b>${fd(ins,box)}</b></span><span class="st-${q.st}">${esc(q.stT)}</span></div>
       <p>${brTxt(q.why)}</p>
       ${q.warn?`<div class="brwarn">${esc(q.warn)}</div>`:""}
-      ${big?`<div class="brwarn">הבוקס גדול מהסטופ שלך (${fd(ins,cf.stop)}). חכה לקופסה קטנה של 5 דק׳ בתוך האזור ושים את הסטופ מעליה.</div>`:""}
+      ${big?`<div class="brwarn">הבוקס גדול מהסטופ שלך (${fd(ins,cf.stop)}) — חכה לקופסה קטנה של 5 דק׳ בתוך האזור.</div>`:""}
     </div>
-    <div class="brev"><div><small>בדוגמאות של ברק</small><b>${brTxt(q.ev)}</b></div><p>${brTxt(q.ex)}</p></div>
+    <div class="brev"><div><small>בדוגמאות של ברק</small><b>${brTxt(q.ev)}</b></div><p>${brTxt(q.ex)}</p>${myStats(ins,d.dayType)}</div>
+    ${brTrig(ins,q.side)}
     <div class="brsect">לפני כניסה</div>
     <div class="brchk">${chk.map(c=>`<div class="${c[0]===true?"ok":c[0]===false?"no":"man"}"><i>${c[0]===true?"✓":c[0]===false?"✕":"○"}</i><b>${esc(c[1])}</b><span>${esc(c[2])}</span></div>`).join("")}</div>
     <div class="brsect">מפת מחירים</div>
     ${brLadder(P,q)}
     ${alt?`<div class="bralt ${alt.side}${alt.cancel?" dead":""}"><small>${alt.cancel?"❌ בוטל · ":"תוכנית ב׳ · "}${alt.side==="short"?"מכירה":"קנייה"}</small><b>${fp(ins,alt.lo)} — ${fp(ins,alt.hi)}</b><span>${esc(alt.t)} · ${esc(alt.stT)}</span></div>`:""}
     <div class="brkill"><b>מבטל:</b> ${esc(q.kill)}</div>${d.lockSide?`<button class="brunlock" data-act="unlockSide">שחרר נעילה ותכנן מחדש (רק אם הזנתי מחיר בטעות)</button>`:""}
-    <div class="brnote">רמה = ${fd(ins,P.lv)}${/^M?NQ$/.test(ins)&&!brLvUser(ins)?" (≈0.4% מהמחיר, לפי הגרפים שלך)":""} · קופסה ≈ ${fd(ins,P.zb)}. ברק מראה כמעט רק דוגמאות מנצחות — אלה דפוסים, לא אחוזי הצלחה.</div>
+    <div class="brnote">ברק מראה כמעט רק דוגמאות מנצחות — אלה דפוסים, לא אחוזי הצלחה.</div>
   </div>`;
   return `<div id="plan">${head("תדריך לפני פתיחה")}
     ${ev.length?`<div class="pnews">חדשות אדומות היום: ${ev.map(e=>esc(e.name)+" "+evTime(e)).join(" · ")} — לא נכנסים 15 דק׳ לפני</div>`:""}
@@ -3515,14 +3580,14 @@ document.addEventListener("click",function(e){
       if(C0>0&&Math.abs(v-C0)/C0>0.12){S.nowMsg="המחיר רחוק מדי מהסגירה — בדוק שהקלדת נכון";render();return}
       const L0=d0.levels;L0.now=String(v);
       if(!(parseFloat(L0.hod)>=v))L0.hod=String(v);if(!(parseFloat(L0.lod)<=v))L0.lod=String(v);
-      const t0=new Date();d0.nowAt=String(t0.getHours()).padStart(2,"0")+":"+String(t0.getMinutes()).padStart(2,"0");
+      const t0=new Date();d0.nowAt=String(t0.getHours()).padStart(2,"0")+":"+String(t0.getMinutes()).padStart(2,"0");d0.nowTs=t0.getTime();
       brSnap(d0);syncBias(d0);persist.d();render();return}
     case "calDay": S.jq=arg; S.tab="journal"; S.openTrade=null; render(); scrollTo(0,0); return;
     case "tab": if(/^\d{4}-\d{2}-\d{2}$/.test(S.jq||""))S.jq=""; S.tab=arg; S.picker=null; S.editMove=null; S.mv=null; S.editTrade=null; S.openTrade=null;
       if(arg==="gate"){S.gateStep=1;gateDefaults()} render(); return;
     case "prep": d.prep[arg]=!d.prep[arg]; persist.d(); render(); return;
     case "dayType": if(S.tab==="today")S.planIn=true; d.dayType=d.dayType===arg?"":arg; d.planDir=""; d.planOpt=0;
-      d.cycleDay=({frd:3,fgd:3,id:3,dbl:3,d2:2,d3:3,d1:1})[d.dayType]||0;
+      d.cycleDay=({frd:3,fgd:3,id:3,dbl:3,d2:2,d3:3,d1:1,cib:2})[d.dayType]||0;
       syncBias(d); persist.d(); render(); return;
     case "planDir": S.planIn=true; d.planDir=arg; d.planOpt=0; syncBias(d); persist.d(); render(); return;
     case "planEdit": S.planEdit=!S.planEdit; render(); return;
@@ -3543,7 +3608,7 @@ document.addEventListener("click",function(e){
       const wasOpen=!isClosed(t); t.pnl=Math.round(v*100)/100; delete t.r; persist.t(); S.openTrade=null; render();
       if(wasOpen&&S.settings.coolOn!==false) openCool(t.pnl<0); return}
     case "planGo": {d.planOpt=+arg||0; const P=planOf(d); if(!P.opts||!P.opts.length)return; const zz=P.opts[P.oi];
-      const MAP={frd:"frd",fgd:"fgd",id:"id",dbl:"id",d3:"d3",d2:"d3",bo:"lhf",pump:"lhf",dump:"lhf",news:"second",range:"para"};
+      const MAP={frd:"frd",fgd:"fgd",id:"id",dbl:"id",d3:"d3",d2:"d3",bo:"lhf",cib:"lhf",pump:"lhf",dump:"lhf",news:"second",range:"para"};
       d.bias=zz.side; persist.d(); gateDefaults();
       Object.assign(S.gateForm,{instrument:P.ins,dir:zz.side,setup:zz.setup!==undefined&&zz.setup!==""?zz.setup:(MAP[d.dayType]||""),dayType:d.dayType,entry:pq(P.ins,zz.e)});
       applyScale(S.gateForm,true);
@@ -3755,7 +3820,7 @@ document.addEventListener("change",function(e){
 document.addEventListener("input",function(e){
   const el=e.target,m=el.dataset.model;if(!m)return;
   if(m==="level"){day().levels[el.dataset.arg]=el.value;persist.d()}
-  else if(m==="plv"){const d=day();d.levels[el.dataset.arg]=el.value;S.planIn=true;
+  else if(m==="plv"){const d=day();d.levels[el.dataset.arg]=el.value;S.planIn=true;if(/^(now|hod|lod)$/.test(el.dataset.arg)){const t0=new Date();d.nowTs=t0.getTime();d.nowAt=String(t0.getHours()).padStart(2,"0")+":"+String(t0.getMinutes()).padStart(2,"0")}
     syncBias(d); persist.d(); if(!el.closest(".zex2"))schedPlan()}
   else if(m==="planIns"){day().planIns=el.value;persist.d();el.blur();render()}
   else if(m==="planQty"){day().planQty=Math.max(1,parseInt(el.value)||1);persist.d();schedPlan()}

@@ -1,4 +1,4 @@
-const CACHE = "sadna-v48";
+const CACHE = "sadna-v54";
 const ASSETS = [
   "./", "./index.html", "./manifest.webmanifest",
   "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"
